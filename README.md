@@ -1,34 +1,35 @@
-# obengine README
+# ÖbEngine VS Code Extension
 
-ObEngine extension
+Develop games for ÖbEngine using VS Code as your editor !
 
 ## Features
 
-\!\[feature k\]\(images/feature-x.png\)
+### Code completion
 
+#### Listing available functions / methods
+![Code completion 1](images/README/completion_1.png)
+
+#### Using documentation and argument list
+![Code completion 2](images/README/completion_2.png)
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+This package uses [sumneko's Lua extension](https://marketplace.visualstudio.com/items?itemName=sumneko.lua) as a language server.
 
 ## Extension Settings
 
 This extension contributes the following settings:
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
+* `Lua.workspace.userThirdParty`: List of directories used by [sumneko's Lua extension](https://marketplace.visualstudio.com/items?itemName=sumneko.lua) to load type hints
 
 ## Known Issues
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
+- Type hints might be wrong
+
+If you encounter any issues (extension problem, wrong type hints), [please report it here](https://github.com/ObEngine/ObEngine-VSCode/issues)
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.0.1
 
-### 1.0.0
-
-Initial release of ...
-
-### For more information
-
+Initial release of ÖbEngine VS Code Extension
