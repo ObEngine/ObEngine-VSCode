@@ -21,6 +21,20 @@
 			"preLaunchTask": "npm"
 		},
 		{
+			"type": "node",
+			"request": "launch",
+			"name": "Server",
+			"cwd": "${workspaceRoot}",
+			"program": "${workspaceRoot}/src/debugAdapter.ts",
+			"args": [
+				"--server=21122"
+			],
+			"sourceMaps": true,
+			"outFiles": [
+				"${workspaceRoot}/out/**/*.js"
+			]
+		},
+		{
 			"name": "Run Extension",
 			"type": "extensionHost",
 			"request": "launch",

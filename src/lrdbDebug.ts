@@ -1,5 +1,6 @@
 import {
   DebugSession,
+  Event,
   InitializedEvent,
   TerminatedEvent,
   ContinuedEvent,
@@ -13,7 +14,6 @@ import {
   Breakpoint,
 } from 'vscode-debugadapter'
 import { DebugProtocol } from 'vscode-debugprotocol'
-import * as logger from 'vscode-debug-logger';
 import { readFileSync, existsSync } from 'fs'
 import { spawn, ChildProcess } from 'child_process'
 import * as path from 'path'
@@ -98,8 +98,7 @@ export class LuaDebugSession extends DebugSession {
     this.setDebuggerLinesStartAt1(false)
     this.setDebuggerColumnsStartAt1(false)
 
-    logger.init(e => this.sendEvent(e), "lrdb_help.log", true);
-    logger.setMinLogLevel(logger.LogLevel.Verbose);
+    this.sendEvent(new Event("hey", {"info": 3}));
   }
 
   /**
@@ -177,6 +176,7 @@ export class LuaDebugSession extends DebugSession {
     response: DebugProtocol.AttachResponse,
     oargs: DebugProtocol.AttachRequestArguments
   ): void {
+    this.sendEvent(new Event("obengine.attachRequest", {}));
     const args = oargs as AttachRequestArguments
     this._stopOnEntry = args.stopOnEntry
     let sourceRoot = [""]
@@ -209,6 +209,7 @@ export class LuaDebugSession extends DebugSession {
     response: DebugProtocol.SetBreakpointsResponse,
     args: DebugProtocol.SetBreakpointsArguments
   ): void {
+    this.sendEvent(new Event("obengine.setBreakPointsRequest", {}));
     if (!this._debug_client)
     {
       return;

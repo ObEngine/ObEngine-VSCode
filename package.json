@@ -2,7 +2,7 @@
 	"name": "obengine",
 	"displayName": "ObEngine",
 	"description": "ÖbEngine support for VS Code",
-	"version": "0.1.2",
+	"version": "0.1.4",
 	"publisher": "obengine",
 	"icon": "images/logo.png",
 	"engines": {
@@ -124,7 +124,6 @@
 		"glob": "^7.1.7",
 		"mocha": "^9.1.1",
 		"typescript": "^4.4.4",
-		"vscode-debug-logger": "0.0.5",
 		"vscode-debugprotocol": "^1.43.0"
 	}
 }
