@@ -45,7 +45,7 @@ function removeUserThirdPartyHints() {
 }
 
 function spawnEggplant() {
-	vscode.window.showInformationMessage('🍆 5');
+	vscode.window.showInformationMessage('🍆');
 }
 
 function setObEngineContext() {
@@ -88,7 +88,7 @@ function setObEngineContext() {
 
 export function activate(context: vscode.ExtensionContext) {
 	let outputChannel = vscode.window.createOutputChannel("ObEngine");
-	outputChannel.appendLine('ÖbEngine extension successfully activated :)');
+	outputChannel.appendLine('[ObEngine] ÖbEngine extension successfully activated :)');
 
 	let spawnEggplantCommand = vscode.commands.registerCommand('obengine.eggplant', spawnEggplant);
 	let setObEngineContextCommand = vscode.commands.registerCommand('obengine.context', setObEngineContext);
@@ -97,13 +97,11 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(setObEngineContextCommand);
 
 	vscode.debug.onDidStartDebugSession((e) => {
-		outputChannel.appendLine(`Started debug session ${e.id}`);
+		outputChannel.appendLine(`[ObEngine:DebugSession] Started debug session ${e.id}`);
 	})
 
 	vscode.debug.onDidReceiveDebugSessionCustomEvent(dapEvent => {
-		outputChannel.appendLine("Message received from DebugSession");
-		outputChannel.appendLine(`[DA] ${dapEvent.event}`);
-        console.log(dapEvent.event);
+		outputChannel.appendLine(`[ObEngine:DebugSession] ${dapEvent.event}`);
     });
 
 	context.subscriptions.push(
