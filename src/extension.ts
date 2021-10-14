@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { LRDBConfigurationProvider } from './lrdbConfigurationProvider';
+import { ObEngineConfigurationProvider } from './obengineConfigurationProvider';
 const util = require('util');
 
 function getHintFolder() : String | undefined {
@@ -61,7 +61,7 @@ function setObEngineContext() {
 	luaWorkspace.update("checkThirdParty", false);
 
 	const debugObEngineTask = {
-		type: 'lrdb',
+		type: 'obengine',
 		request: 'attach',
 		name: '[ObEngine] Debug',
 		host: "localhost",
@@ -97,8 +97,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(
 		vscode.debug.registerDebugConfigurationProvider(
-		  'lrdb',
-		  new LRDBConfigurationProvider()
+		  'obengine',
+		  new ObEngineConfigurationProvider()
 		)
 	  )
 }

@@ -6,7 +6,7 @@ function createLaunchConfigFromContext(
     resolve: boolean
   ): vscode.DebugConfiguration {
     const config = {
-      type: 'lrdb',
+      type: 'obengine',
       request: 'attach',
       name: '[ObEngine] Debug',
       host: "localhost",
@@ -33,7 +33,7 @@ function createLaunchConfigFromContext(
     return config
   }
 
-export class LRDBConfigurationProvider implements vscode.DebugConfigurationProvider {
+export class ObEngineConfigurationProvider implements vscode.DebugConfigurationProvider {
     /**
      * Returns an initial debug configuration based on contextual information, e.g. package.json or folder.
      */

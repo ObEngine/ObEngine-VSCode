@@ -9,3 +9,4 @@ tsconfig.lsif.json
 *.db
 node_modules/
 *.vsix
+out/
