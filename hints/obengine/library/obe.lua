@@ -1,71 +1,72 @@
-obe = {};
 vili = {};
-obe.Audio = {};
-obe.Network = {};
-obe.Event = {};
-obe.Events = {};
-obe.Collision = {};
-obe.Config = {};
-obe.Component = {};
-obe.Graphics = {};
-obe.Time = {};
-obe.Tiles = {};
-obe.Script = {};
-obe.Debug = {};
-obe.Input = {};
-vili.writer = {};
+obe = {};
 obe.Scene = {};
-vili.utils = {};
-obe.Engine = {};
-obe.Bindings = {};
+obe.Collision = {};
 obe.Types = {};
-obe.Utils = {};
 obe.Animation = {};
-obe.Transform = {};
+obe.Debug = {};
+obe.Tiles = {};
+obe.Events = {};
 vili.exceptions = {};
 obe.System = {};
+obe.Event = {};
+obe.Utils = {};
+obe.Script = {};
+obe.Audio = {};
+obe.Bindings = {};
+obe.Engine = {};
+vili.utils = {};
+obe.Config = {};
+vili.writer = {};
+obe.Network = {};
+obe.Graphics = {};
+obe.Input = {};
+obe.Component = {};
+obe.Time = {};
+obe.Transform = {};
 vili.parser = {};
-obe.Utils.Exec = {};
-vili.parser.rules = {};
-obe.Events.Actions = {};
-obe.Config.Templates = {};
+obe.Graphics.Utils = {};
+obe.System.Exceptions = {};
+obe.Component.Exceptions = {};
 obe.Utils.Vector = {};
-obe.Transform.Exceptions = {};
-obe.Events.Network = {};
+obe.Config.Validators = {};
+obe.Graphics.Shapes = {};
+obe.Events.Keys = {};
+obe.System.Project = {};
+obe.Utils.Math = {};
+vili.parser.rules = {};
 vili.writer.dump_options = {};
 obe.System.Prefixes = {};
-obe.Audio.Exceptions = {};
-obe.Engine.Exceptions = {};
-obe.Config.Exceptions = {};
-vili.utils.string = {};
-obe.Animation.Exceptions = {};
-obe.Config.Validators = {};
-obe.Utils.File = {};
-obe.System.Project = {};
-obe.System.Constraints = {};
-obe.Events.Cursor = {};
-obe.Script.Exceptions = {};
-obe.Component.Exceptions = {};
-obe.Collision.Exceptions = {};
-obe.Graphics.Exceptions = {};
-obe.Input.Exceptions = {};
-obe.Graphics.Utils = {};
-obe.Utils.Math = {};
-obe.Animation.Easing = {};
-obe.Debug.Render = {};
-obe.Graphics.Shapes = {};
 obe.Tiles.Exceptions = {};
-obe.Events.Game = {};
-obe.Events.Keys = {};
-obe.Script.ViliLuaBridge = {};
-obe.Utils.String = {};
-obe.Events.Scene = {};
-obe.System.Package = {};
-obe.Event.Exceptions = {};
-obe.Scene.Exceptions = {};
-obe.System.Priorities = {};
+obe.Utils.Exec = {};
 obe.Graphics.Canvas = {};
-obe.System.Exceptions = {};
+obe.System.Package = {};
+obe.Debug.Render = {};
+obe.Animation.Easing = {};
+obe.Utils.String = {};
+obe.Events._EventTableGroups = {};
+vili.utils.string = {};
+obe.Engine.Exceptions = {};
+obe.System.Constraints = {};
+obe.Events.Game = {};
+obe.Config.Templates = {};
+obe.Config.Exceptions = {};
+obe.Script.Exceptions = {};
+obe.Input.Exceptions = {};
+obe.Animation.Exceptions = {};
+obe.Transform.Exceptions = {};
+obe.Audio.Exceptions = {};
+obe.Events.Cursor = {};
+obe.Events.Network = {};
+obe.Events.Scene = {};
+obe.Collision.Exceptions = {};
+obe.Script.ViliLuaBridge = {};
+obe.Graphics.Exceptions = {};
+obe.Utils.File = {};
+obe.System.Priorities = {};
+obe.Events.Actions = {};
+obe.Scene.Exceptions = {};
+obe.Event.Exceptions = {};
 obe.System.Project.Prefixes = {};
 
 ---@alias obe.Time.TimeUnit number
@@ -6635,6 +6636,47 @@ vili.writer.dump_options._object = {};
 
 
 
+---@class obe.Events._EventTableGroups.Cursor
+---@field Hold fun(evt:obe.Events.Cursor.Hold) #
+---@field Move fun(evt:obe.Events.Cursor.Move) #
+---@field Press fun(evt:obe.Events.Cursor.Press) #
+---@field Release fun(evt:obe.Events.Cursor.Release) #
+obe.Events._EventTableGroups._Cursor = {};
+
+
+
+---@class obe.Events._EventTableGroups.Game
+---@field End fun(evt:obe.Events.Game.End) #
+---@field Render fun(evt:obe.Events.Game.Render) #
+---@field Start fun(evt:obe.Events.Game.Start) #
+---@field Update fun(evt:obe.Events.Game.Update) #
+obe.Events._EventTableGroups._Game = {};
+
+
+
+---@class obe.Events._EventTableGroups.Network
+---@field Connected fun(evt:obe.Events.Network.Connected) #
+---@field DataReceived fun(evt:obe.Events.Network.DataReceived) #
+---@field Disconnected fun(evt:obe.Events.Network.Disconnected) #
+obe.Events._EventTableGroups._Network = {};
+
+
+
+---@class obe.Events._EventTableGroups.Scene
+---@field Loaded fun(evt:obe.Events.Scene.Loaded) #
+obe.Events._EventTableGroups._Scene = {};
+
+
+
+---@class obe.Events._EventTable
+---@field Cursor obe.Events._EventTableGroups.Cursor #
+---@field Game obe.Events._EventTableGroups.Game #
+---@field Network obe.Events._EventTableGroups.Network #
+---@field Scene obe.Events._EventTableGroups.Scene #
+obe.Events.__EventTable = {};
+
+
+
 ---@return auto
 function obe.getTypeName() end
 
@@ -7786,4 +7828,7 @@ Engine = {};
 
 ---@type obe.Script.GameObject
 This = {};
+
+---@type obe.Events._EventTable
+Event = {};
 
