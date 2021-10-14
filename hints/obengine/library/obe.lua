@@ -1,75 +1,122 @@
----@meta
-
-
-vili = {};
 obe = {};
+vili = {};
+obe.Time = {};
 obe.Network = {};
+obe.Tiles = {};
 vili.utils = {};
-obe.Audio = {};
-obe.Bindings = {};
-vili.exceptions = {};
 obe.Engine = {};
-obe.Config = {};
+obe.System = {};
+vili.parser = {};
+vili.exceptions = {};
 obe.Types = {};
-obe.Graphics = {};
-obe.Event = {};
+obe.Config = {};
+obe.Input = {};
+obe.Bindings = {};
 obe.Utils = {};
+obe.Scene = {};
+obe.Component = {};
+obe.Debug = {};
+obe.Audio = {};
+obe.Event = {};
+obe.Collision = {};
+obe.Animation = {};
+vili.writer = {};
+obe.Events = {};
 obe.Script = {};
 obe.Transform = {};
-vili.parser = {};
-obe.Input = {};
-vili.writer = {};
-obe.Tiles = {};
-obe.Component = {};
-obe.Animation = {};
-obe.Collision = {};
-obe.System = {};
-obe.Time = {};
-obe.Scene = {};
-obe.Debug = {};
-obe.Events = {};
-obe.System.Exceptions = {};
-obe.System.Priorities = {};
-obe.Animation.Exceptions = {};
+obe.Graphics = {};
 obe.Script.Exceptions = {};
-obe.Engine.Exceptions = {};
-obe.Events.Scene = {};
 obe.Component.Exceptions = {};
-obe.Graphics.Canvas = {};
-vili.writer.dump_options = {};
-obe.Animation.Easing = {};
+obe.Script.ViliLuaBridge = {};
+obe.Utils.String = {};
+obe.System.Exceptions = {};
+obe.Events.Actions = {};
+obe.Animation.Exceptions = {};
+obe.Tiles.Exceptions = {};
+obe.Events.Cursor = {};
 obe.Debug.Render = {};
 obe.Utils.Vector = {};
-obe.Utils.String = {};
-vili.utils.string = {};
-obe.Utils.Math = {};
-obe.System.Prefixes = {};
-vili.parser.rules = {};
-obe.Events.Actions = {};
-obe.Scene.Exceptions = {};
-obe.Tiles.Exceptions = {};
-obe.Collision.Exceptions = {};
-obe.Events.Keys = {};
-obe.Utils.Exec = {};
 obe.Transform.Exceptions = {};
-obe.Graphics.Utils = {};
-obe.Config.Templates = {};
+obe.Events.Keys = {};
 obe.Events.Game = {};
+obe.Animation.Easing = {};
 obe.Audio.Exceptions = {};
-obe.System.Package = {};
-obe.Config.Validators = {};
-obe.Event.Exceptions = {};
-obe.Graphics.Shapes = {};
-obe.System.Project = {};
-obe.System.Constraints = {};
-obe.Events.Cursor = {};
-obe.Events.Network = {};
-obe.Utils.File = {};
-obe.Config.Exceptions = {};
 obe.Input.Exceptions = {};
+obe.Utils.File = {};
+obe.System.Priorities = {};
+obe.Graphics.Utils = {};
+obe.Config.Validators = {};
+obe.System.Prefixes = {};
+obe.Graphics.Canvas = {};
+obe.System.Project = {};
+vili.utils.string = {};
+vili.parser.rules = {};
 obe.Graphics.Exceptions = {};
-obe.Script.ViliLuaBridge = {};
+obe.System.Package = {};
+obe.Collision.Exceptions = {};
+obe.Events.Scene = {};
+obe.Config.Exceptions = {};
+obe.Events.Network = {};
+obe.Utils.Math = {};
+obe.Event.Exceptions = {};
+obe.Config.Templates = {};
+obe.Scene.Exceptions = {};
+obe.System.Constraints = {};
+obe.Utils.Exec = {};
+obe.Graphics.Shapes = {};
+vili.writer.dump_options = {};
+obe.Engine.Exceptions = {};
 obe.System.Project.Prefixes = {};
+
+---@alias obe.Time.TimeUnit number
+
+---@alias obe.Animation.Easing.Easing.EasingFunction function
+
+---@alias obe.Collision.TrajectoryCheckFunction function(trajectory: obe.Collision.Trajectory, offset: obe.Transform.UnitVector, collider: obe.Collision.PolygonalCollider)
+
+---@alias obe.Collision.OnCollideCallback function(trajectory: obe.Collision.Trajectory, offset: obe.Transform.UnitVector, data: obe.Collision.CollisionData)
+
+---@alias obe.Event.Callback function
+
+---@alias obe.Event.ExternalEventListener obe.Event.LuaEventListener
+
+---@alias obe.Event.EventProfiler table<string, obe.Event.CallbackProfiler>
+
+---@alias obe.Event.OnListenerChange function(change_state: obe.Event.ListenerChangeState, string)
+
+---@alias obe.Event.EventGroupPtr obe.Event.EventGroup
+
+---@alias sol.protected_function function
+
+---@alias sol.lua_value any
+
+---@alias sol.object table
+
+---@alias obe.Graphics.CoordinateTransformer function(position: number, camera: number, layer: number):number
+
+---@alias obe.System.MountList table<number, obe.System.MountablePath>
+
+---@alias obe.Tiles.AnimatedTiles table<number, obe.Tiles.AnimatedTile>
+
+---@alias obe.Transform.PolygonPath table<number, obe.Transform.PolygonPoint>
+
+---@alias obe.Transform.point_index_t number
+
+---@alias point_index_t number
+
+---@alias vili.number number
+
+---@alias vili.integer number
+
+---@alias vili.boolean boolean
+
+---@alias vili.array table<number, any>
+
+---@alias vili.object table<string, any>
+
+---@alias vili.string string
+
+---@alias obe.Input.InputButtonMonitorPtr obe.Input.InputButtonMonitor
 
 ---@class obe.Animation.Animation
 obe.Animation._Animation = {};
@@ -79,6 +126,7 @@ obe.Animation._Animation = {};
 ---@return obe.Animation.Animation
 function obe.Animation.Animation() end
 
+
 --- Apply global Animation parameters (Sprite offset and priority)
 ---
 ---@param parameters vili.node #A vili::node that contains the following optional parameters : spriteOffsetX : x Coordinate of the Sprite Offset in the Animation in pixels. spriteOffsetY : y Coordinate of the Sprite Offset in the Animation in pixels. priority : Priority of the Animation (A higher Animation priority can't be interrupted by an Animation with a lower one).
@@ -86,7 +134,7 @@ function obe.Animation._Animation:applyParameters(parameters) end
 
 --- Get the name of all contained AnimationGroup of the Animation.
 ---
----@return table
+---@return table<number, string>
 function obe.Animation._Animation:getAllAnimationGroupName() end
 
 --- Get the default delay of the Animation. The delay will be transferred to AnimationGroup children if not specified.
@@ -127,7 +175,7 @@ function obe.Animation._Animation:getCurrentAnimationGroup() end
 
 --- Return the Animation priority.
 ---
----@return number[integer]
+---@return number
 function obe.Animation._Animation:getPriority() end
 
 --- Get the current Texture displayed by the Animation.
@@ -137,7 +185,7 @@ function obe.Animation._Animation:getTexture() end
 
 --- Get the texture used in the Animation at the specified index.
 ---
----@param index number[integer] #Index of the texture to return.
+---@param index number #Index of the texture to return.
 ---@return obe.Graphics.Texture
 function obe.Animation._Animation:getTextureAtIndex(index) end
 
@@ -173,6 +221,7 @@ function obe.Animation._Animation:getAntiAliasing() end
 ---@return obe.Animation.AnimationState
 function obe.Animation._Animation:makeState() end
 
+
 ---@class obe.Animation.AnimationGroup
 obe.Animation._AnimationGroup = {};
 
@@ -188,6 +237,7 @@ function obe.Animation.AnimationGroup(name) end
 ---@return obe.Animation.AnimationGroup
 function obe.Animation.AnimationGroup(group) end
 
+
 --- Get the delay between each frame of the AnimationGroup.
 ---
 ---@return obe.Time.TimeUnit
@@ -195,7 +245,7 @@ function obe.Animation._AnimationGroup:getDelay() end
 
 --- Get the current index of AnimationGroup.
 ---
----@return number[integer]
+---@return number
 function obe.Animation._AnimationGroup:getIndex() end
 
 --- Get the name of the AnimationGroup.
@@ -205,7 +255,7 @@ function obe.Animation._AnimationGroup:getName() end
 
 --- Get the AnimationGroup size.
 ---
----@return number[integer]
+---@return number
 function obe.Animation._AnimationGroup:getSize() end
 
 --- Get the current Sprite of the AnimationGroup.
@@ -235,7 +285,7 @@ function obe.Animation._AnimationGroup:pushTexture(texture) end
 
 --- Remove the texture at the given index in the AnimationGroup.
 ---
----@param index number[integer] #Removes the texture at index
+---@param index number #Removes the texture at index
 function obe.Animation._AnimationGroup:removeTextureByIndex(index) end
 
 --- Reset the AnimationGroup (Index to 0, Loops to 0, Delay to 0)
@@ -249,8 +299,9 @@ function obe.Animation._AnimationGroup:setDelay(delay) end
 
 --- Set how many times the AnimationGroup should be replayed before end.
 ---
----@param loops number[integer] #Amount of loops to do
+---@param loops number #Amount of loops to do
 function obe.Animation._AnimationGroup:setLoops(loops) end
+
 
 ---@class obe.Animation.AnimationState
 obe.Animation._AnimationState = {};
@@ -260,6 +311,7 @@ obe.Animation._AnimationState = {};
 ---@param parent obe.Animation.Animation #
 ---@return obe.Animation.AnimationState
 function obe.Animation.AnimationState(parent) end
+
 
 function obe.Animation._AnimationState:load() end
 
@@ -305,6 +357,7 @@ function obe.Animation._AnimationState:update() end
 ---@return obe.Animation.Animation
 function obe.Animation._AnimationState:getAnimation() end
 
+
 ---@class obe.Animation.Animator
 obe.Animation._Animator = {};
 
@@ -313,13 +366,14 @@ obe.Animation._Animator = {};
 ---@return obe.Animation.Animator
 function obe.Animation.Animator() end
 
+
 --- Clear the Animator of all Animation.
 ---
 function obe.Animation._Animator:clear() end
 
 --- Get the name of all contained Animation.
 ---
----@return table
+---@return table<number, string>
 function obe.Animation._Animator:getAllAnimationName() end
 
 --- Get the contained Animation pointer by Animation name.
@@ -341,7 +395,7 @@ function obe.Animation._Animator:getTexture() end
 --- Call Animation::getTextureAtIndex.
 ---
 ---@param key string #Name of the Animation where the Texture is located
----@param index number[integer] #Index of the Texture in the Animation
+---@param index number #Index of the Texture in the Animation
 ---@return obe.Graphics.Texture
 function obe.Animation._Animator:getTextureAtKey(key, index) end
 
@@ -375,6 +429,7 @@ function obe.Animation._Animator:getPath() end
 ---@return obe.Animation.AnimatorState
 function obe.Animation._Animator:makeState() end
 
+
 ---@class obe.Animation.AnimatorState
 obe.Animation._AnimatorState = {};
 
@@ -383,6 +438,7 @@ obe.Animation._AnimatorState = {};
 ---@param parent obe.Animation.Animator #
 ---@return obe.Animation.AnimatorState
 function obe.Animation.AnimatorState(parent) end
+
 
 --- Get the name of the currently played Animation.
 ---
@@ -423,18 +479,20 @@ function obe.Animation._AnimatorState:getTexture() end
 ---@return obe.Animation.Animator
 function obe.Animation._AnimatorState:getAnimator() end
 
+
 ---@class obe.Animation.Exceptions.AnimationGroupTextureIndexOverflow
 obe.Animation.Exceptions._AnimationGroupTextureIndexOverflow = {};
 
 --- obe.Animation.Exceptions.AnimationGroupTextureIndexOverflow constructor
 ---
 ---@param animationGroup string #
----@param index number[integer] #
----@param maximum number[integer] #
+---@param index number #
+---@param maximum number #
 ---@param info obe.DebugInfo #
 ---@return obe.Animation.Exceptions.AnimationGroupTextureIndexOverflow
-function obe.Animation.Exceptions.AnimationGroupTextureIndexOverflow(
-    animationGroup, index, maximum, info) end
+function obe.Animation.Exceptions.AnimationGroupTextureIndexOverflow(animationGroup, index, maximum, info) end
+
+
 
 ---@class obe.Animation.Exceptions.AnimationTextureIndexOverflow
 obe.Animation.Exceptions._AnimationTextureIndexOverflow = {};
@@ -442,13 +500,13 @@ obe.Animation.Exceptions._AnimationTextureIndexOverflow = {};
 --- obe.Animation.Exceptions.AnimationTextureIndexOverflow constructor
 ---
 ---@param animation string #
----@param index number[integer] #
----@param maximum number[integer] #
+---@param index number #
+---@param maximum number #
 ---@param info obe.DebugInfo #
 ---@return obe.Animation.Exceptions.AnimationTextureIndexOverflow
-function obe.Animation.Exceptions.AnimationTextureIndexOverflow(animation,
-                                                                index, maximum,
-                                                                info) end
+function obe.Animation.Exceptions.AnimationTextureIndexOverflow(animation, index, maximum, info) end
+
+
 
 ---@class obe.Animation.Exceptions.InvalidAnimationFile
 obe.Animation.Exceptions._InvalidAnimationFile = {};
@@ -460,6 +518,8 @@ obe.Animation.Exceptions._InvalidAnimationFile = {};
 ---@return obe.Animation.Exceptions.InvalidAnimationFile
 function obe.Animation.Exceptions.InvalidAnimationFile(path, info) end
 
+
+
 ---@class obe.Animation.Exceptions.NoSelectedAnimation
 obe.Animation.Exceptions._NoSelectedAnimation = {};
 
@@ -469,6 +529,8 @@ obe.Animation.Exceptions._NoSelectedAnimation = {};
 ---@param info obe.DebugInfo #
 ---@return obe.Animation.Exceptions.NoSelectedAnimation
 function obe.Animation.Exceptions.NoSelectedAnimation(animator, info) end
+
+
 
 ---@class obe.Animation.Exceptions.NoSelectedAnimationGroup
 obe.Animation.Exceptions._NoSelectedAnimationGroup = {};
@@ -480,6 +542,8 @@ obe.Animation.Exceptions._NoSelectedAnimationGroup = {};
 ---@return obe.Animation.Exceptions.NoSelectedAnimationGroup
 function obe.Animation.Exceptions.NoSelectedAnimationGroup(animation, info) end
 
+
+
 ---@class obe.Animation.Exceptions.UnknownAnimation
 obe.Animation.Exceptions._UnknownAnimation = {};
 
@@ -487,11 +551,12 @@ obe.Animation.Exceptions._UnknownAnimation = {};
 ---
 ---@param animatorPath string #
 ---@param animation string #
----@param animations table #
+---@param animations table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.Animation.Exceptions.UnknownAnimation
-function obe.Animation.Exceptions.UnknownAnimation(animatorPath, animation,
-                                                   animations, info) end
+function obe.Animation.Exceptions.UnknownAnimation(animatorPath, animation, animations, info) end
+
+
 
 ---@class obe.Animation.Exceptions.UnknownAnimationCommand
 obe.Animation.Exceptions._UnknownAnimationCommand = {};
@@ -502,8 +567,9 @@ obe.Animation.Exceptions._UnknownAnimationCommand = {};
 ---@param command string #
 ---@param info obe.DebugInfo #
 ---@return obe.Animation.Exceptions.UnknownAnimationCommand
-function obe.Animation.Exceptions.UnknownAnimationCommand(animation, command,
-                                                          info) end
+function obe.Animation.Exceptions.UnknownAnimationCommand(animation, command, info) end
+
+
 
 ---@class obe.Animation.Exceptions.UnknownAnimationGroup
 obe.Animation.Exceptions._UnknownAnimationGroup = {};
@@ -512,11 +578,12 @@ obe.Animation.Exceptions._UnknownAnimationGroup = {};
 ---
 ---@param animation string #
 ---@param groupName string #
----@param groups table #
+---@param groups table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.Animation.Exceptions.UnknownAnimationGroup
-function obe.Animation.Exceptions.UnknownAnimationGroup(animation, groupName,
-                                                        groups, info) end
+function obe.Animation.Exceptions.UnknownAnimationGroup(animation, groupName, groups, info) end
+
+
 
 ---@class obe.Animation.Exceptions.UnknownAnimationPlayMode
 obe.Animation.Exceptions._UnknownAnimationPlayMode = {};
@@ -528,15 +595,19 @@ obe.Animation.Exceptions._UnknownAnimationPlayMode = {};
 ---@return obe.Animation.Exceptions.UnknownAnimationPlayMode
 function obe.Animation.Exceptions.UnknownAnimationPlayMode(playMode, info) end
 
+
+
 ---@class obe.Animation.Exceptions.UnknownEasingFromEnum
 obe.Animation.Exceptions._UnknownEasingFromEnum = {};
 
 --- obe.Animation.Exceptions.UnknownEasingFromEnum constructor
 ---
----@param enumValue number[integer] #
+---@param enumValue number #
 ---@param info obe.DebugInfo #
 ---@return obe.Animation.Exceptions.UnknownEasingFromEnum
 function obe.Animation.Exceptions.UnknownEasingFromEnum(enumValue, info) end
+
+
 
 ---@class obe.Animation.Exceptions.UnknownEasingFromString
 obe.Animation.Exceptions._UnknownEasingFromString = {};
@@ -548,6 +619,8 @@ obe.Animation.Exceptions._UnknownEasingFromString = {};
 ---@return obe.Animation.Exceptions.UnknownEasingFromString
 function obe.Animation.Exceptions.UnknownEasingFromString(easingName, info) end
 
+
+
 ---@class obe.Animation.Exceptions.UnknownTargetScaleMode
 obe.Animation.Exceptions._UnknownTargetScaleMode = {};
 
@@ -557,6 +630,8 @@ obe.Animation.Exceptions._UnknownTargetScaleMode = {};
 ---@param info obe.DebugInfo #
 ---@return obe.Animation.Exceptions.UnknownTargetScaleMode
 function obe.Animation.Exceptions.UnknownTargetScaleMode(targetScaleMode, info) end
+
+
 
 ---@class obe.Animation.ValueTweening
 obe.Animation._ValueTweening = {};
@@ -575,6 +650,7 @@ function obe.Animation.ValueTweening(duration) end
 ---@return obe.Animation.ValueTweening
 function obe.Animation.ValueTweening(from, to, duration) end
 
+
 ---@param from number #
 ---@return obe.Animation.ValueTweening
 function obe.Animation._ValueTweening:from(from) end
@@ -583,7 +659,7 @@ function obe.Animation._ValueTweening:from(from) end
 ---@return obe.Animation.ValueTweening
 function obe.Animation._ValueTweening:to(to) end
 
----@param easing obe.Animation.Easing.Easing.EasingFunction #
+---@param easing function #
 ---@return obe.Animation.ValueTweening
 function obe.Animation._ValueTweening:ease(easing) end
 
@@ -594,6 +670,7 @@ function obe.Animation._ValueTweening:done() end
 ---@return number
 function obe.Animation._ValueTweening:step(dt) end
 
+
 ---@class obe.Audio.AudioManager
 obe.Audio._AudioManager = {};
 
@@ -602,6 +679,7 @@ obe.Audio._AudioManager = {};
 ---@return obe.Audio.AudioManager
 function obe.Audio.AudioManager() end
 
+
 --- Loads a sound file at a given path.
 ---
 ---@param path obe.System.Path #Path to the sound file
@@ -609,16 +687,19 @@ function obe.Audio.AudioManager() end
 ---@return obe.Audio.Sound
 function obe.Audio._AudioManager:load(path, loadPolicy) end
 
+
 ---@class obe.Audio.Exceptions.AudioFileNotFound
 obe.Audio.Exceptions._AudioFileNotFound = {};
 
 --- obe.Audio.Exceptions.AudioFileNotFound constructor
 ---
 ---@param path string #
----@param mountedPaths table #
+---@param mountedPaths table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.Audio.Exceptions.AudioFileNotFound
 function obe.Audio.Exceptions.AudioFileNotFound(path, mountedPaths, info) end
+
+
 
 ---@class obe.Audio.Sound
 obe.Audio._Sound = {};
@@ -626,9 +707,10 @@ obe.Audio._Sound = {};
 --- obe.Audio.Sound constructor
 ---
 ---@param manager SoLoud.Soloud #
----@param source shared pointer #
+---@param source SoLoud.AudioSource #
 ---@return obe.Audio.Sound
 function obe.Audio.Sound(manager, source) end
+
 
 ---@return number
 function obe.Audio._Sound:getDuration() end
@@ -672,6 +754,7 @@ function obe.Audio._Sound:setLooping(looping) end
 ---@return boolean
 function obe.Audio._Sound:getLooping() end
 
+
 ---@class obe.BaseException
 obe._BaseException = {};
 
@@ -680,28 +763,20 @@ obe._BaseException = {};
 ---@return obe.BaseException
 function obe.BaseException() end
 
---- obe.BaseException constructor
----
----@param e std.exception #
----@return obe.BaseException
-function obe.BaseException(e) end
 
----@param args Args &&... #
-function obe._BaseException:error(args) end
-
----@param args Args &&... #
-function obe._BaseException:hint(args) end
-
----@return char
+---@return string
 function obe._BaseException:what() end
 
----@return table
+---@return table<number, std.runtime_error>
 function obe._BaseException:traceback() end
 
+
 ---@class obe.Collision.CollisionData
----@field colliders table of PolygonalCollider * #Colliders the collider touched during the collision (empty if no collision occurs)
----@field offset Transform.UnitVector #Maximum distance that can be traveled before collision.
+---@field colliders table<number, PolygonalCollider> #Colliders the collider touched during the collision (empty if no collision occurs)
+---@field offset obe.Transform.UnitVector #Maximum distance that can be traveled before collision.
 obe.Collision._CollisionData = {};
+
+
 
 ---@class obe.Collision.Exceptions.InvalidTagFormat
 obe.Collision.Exceptions._InvalidTagFormat = {};
@@ -713,11 +788,12 @@ obe.Collision.Exceptions._InvalidTagFormat = {};
 ---@param dataType string #
 ---@param info obe.DebugInfo #
 ---@return obe.Collision.Exceptions.InvalidTagFormat
-function obe.Collision.Exceptions.InvalidTagFormat(colliderId, tagType,
-                                                   dataType, info) end
+function obe.Collision.Exceptions.InvalidTagFormat(colliderId, tagType, dataType, info) end
+
+
 
 ---@class obe.Collision.PolygonalCollider
----@field ComponentType constant expr std.string_view #
+---@field ComponentType string #
 obe.Collision._PolygonalCollider = {};
 
 --- Constructs a PolygonalCollider.
@@ -731,6 +807,7 @@ function obe.Collision.PolygonalCollider(id) end
 ---@param collider obe.Collision.PolygonalCollider #
 ---@return obe.Collision.PolygonalCollider
 function obe.Collision.PolygonalCollider(collider) end
+
 
 --- Adds a Tag to the Collider.
 ---
@@ -746,7 +823,7 @@ function obe.Collision._PolygonalCollider:clearTags(tagType) end
 --- Check if the Collider contains one of the Tag in parameter.
 ---
 ---@param tagType obe.Collision.ColliderTagType #List from where you want to check the Tags existence (Tag / Accepted / Rejected)
----@param tags table #List of Tags you want to check the existence
+---@param tags table<number, string> #List of Tags you want to check the existence
 ---@return boolean
 function obe.Collision._PolygonalCollider:doesHaveAnyTag(tagType, tags) end
 
@@ -765,7 +842,7 @@ function obe.Collision._PolygonalCollider:dump() end
 --- Gets all the Tags from one of the Lists.
 ---
 ---@param tagType obe.Collision.ColliderTagType #List where you want to get all the Tags from (Tag / Accepted / Rejected)
----@return table
+---@return table<number, string>
 function obe.Collision._PolygonalCollider:getAllTags(tagType) end
 
 --- Get the Id of the parent of the Collider (When used in a GameObject)
@@ -798,7 +875,7 @@ function obe.Collision._PolygonalCollider:getBoundingBox() end
 --- Adds a new Point to the Polygon at Position (x, y)
 ---
 ---@param position obe.Transform.UnitVector #Coordinate of the Position where to add the new Point
----@param pointIndex? number[integer] #Index where to insert the new Point, Use pointIndex = -1 <DefaultArg> to insert at the end (between last and first Point)
+---@param pointIndex? number #Index where to insert the new Point, Use pointIndex = -1 <DefaultArg> to insert at the end (between last and first Point)
 function obe.Collision._PolygonalCollider:addPoint(position, pointIndex) end
 
 --- Moves the Movable (Adds the given position to the current one)
@@ -826,6 +903,7 @@ function obe.Collision._PolygonalCollider:setRotation(angle, origin) end
 ---@param position obe.Transform.UnitVector #
 function obe.Collision._PolygonalCollider:setPositionFromCentroid(position) end
 
+
 ---@class obe.Collision.Trajectory
 obe.Collision._Trajectory = {};
 
@@ -834,6 +912,7 @@ obe.Collision._Trajectory = {};
 ---@param unit? obe.Transform.Units #
 ---@return obe.Collision.Trajectory
 function obe.Collision.Trajectory(unit) end
+
 
 ---@param acceleration number #
 ---@return obe.Collision.Trajectory
@@ -856,7 +935,7 @@ function obe.Collision._Trajectory:getAcceleration() end
 ---@return number
 function obe.Collision._Trajectory:getAngle() end
 
----@return table
+---@return table<number, obe.Collision.TrajectoryCheckFunction>
 function obe.Collision._Trajectory:getChecks() end
 
 ---@return obe.Collision.OnCollideCallback
@@ -890,6 +969,7 @@ function obe.Collision._Trajectory:setSpeed(speed) end
 ---@return obe.Collision.Trajectory
 function obe.Collision._Trajectory:setStatic(tStatic) end
 
+
 ---@class obe.Collision.TrajectoryNode
 obe.Collision._TrajectoryNode = {};
 
@@ -898,6 +978,7 @@ obe.Collision._TrajectoryNode = {};
 ---@param sceneNode obe.Scene.SceneNode #
 ---@return obe.Collision.TrajectoryNode
 function obe.Collision.TrajectoryNode(sceneNode) end
+
 
 ---@param id string #
 ---@param unit? obe.Transform.Units #
@@ -920,8 +1001,9 @@ function obe.Collision._TrajectoryNode:setProbe(probe) end
 ---@param dt number #
 function obe.Collision._TrajectoryNode:update(dt) end
 
+
 ---@class obe.Component.ComponentBase
----@field ComponentType constant expr std.string_view #
+---@field ComponentType string #
 obe.Component._ComponentBase = {};
 
 --- obe.Component.ComponentBase constructor
@@ -930,7 +1012,8 @@ obe.Component._ComponentBase = {};
 ---@return obe.Component.ComponentBase
 function obe.Component.ComponentBase(id) end
 
----@param envIndex number[position integer] #
+
+---@param envIndex number #
 function obe.Component._ComponentBase:inject(envIndex) end
 
 function obe.Component._ComponentBase:remove() end
@@ -948,6 +1031,7 @@ function obe.Component._ComponentBase:load(data) end
 ---@return string
 function obe.Component._ComponentBase:type() end
 
+
 ---@class obe.Component.Exceptions.ComponentIdAlreadyTaken
 obe.Component.Exceptions._ComponentIdAlreadyTaken = {};
 
@@ -958,6 +1042,8 @@ obe.Component.Exceptions._ComponentIdAlreadyTaken = {};
 ---@return obe.Component.Exceptions.ComponentIdAlreadyTaken
 function obe.Component.Exceptions.ComponentIdAlreadyTaken(id, info) end
 
+
+
 ---@class obe.Config.ConfigurationManager
 obe.Config._ConfigurationManager = {};
 
@@ -966,17 +1052,21 @@ obe.Config._ConfigurationManager = {};
 ---@return obe.Config.ConfigurationManager
 function obe.Config.ConfigurationManager() end
 
+
 function obe.Config._ConfigurationManager:load() end
+
 
 ---@class obe.Config.Exceptions.ConfigError
 obe.Config.Exceptions._ConfigError = {};
 
 --- obe.Config.Exceptions.ConfigError constructor
 ---
----@param configFiles table #
+---@param configFiles table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.Config.Exceptions.ConfigError
 function obe.Config.Exceptions.ConfigError(configFiles, info) end
+
+
 
 ---@class obe.Config.Exceptions.InvalidVersionFormat
 obe.Config.Exceptions._InvalidVersionFormat = {};
@@ -988,17 +1078,19 @@ obe.Config.Exceptions._InvalidVersionFormat = {};
 ---@return obe.Config.Exceptions.InvalidVersionFormat
 function obe.Config.Exceptions.InvalidVersionFormat(detail, info) end
 
+
+
 ---@class obe.Config.Version
----@field major number[integer] #
----@field minor number[integer] #
----@field patch number[integer] #
+---@field major number #
+---@field minor number #
+---@field patch number #
 obe.Config._Version = {};
 
 --- obe.Config.Version constructor
 ---
----@param version_major number[integer] #
----@param version_minor number[integer] #
----@param version_patch number[integer] #
+---@param version_major number #
+---@param version_minor number #
+---@param version_patch number #
 ---@return obe.Config.Version
 function obe.Config.Version(version_major, version_minor, version_patch) end
 
@@ -1008,24 +1100,37 @@ function obe.Config.Version(version_major, version_minor, version_patch) end
 ---@return obe.Config.Version
 function obe.Config.Version(str) end
 
+
 ---@return string
 function obe.Config._Version:string() end
 
+
 ---@class obe.DebugInfo
 ---@field file string #
----@field line number[integer] #
+---@field line number #
 ---@field function string #
 obe._DebugInfo = {};
 
 --- obe.DebugInfo constructor
 ---
 ---@param file string #
----@param line number[integer] #
+---@param line number #
 ---@param funcname string #
 ---@return obe.DebugInfo
 function obe.DebugInfo(file, line, funcname) end
 
+
+
 ---@class obe.Engine.Engine
+---@field Audio obe.Audio.AudioManager #
+---@field Configuration obe.Config.ConfigurationManager #
+---@field Resources obe.Engine.ResourceManager #
+---@field Input obe.Input.InputManager #
+---@field Framerate obe.Time.FramerateManager #
+---@field Events obe.Event.EventManager #
+---@field Scene obe.Scene.Scene #
+---@field Cursor obe.System.Cursor #
+---@field Window obe.System.Window #
 obe.Engine._Engine = {};
 
 --- obe.Engine.Engine constructor
@@ -1033,36 +1138,11 @@ obe.Engine._Engine = {};
 ---@return obe.Engine.Engine
 function obe.Engine.Engine() end
 
+
 function obe.Engine._Engine:init() end
 
 function obe.Engine._Engine:run() end
 
----@return obe.Audio.AudioManager
-function obe.Engine._Engine:getAudioManager() end
-
----@return obe.Config.ConfigurationManager
-function obe.Engine._Engine:getConfigurationManager() end
-
----@return obe.Engine.ResourceManager
-function obe.Engine._Engine:getResourceManager() end
-
----@return obe.Input.InputManager
-function obe.Engine._Engine:getInputManager() end
-
----@return obe.Time.FramerateManager
-function obe.Engine._Engine:getFramerateManager() end
-
----@return obe.Event.EventManager
-function obe.Engine._Engine:getEventManager() end
-
----@return obe.Scene.Scene
-function obe.Engine._Engine:getScene() end
-
----@return obe.System.Cursor
-function obe.Engine._Engine:getCursor() end
-
----@return obe.System.Window
-function obe.Engine._Engine:getWindow() end
 
 ---@class obe.Engine.Exceptions.BootScriptExecutionError
 obe.Engine.Exceptions._BootScriptExecutionError = {};
@@ -1073,8 +1153,9 @@ obe.Engine.Exceptions._BootScriptExecutionError = {};
 ---@param errorMessage string #
 ---@param info obe.DebugInfo #
 ---@return obe.Engine.Exceptions.BootScriptExecutionError
-function obe.Engine.Exceptions.BootScriptExecutionError(functionName,
-                                                        errorMessage, info) end
+function obe.Engine.Exceptions.BootScriptExecutionError(functionName, errorMessage, info) end
+
+
 
 ---@class obe.Engine.Exceptions.BootScriptLoadingError
 obe.Engine.Exceptions._BootScriptLoadingError = {};
@@ -1086,15 +1167,19 @@ obe.Engine.Exceptions._BootScriptLoadingError = {};
 ---@return obe.Engine.Exceptions.BootScriptLoadingError
 function obe.Engine.Exceptions.BootScriptLoadingError(errorMessage, info) end
 
+
+
 ---@class obe.Engine.Exceptions.BootScriptMissing
 obe.Engine.Exceptions._BootScriptMissing = {};
 
 --- obe.Engine.Exceptions.BootScriptMissing constructor
 ---
----@param mountedPaths table #
+---@param mountedPaths table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.Engine.Exceptions.BootScriptMissing
 function obe.Engine.Exceptions.BootScriptMissing(mountedPaths, info) end
+
+
 
 ---@class obe.Engine.Exceptions.FontNotFound
 obe.Engine.Exceptions._FontNotFound = {};
@@ -1102,10 +1187,12 @@ obe.Engine.Exceptions._FontNotFound = {};
 --- obe.Engine.Exceptions.FontNotFound constructor
 ---
 ---@param path string #
----@param mounts table #
+---@param mounts table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.Engine.Exceptions.FontNotFound
 function obe.Engine.Exceptions.FontNotFound(path, mounts, info) end
+
+
 
 ---@class obe.Engine.Exceptions.TextureNotFound
 obe.Engine.Exceptions._TextureNotFound = {};
@@ -1113,10 +1200,12 @@ obe.Engine.Exceptions._TextureNotFound = {};
 --- obe.Engine.Exceptions.TextureNotFound constructor
 ---
 ---@param path string #
----@param mounts table #
+---@param mounts table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.Engine.Exceptions.TextureNotFound
 function obe.Engine.Exceptions.TextureNotFound(path, mounts, info) end
+
+
 
 ---@class obe.Engine.Exceptions.UnitializedEngine
 obe.Engine.Exceptions._UnitializedEngine = {};
@@ -1127,13 +1216,17 @@ obe.Engine.Exceptions._UnitializedEngine = {};
 ---@return obe.Engine.Exceptions.UnitializedEngine
 function obe.Engine.Exceptions.UnitializedEngine(info) end
 
+
+
 ---@class obe.Engine.ResourceManagedObject
 obe.Engine._ResourceManagedObject = {};
+
 
 function obe.Engine._ResourceManagedObject:removeResourceManager() end
 
 ---@param resources obe.Engine.ResourceManager #
 function obe.Engine._ResourceManagedObject:attachResourceManager(resources) end
+
 
 ---@class obe.Engine.ResourceManager
 ---@field defaultAntiAliasing boolean #
@@ -1144,18 +1237,22 @@ obe.Engine._ResourceManager = {};
 ---@return obe.Engine.ResourceManager
 function obe.Engine.ResourceManager() end
 
+
 ---@param path string #
----@return shared pointer
+---@return obe.Graphics.Font
 function obe.Engine._ResourceManager:getFont(path) end
 
 function obe.Engine._ResourceManager:clean() end
 
+
 ---@class obe.Event.CallbackProfiler
----@field hits std.uint64_t #
----@field time number #
----@field min number #
----@field max number #
+---@field hits number #
+---@field time obe.Time.TimeUnit #
+---@field min obe.Time.TimeUnit #
+---@field max obe.Time.TimeUnit #
 obe.Event._CallbackProfiler = {};
+
+
 
 ---@class obe.Event.CallbackScheduler
 obe.Event._CallbackScheduler = {};
@@ -1164,6 +1261,7 @@ obe.Event._CallbackScheduler = {};
 ---
 ---@return obe.Event.CallbackScheduler
 function obe.Event.CallbackScheduler() end
+
 
 ---@param amount number #
 ---@return obe.Event.CallbackScheduler
@@ -1175,7 +1273,7 @@ function obe.Event._CallbackScheduler:every(amount) end
 
 --- calls the callback amount times at the rate configured in the every(x) call
 ---
----@param amount number[position integer] #
+---@param amount number #
 ---@return obe.Event.CallbackScheduler
 function obe.Event._CallbackScheduler:replay(amount) end
 
@@ -1183,6 +1281,7 @@ function obe.Event._CallbackScheduler:replay(amount) end
 function obe.Event._CallbackScheduler:run(callback) end
 
 function obe.Event._CallbackScheduler:stop() end
+
 
 ---@class obe.Event.EventBase
 obe.Event._EventBase = {};
@@ -1194,6 +1293,7 @@ obe.Event._EventBase = {};
 ---@param startState? boolean #State of the Event when created (enabled / disabled)
 ---@return obe.Event.EventBase
 function obe.Event.EventBase(parentName, name, startState) end
+
 
 --- Get the State of the Event (enabled / disabled)
 ---
@@ -1224,6 +1324,7 @@ function obe.Event._EventBase:removeExternalListener(id) end
 ---@return obe.Event.EventProfiler
 function obe.Event._EventBase:getProfiler() end
 
+
 ---@class obe.Event.EventGroup
 obe.Event._EventGroup = {};
 
@@ -1233,6 +1334,7 @@ obe.Event._EventGroup = {};
 ---@param name string #Name of the EventGroup
 ---@return obe.Event.EventGroup
 function obe.Event.EventGroup(eventNamespace, name) end
+
 
 ---@return obe.Event.EventGroupView
 function obe.Event._EventGroup:getView() end
@@ -1260,12 +1362,12 @@ function obe.Event._EventGroup:remove(eventName) end
 
 --- Get the name of all Events contained in the EventGroup.
 ---
----@return table
+---@return table<number, string>
 function obe.Event._EventGroup:getEventsNames() end
 
 --- Get all the Events contained in the EventGroup.
 ---
----@return table
+---@return table<number, obe.Event.EventBase>
 function obe.Event._EventGroup:getEvents() end
 
 --- Get the full name of the EventGroup (namespace + name)
@@ -1293,6 +1395,7 @@ function obe.Event._EventGroup:onRemoveListener(eventName, callback) end
 ---@return vili.node
 function obe.Event._EventGroup:getProfilerResults() end
 
+
 ---@class obe.Event.EventGroupView
 obe.Event._EventGroupView = {};
 
@@ -1302,14 +1405,15 @@ obe.Event._EventGroupView = {};
 ---@return obe.Event.EventGroupView
 function obe.Event.EventGroupView(eventGroup) end
 
+
 --- Get the name of all Events contained in the EventGroup.
 ---
----@return table
+---@return table<number, string>
 function obe.Event._EventGroupView:getEventsNames() end
 
 --- Get all the Events contained in the EventGroup.
 ---
----@return table
+---@return table<number, obe.Event.EventBase>
 function obe.Event._EventGroupView:getEvents() end
 
 --- Get the full name of the EventGroup (namespace + name)
@@ -1330,6 +1434,7 @@ function obe.Event._EventGroupView:isJoinable() end
 ---@return vili.node
 function obe.Event._EventGroupView:getProfilerResults() end
 
+
 ---@class obe.Event.EventManager
 obe.Event._EventManager = {};
 
@@ -1337,6 +1442,7 @@ obe.Event._EventManager = {};
 ---
 ---@return obe.Event.EventManager
 function obe.Event.EventManager() end
+
 
 --- Updates the EventManager.
 ---
@@ -1360,6 +1466,7 @@ function obe.Event._EventManager:schedule() end
 ---@return vili.node
 function obe.Event._EventManager:dumpProfilerResults() end
 
+
 ---@class obe.Event.EventNamespace
 obe.Event._EventNamespace = {};
 
@@ -1368,6 +1475,7 @@ obe.Event._EventNamespace = {};
 ---@param name string #
 ---@return obe.Event.EventNamespace
 function obe.Event.EventNamespace(name) end
+
 
 --- Creates a new EventGroup (Throws an error if the EventGroup already exists)
 ---
@@ -1387,7 +1495,7 @@ function obe.Event._EventNamespace:getGroup(group) end
 
 --- Get all the names of the EventGroup in the given Namespace.
 ---
----@return table
+---@return table<number, string>
 function obe.Event._EventNamespace:getAllGroupsNames() end
 
 --- Removes an existing EventGroup.
@@ -1404,6 +1512,7 @@ function obe.Event._EventNamespace:doesGroupExists(group) end
 ---@return obe.Event.EventNamespaceView
 function obe.Event._EventNamespace:getView() end
 
+
 ---@class obe.Event.EventNamespaceView
 obe.Event._EventNamespaceView = {};
 
@@ -1413,13 +1522,14 @@ obe.Event._EventNamespaceView = {};
 ---@return obe.Event.EventNamespaceView
 function obe.Event.EventNamespaceView(eventNamespace) end
 
+
 ---@param group string #
 ---@return obe.Event.EventGroupView
 function obe.Event._EventNamespaceView:getGroup(group) end
 
 --- Get all the names of the EventGroup in the given Namespace.
 ---
----@return table
+---@return table<number, string>
 function obe.Event._EventNamespaceView:getAllGroupsNames() end
 
 --- Check if an EventGroup exists in the EventNamespace.
@@ -1427,6 +1537,7 @@ function obe.Event._EventNamespaceView:getAllGroupsNames() end
 ---@param group string #Name of the EventGroup to search
 ---@return boolean
 function obe.Event._EventNamespaceView:doesGroupExists(group) end
+
 
 ---@class obe.Event.Exceptions.CallbackCreationError
 obe.Event.Exceptions._CallbackCreationError = {};
@@ -1439,8 +1550,9 @@ obe.Event.Exceptions._CallbackCreationError = {};
 ---@param error string #
 ---@param info obe.DebugInfo #
 ---@return obe.Event.Exceptions.CallbackCreationError
-function obe.Event.Exceptions.CallbackCreationError(eventName, environmentId,
-                                                    callback, error, info) end
+function obe.Event.Exceptions.CallbackCreationError(eventName, environmentId, callback, error, info) end
+
+
 
 ---@class obe.Event.Exceptions.EventAlreadyExists
 obe.Event.Exceptions._EventAlreadyExists = {};
@@ -1451,8 +1563,9 @@ obe.Event.Exceptions._EventAlreadyExists = {};
 ---@param eventName string #
 ---@param info obe.DebugInfo #
 ---@return obe.Event.Exceptions.EventAlreadyExists
-function obe.Event.Exceptions.EventAlreadyExists(eventGroupIdentifier,
-                                                 eventName, info) end
+function obe.Event.Exceptions.EventAlreadyExists(eventGroupIdentifier, eventName, info) end
+
+
 
 ---@class obe.Event.Exceptions.EventExecutionError
 obe.Event.Exceptions._EventExecutionError = {};
@@ -1465,6 +1578,8 @@ obe.Event.Exceptions._EventExecutionError = {};
 ---@return obe.Event.Exceptions.EventExecutionError
 function obe.Event.Exceptions.EventExecutionError(eventName, listenerId, info) end
 
+
+
 ---@class obe.Event.Exceptions.EventGroupAlreadyExists
 obe.Event.Exceptions._EventGroupAlreadyExists = {};
 
@@ -1474,8 +1589,9 @@ obe.Event.Exceptions._EventGroupAlreadyExists = {};
 ---@param eventGroup string #
 ---@param info obe.DebugInfo #
 ---@return obe.Event.Exceptions.EventGroupAlreadyExists
-function obe.Event.Exceptions.EventGroupAlreadyExists(eventNamespace,
-                                                      eventGroup, info) end
+function obe.Event.Exceptions.EventGroupAlreadyExists(eventNamespace, eventGroup, info) end
+
+
 
 ---@class obe.Event.Exceptions.EventGroupNotJoinable
 obe.Event.Exceptions._EventGroupNotJoinable = {};
@@ -1486,8 +1602,9 @@ obe.Event.Exceptions._EventGroupNotJoinable = {};
 ---@param eventGroup string #
 ---@param info obe.DebugInfo #
 ---@return obe.Event.Exceptions.EventGroupNotJoinable
-function obe.Event.Exceptions.EventGroupNotJoinable(eventNamespace, eventGroup,
-                                                    info) end
+function obe.Event.Exceptions.EventGroupNotJoinable(eventNamespace, eventGroup, info) end
+
+
 
 ---@class obe.Event.Exceptions.EventNamespaceAlreadyExists
 obe.Event.Exceptions._EventNamespaceAlreadyExists = {};
@@ -1499,6 +1616,8 @@ obe.Event.Exceptions._EventNamespaceAlreadyExists = {};
 ---@return obe.Event.Exceptions.EventNamespaceAlreadyExists
 function obe.Event.Exceptions.EventNamespaceAlreadyExists(eventNamespace, info) end
 
+
+
 ---@class obe.Event.Exceptions.UnknownEvent
 obe.Event.Exceptions._UnknownEvent = {};
 
@@ -1506,11 +1625,12 @@ obe.Event.Exceptions._UnknownEvent = {};
 ---
 ---@param eventGroup string #
 ---@param eventName string #
----@param existingEvents table #
+---@param existingEvents table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.Event.Exceptions.UnknownEvent
-function obe.Event.Exceptions.UnknownEvent(eventGroup, eventName,
-                                           existingEvents, info) end
+function obe.Event.Exceptions.UnknownEvent(eventGroup, eventName, existingEvents, info) end
+
+
 
 ---@class obe.Event.Exceptions.UnknownEventGroup
 obe.Event.Exceptions._UnknownEventGroup = {};
@@ -1519,11 +1639,12 @@ obe.Event.Exceptions._UnknownEventGroup = {};
 ---
 ---@param eventNamespace string #
 ---@param eventGroup string #
----@param existingGroups table #
+---@param existingGroups table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.Event.Exceptions.UnknownEventGroup
-function obe.Event.Exceptions.UnknownEventGroup(eventNamespace, eventGroup,
-                                                existingGroups, info) end
+function obe.Event.Exceptions.UnknownEventGroup(eventNamespace, eventGroup, existingGroups, info) end
+
+
 
 ---@class obe.Event.Exceptions.UnknownEventNamespace
 obe.Event.Exceptions._UnknownEventNamespace = {};
@@ -1531,11 +1652,12 @@ obe.Event.Exceptions._UnknownEventNamespace = {};
 --- obe.Event.Exceptions.UnknownEventNamespace constructor
 ---
 ---@param eventNamespace string #
----@param existingNamespaces table #
+---@param existingNamespaces table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.Event.Exceptions.UnknownEventNamespace
-function obe.Event.Exceptions.UnknownEventNamespace(eventNamespace,
-                                                    existingNamespaces, info) end
+function obe.Event.Exceptions.UnknownEventNamespace(eventNamespace, existingNamespaces, info) end
+
+
 
 ---@class obe.Event.LuaEventListener
 obe.Event._LuaEventListener = {};
@@ -1546,6 +1668,8 @@ obe.Event._LuaEventListener = {};
 ---@return obe.Event.LuaEventListener
 function obe.Event.LuaEventListener(callback) end
 
+
+
 ---@class obe.Event.ScopeProfiler
 obe.Event._ScopeProfiler = {};
 
@@ -1555,11 +1679,13 @@ obe.Event._ScopeProfiler = {};
 ---@return obe.Event.ScopeProfiler
 function obe.Event.ScopeProfiler(results) end
 
+
+
 ---@class obe.Graphics.Canvas.Bezier
----@field points table of Transform.UnitVector #
----@field colors table of Graphics.Color #
----@field precision number[position integer] #
----@field Type constant expr CanvasElementType #
+---@field points table<number, obe.Transform.UnitVector> #
+---@field colors table<number, obe.Graphics.Color> #
+---@field precision number #
+---@field Type obe.Graphics.Canvas.CanvasElementType #
 obe.Graphics.Canvas._Bezier = {};
 
 --- obe.Graphics.Canvas.Bezier constructor
@@ -1569,20 +1695,23 @@ obe.Graphics.Canvas._Bezier = {};
 ---@return obe.Graphics.Canvas.Bezier
 function obe.Graphics.Canvas.Bezier(parent, id) end
 
+
 --- Draw the Bezier Curve.
 ---
 ---@param target obe.Graphics.RenderTarget #Target where to draw the Sprite to
 function obe.Graphics.Canvas._Bezier:draw(target) end
+
 
 ---@class obe.Graphics.Canvas.Canvas
 obe.Graphics.Canvas._Canvas = {};
 
 --- Create a new Canvas.
 ---
----@param width number[position integer] #Width of the Canvas (in pixels)
----@param height number[position integer] #Height of the Canvas (in pixels)
+---@param width number #Width of the Canvas (in pixels)
+---@param height number #Height of the Canvas (in pixels)
 ---@return obe.Graphics.Canvas.Canvas
 function obe.Graphics.Canvas.Canvas(width, height) end
+
 
 --- Adds a new CanvasElement of type T to the Canvas.
 ---
@@ -1619,12 +1748,13 @@ function obe.Graphics.Canvas._Canvas:getTexture() end
 ---
 function obe.Graphics.Canvas._Canvas:requiresSort() end
 
+
 ---@class obe.Graphics.Canvas.CanvasElement
----@field parent reference to Canvas #
----@field layer number[position integer] #
+---@field parent obe.Graphics.Canvas.Canvas #
+---@field layer number #
 ---@field visible boolean #
----@field type CanvasElementType #
----@field Type constant expr CanvasElementType #
+---@field type obe.Graphics.Canvas.CanvasElementType #
+---@field Type obe.Graphics.Canvas.CanvasElementType #
 obe.Graphics.Canvas._CanvasElement = {};
 
 --- Create a new CanvasElement.
@@ -1634,6 +1764,7 @@ obe.Graphics.Canvas._CanvasElement = {};
 ---@return obe.Graphics.Canvas.CanvasElement
 function obe.Graphics.Canvas.CanvasElement(parent, id) end
 
+
 --- Abstract draw method.
 ---
 ---@param target obe.Graphics.RenderTarget #Target where to render the result
@@ -1641,11 +1772,12 @@ function obe.Graphics.Canvas._CanvasElement:draw(target) end
 
 --- Change layer or object and will ask the Canvas to reorder elements automatically.
 ---
----@param layer number[position integer] #
+---@param layer number #
 function obe.Graphics.Canvas._CanvasElement:setLayer(layer) end
 
+
 ---@class obe.Graphics.Canvas.CanvasPositionable
----@field position Transform.UnitVector #
+---@field position obe.Transform.UnitVector #
 obe.Graphics.Canvas._CanvasPositionable = {};
 
 --- obe.Graphics.Canvas.CanvasPositionable constructor
@@ -1655,9 +1787,11 @@ obe.Graphics.Canvas._CanvasPositionable = {};
 ---@return obe.Graphics.Canvas.CanvasPositionable
 function obe.Graphics.Canvas.CanvasPositionable(parent, id) end
 
+
+
 ---@class obe.Graphics.Canvas.Circle
----@field shape Shapes.Circle #
----@field Type constant expr CanvasElementType #
+---@field shape obe.Graphics.Shapes.Circle #
+---@field Type obe.Graphics.Canvas.CanvasElementType #
 obe.Graphics.Canvas._Circle = {};
 
 --- Create a new Circle.
@@ -1667,18 +1801,20 @@ obe.Graphics.Canvas._Circle = {};
 ---@return obe.Graphics.Canvas.Circle
 function obe.Graphics.Canvas.Circle(parent, id) end
 
+
 --- Draw the Circle.
 ---
 ---@param target obe.Graphics.RenderTarget #Target where to draw the Circle to
 function obe.Graphics.Canvas._Circle:draw(target) end
 
+
 ---@class obe.Graphics.Canvas.Line
----@field p1 Transform.UnitVector #
----@field p2 Transform.UnitVector #
----@field thickness number[position integer] #
----@field p1color Color #
----@field p2color Color #
----@field Type constant expr CanvasElementType #
+---@field p1 obe.Transform.UnitVector #
+---@field p2 obe.Transform.UnitVector #
+---@field thickness number #
+---@field p1color obe.Graphics.Color #
+---@field p2color obe.Graphics.Color #
+---@field Type obe.Graphics.Canvas.CanvasElementType #
 obe.Graphics.Canvas._Line = {};
 
 --- Create a new Line.
@@ -1688,14 +1824,16 @@ obe.Graphics.Canvas._Line = {};
 ---@return obe.Graphics.Canvas.Line
 function obe.Graphics.Canvas.Line(parent, id) end
 
+
 --- Draw the Line.
 ---
 ---@param target obe.Graphics.RenderTarget #Target where to draw the Line to
 function obe.Graphics.Canvas._Line:draw(target) end
 
+
 ---@class obe.Graphics.Canvas.Polygon
----@field shape Shapes.Polygon #
----@field Type constant expr CanvasElementType #
+---@field shape obe.Graphics.Shapes.Polygon #
+---@field Type obe.Graphics.Canvas.CanvasElementType #
 obe.Graphics.Canvas._Polygon = {};
 
 --- obe.Graphics.Canvas.Polygon constructor
@@ -1705,15 +1843,17 @@ obe.Graphics.Canvas._Polygon = {};
 ---@return obe.Graphics.Canvas.Polygon
 function obe.Graphics.Canvas.Polygon(parent, id) end
 
+
 --- Abstract draw method.
 ---
 ---@param target obe.Graphics.RenderTarget #Target where to render the result
 function obe.Graphics.Canvas._Polygon:draw(target) end
 
+
 ---@class obe.Graphics.Canvas.Rectangle
----@field shape Shapes.Rectangle #
----@field size Transform.UnitVector #
----@field Type constant expr CanvasElementType #
+---@field shape obe.Graphics.Shapes.Rectangle #
+---@field size obe.Transform.UnitVector #
+---@field Type obe.Graphics.Canvas.CanvasElementType #
 obe.Graphics.Canvas._Rectangle = {};
 
 --- Create a new Rectangle.
@@ -1723,18 +1863,21 @@ obe.Graphics.Canvas._Rectangle = {};
 ---@return obe.Graphics.Canvas.Rectangle
 function obe.Graphics.Canvas.Rectangle(parent, id) end
 
+
 --- Draw the Rectangle.
 ---
 ---@param target obe.Graphics.RenderTarget #Target where to draw the Rectangle to
 function obe.Graphics.Canvas._Rectangle:draw(target) end
 
+
 ---@class obe.Graphics.Canvas.Text
 ---@field fontPath string #
----@field shape Shapes.Text #
----@field h_align TextHorizontalAlign #
----@field v_align TextVerticalAlign #
----@field texts table of Graphics.Text #
----@field Type constant expr CanvasElementType #
+---@field shape obe.Graphics.Shapes.Text #
+---@field h_align obe.Graphics.Canvas.TextHorizontalAlign #
+---@field v_align obe.Graphics.Canvas.TextVerticalAlign #
+---@field texts table<number, obe.Graphics.Text> #
+---@field Type obe.Graphics.Canvas.CanvasElementType #
+---@field text obe.Graphics.Text #Returns the current Text part.
 obe.Graphics.Canvas._Text = {};
 
 --- Create a new Text.
@@ -1744,6 +1887,7 @@ obe.Graphics.Canvas._Text = {};
 ---@return obe.Graphics.Canvas.Text
 function obe.Graphics.Canvas.Text(parent, id) end
 
+
 --- Draw the Text.
 ---
 ---@param target obe.Graphics.RenderTarget #Target where to draw the Text to
@@ -1751,157 +1895,153 @@ function obe.Graphics.Canvas._Text:draw(target) end
 
 function obe.Graphics.Canvas._Text:refresh() end
 
---- Returns the current Text part.
----
----@return obe.Graphics.Text
-function obe.Graphics.Canvas._Text:currentText() end
 
 ---@class obe.Graphics.Color
 ---@field r number #
 ---@field g number #
 ---@field b number #
 ---@field a number #
----@field AliceBlue Color #
----@field AntiqueWhite Color #
----@field Aqua Color #
----@field Aquamarine Color #
----@field Azure Color #
----@field Beige Color #
----@field Bisque Color #
----@field Black Color #
----@field BlanchedAlmond Color #
----@field Blue Color #
----@field BlueViolet Color #
----@field Brown Color #
----@field BurlyWood Color #
----@field CadetBlue Color #
----@field Chartreuse Color #
----@field Chocolate Color #
----@field Coral Color #
----@field CornflowerBlue Color #
----@field Cornsilk Color #
----@field Crimson Color #
----@field Cyan Color #
----@field DarkBlue Color #
----@field DarkCyan Color #
----@field DarkGoldenrod Color #
----@field DarkGray Color #
----@field DarkGreen Color #
----@field DarkKhaki Color #
----@field DarkMagenta Color #
----@field DarkOliveGreen Color #
----@field DarkOrange Color #
----@field DarkOrchid Color #
----@field DarkRed Color #
----@field DarkSalmon Color #
----@field DarkSeaGreen Color #
----@field DarkSlateBlue Color #
----@field DarkSlateGray Color #
----@field DarkTurquoise Color #
----@field DarkViolet Color #
----@field DeepPink Color #
----@field DeepSkyBlue Color #
----@field DimGray Color #
----@field DodgerBlue Color #
----@field FireBrick Color #
----@field FloralWhite Color #
----@field ForestGreen Color #
----@field Fuchsia Color #
----@field Gainsboro Color #
----@field GhostWhite Color #
----@field Gold Color #
----@field Goldenrod Color #
----@field Gray Color #
----@field Green Color #
----@field GreenYellow Color #
----@field HoneyDew Color #
----@field HotPink Color #
----@field IndianRed Color #
----@field Indigo Color #
----@field Ivory Color #
----@field Khaki Color #
----@field Lavender Color #
----@field LavenderBlush Color #
----@field LawnGreen Color #
----@field LemonChiffon Color #
----@field LightBlue Color #
----@field LightCoral Color #
----@field LightCyan Color #
----@field LightGoldenrodYellow Color #
----@field LightGray Color #
----@field LightGreen Color #
----@field LightPink Color #
----@field LightSalmon Color #
----@field LightSeaGreen Color #
----@field LightSkyBlue Color #
----@field LightSlateGray Color #
----@field LightSteelBlue Color #
----@field LightYellow Color #
----@field Lime Color #
----@field LimeGreen Color #
----@field Linen Color #
----@field Magenta Color #
----@field Maroon Color #
----@field MediumAquamarine Color #
----@field MediumBlue Color #
----@field MediumOrchid Color #
----@field MediumPurple Color #
----@field MediumSeaGreen Color #
----@field MediumSlateBlue Color #
----@field MediumSpringGreen Color #
----@field MediumTurquoise Color #
----@field MediumVioletRed Color #
----@field MidnightBlue Color #
----@field MintCream Color #
----@field MistyRose Color #
----@field Moccasin Color #
----@field NavajoWhite Color #
----@field Navy Color #
----@field OldLace Color #
----@field Olive Color #
----@field OliveDrab Color #
----@field Orange Color #
----@field OrangeRed Color #
----@field Orchid Color #
----@field PaleGoldenrod Color #
----@field PaleGreen Color #
----@field PaleTurquoise Color #
----@field PaleVioletRed Color #
----@field PapayaWhip Color #
----@field PeachPuff Color #
----@field Peru Color #
----@field Pink Color #
----@field Plum Color #
----@field PowderBlue Color #
----@field Purple Color #
----@field RebeccaPurple Color #
----@field Red Color #
----@field RosyBrown Color #
----@field RoyalBlue Color #
----@field SaddleBrown Color #
----@field Salmon Color #
----@field SandyBrown Color #
----@field SeaGreen Color #
----@field SeaShell Color #
----@field Sienna Color #
----@field Silver Color #
----@field SkyBlue Color #
----@field SlateBlue Color #
----@field SlateGray Color #
----@field Snow Color #
----@field SpringGreen Color #
----@field SteelBlue Color #
----@field Tan Color #
----@field Teal Color #
----@field Thistle Color #
----@field Tomato Color #
----@field Turquoise Color #
----@field Violet Color #
----@field Wheat Color #
----@field White Color #
----@field WhiteSmoke Color #
----@field Yellow Color #
----@field YellowGreen Color #
+---@field AliceBlue obe.Graphics.Color #
+---@field AntiqueWhite obe.Graphics.Color #
+---@field Aqua obe.Graphics.Color #
+---@field Aquamarine obe.Graphics.Color #
+---@field Azure obe.Graphics.Color #
+---@field Beige obe.Graphics.Color #
+---@field Bisque obe.Graphics.Color #
+---@field Black obe.Graphics.Color #
+---@field BlanchedAlmond obe.Graphics.Color #
+---@field Blue obe.Graphics.Color #
+---@field BlueViolet obe.Graphics.Color #
+---@field Brown obe.Graphics.Color #
+---@field BurlyWood obe.Graphics.Color #
+---@field CadetBlue obe.Graphics.Color #
+---@field Chartreuse obe.Graphics.Color #
+---@field Chocolate obe.Graphics.Color #
+---@field Coral obe.Graphics.Color #
+---@field CornflowerBlue obe.Graphics.Color #
+---@field Cornsilk obe.Graphics.Color #
+---@field Crimson obe.Graphics.Color #
+---@field Cyan obe.Graphics.Color #
+---@field DarkBlue obe.Graphics.Color #
+---@field DarkCyan obe.Graphics.Color #
+---@field DarkGoldenrod obe.Graphics.Color #
+---@field DarkGray obe.Graphics.Color #
+---@field DarkGreen obe.Graphics.Color #
+---@field DarkKhaki obe.Graphics.Color #
+---@field DarkMagenta obe.Graphics.Color #
+---@field DarkOliveGreen obe.Graphics.Color #
+---@field DarkOrange obe.Graphics.Color #
+---@field DarkOrchid obe.Graphics.Color #
+---@field DarkRed obe.Graphics.Color #
+---@field DarkSalmon obe.Graphics.Color #
+---@field DarkSeaGreen obe.Graphics.Color #
+---@field DarkSlateBlue obe.Graphics.Color #
+---@field DarkSlateGray obe.Graphics.Color #
+---@field DarkTurquoise obe.Graphics.Color #
+---@field DarkViolet obe.Graphics.Color #
+---@field DeepPink obe.Graphics.Color #
+---@field DeepSkyBlue obe.Graphics.Color #
+---@field DimGray obe.Graphics.Color #
+---@field DodgerBlue obe.Graphics.Color #
+---@field FireBrick obe.Graphics.Color #
+---@field FloralWhite obe.Graphics.Color #
+---@field ForestGreen obe.Graphics.Color #
+---@field Fuchsia obe.Graphics.Color #
+---@field Gainsboro obe.Graphics.Color #
+---@field GhostWhite obe.Graphics.Color #
+---@field Gold obe.Graphics.Color #
+---@field Goldenrod obe.Graphics.Color #
+---@field Gray obe.Graphics.Color #
+---@field Green obe.Graphics.Color #
+---@field GreenYellow obe.Graphics.Color #
+---@field HoneyDew obe.Graphics.Color #
+---@field HotPink obe.Graphics.Color #
+---@field IndianRed obe.Graphics.Color #
+---@field Indigo obe.Graphics.Color #
+---@field Ivory obe.Graphics.Color #
+---@field Khaki obe.Graphics.Color #
+---@field Lavender obe.Graphics.Color #
+---@field LavenderBlush obe.Graphics.Color #
+---@field LawnGreen obe.Graphics.Color #
+---@field LemonChiffon obe.Graphics.Color #
+---@field LightBlue obe.Graphics.Color #
+---@field LightCoral obe.Graphics.Color #
+---@field LightCyan obe.Graphics.Color #
+---@field LightGoldenrodYellow obe.Graphics.Color #
+---@field LightGray obe.Graphics.Color #
+---@field LightGreen obe.Graphics.Color #
+---@field LightPink obe.Graphics.Color #
+---@field LightSalmon obe.Graphics.Color #
+---@field LightSeaGreen obe.Graphics.Color #
+---@field LightSkyBlue obe.Graphics.Color #
+---@field LightSlateGray obe.Graphics.Color #
+---@field LightSteelBlue obe.Graphics.Color #
+---@field LightYellow obe.Graphics.Color #
+---@field Lime obe.Graphics.Color #
+---@field LimeGreen obe.Graphics.Color #
+---@field Linen obe.Graphics.Color #
+---@field Magenta obe.Graphics.Color #
+---@field Maroon obe.Graphics.Color #
+---@field MediumAquamarine obe.Graphics.Color #
+---@field MediumBlue obe.Graphics.Color #
+---@field MediumOrchid obe.Graphics.Color #
+---@field MediumPurple obe.Graphics.Color #
+---@field MediumSeaGreen obe.Graphics.Color #
+---@field MediumSlateBlue obe.Graphics.Color #
+---@field MediumSpringGreen obe.Graphics.Color #
+---@field MediumTurquoise obe.Graphics.Color #
+---@field MediumVioletRed obe.Graphics.Color #
+---@field MidnightBlue obe.Graphics.Color #
+---@field MintCream obe.Graphics.Color #
+---@field MistyRose obe.Graphics.Color #
+---@field Moccasin obe.Graphics.Color #
+---@field NavajoWhite obe.Graphics.Color #
+---@field Navy obe.Graphics.Color #
+---@field OldLace obe.Graphics.Color #
+---@field Olive obe.Graphics.Color #
+---@field OliveDrab obe.Graphics.Color #
+---@field Orange obe.Graphics.Color #
+---@field OrangeRed obe.Graphics.Color #
+---@field Orchid obe.Graphics.Color #
+---@field PaleGoldenrod obe.Graphics.Color #
+---@field PaleGreen obe.Graphics.Color #
+---@field PaleTurquoise obe.Graphics.Color #
+---@field PaleVioletRed obe.Graphics.Color #
+---@field PapayaWhip obe.Graphics.Color #
+---@field PeachPuff obe.Graphics.Color #
+---@field Peru obe.Graphics.Color #
+---@field Pink obe.Graphics.Color #
+---@field Plum obe.Graphics.Color #
+---@field PowderBlue obe.Graphics.Color #
+---@field Purple obe.Graphics.Color #
+---@field RebeccaPurple obe.Graphics.Color #
+---@field Red obe.Graphics.Color #
+---@field RosyBrown obe.Graphics.Color #
+---@field RoyalBlue obe.Graphics.Color #
+---@field SaddleBrown obe.Graphics.Color #
+---@field Salmon obe.Graphics.Color #
+---@field SandyBrown obe.Graphics.Color #
+---@field SeaGreen obe.Graphics.Color #
+---@field SeaShell obe.Graphics.Color #
+---@field Sienna obe.Graphics.Color #
+---@field Silver obe.Graphics.Color #
+---@field SkyBlue obe.Graphics.Color #
+---@field SlateBlue obe.Graphics.Color #
+---@field SlateGray obe.Graphics.Color #
+---@field Snow obe.Graphics.Color #
+---@field SpringGreen obe.Graphics.Color #
+---@field SteelBlue obe.Graphics.Color #
+---@field Tan obe.Graphics.Color #
+---@field Teal obe.Graphics.Color #
+---@field Thistle obe.Graphics.Color #
+---@field Tomato obe.Graphics.Color #
+---@field Turquoise obe.Graphics.Color #
+---@field Violet obe.Graphics.Color #
+---@field Wheat obe.Graphics.Color #
+---@field White obe.Graphics.Color #
+---@field WhiteSmoke obe.Graphics.Color #
+---@field Yellow obe.Graphics.Color #
+---@field YellowGreen obe.Graphics.Color #
 obe.Graphics._Color = {};
 
 --- obe.Graphics.Color constructor
@@ -1930,6 +2070,7 @@ function obe.Graphics.Color(nameOrHex) end
 ---@return obe.Graphics.Color
 function obe.Graphics.Color(color) end
 
+
 ---@param string string #
 function obe.Graphics._Color:fromString(string) end
 
@@ -1947,12 +2088,12 @@ function obe.Graphics._Color:fromHex(hexCode) end
 ---@param a? number #
 function obe.Graphics._Color:fromRgb(r, g, b, a) end
 
----@param H number[integer] #
+---@param H number #
 ---@param S number #
 ---@param V number #
 function obe.Graphics._Color:fromHsv(H, S, V) end
 
----@return uint32_t
+---@return number
 function obe.Graphics._Color:toInteger() end
 
 ---@return string
@@ -1965,6 +2106,7 @@ function obe.Graphics._Color:toName() end
 ---@return obe.Graphics.Color
 function obe.Graphics._Color:Random(randomAlpha) end
 
+
 ---@class obe.Graphics.Exceptions.CanvasElementAlreadyExists
 obe.Graphics.Exceptions._CanvasElementAlreadyExists = {};
 
@@ -1975,9 +2117,9 @@ obe.Graphics.Exceptions._CanvasElementAlreadyExists = {};
 ---@param existingElementType string #
 ---@param info obe.DebugInfo #
 ---@return obe.Graphics.Exceptions.CanvasElementAlreadyExists
-function obe.Graphics.Exceptions.CanvasElementAlreadyExists(id, newElementType,
-                                                            existingElementType,
-                                                            info) end
+function obe.Graphics.Exceptions.CanvasElementAlreadyExists(id, newElementType, existingElementType, info) end
+
+
 
 ---@class obe.Graphics.Exceptions.ImageFileNotFound
 obe.Graphics.Exceptions._ImageFileNotFound = {};
@@ -1989,6 +2131,8 @@ obe.Graphics.Exceptions._ImageFileNotFound = {};
 ---@return obe.Graphics.Exceptions.ImageFileNotFound
 function obe.Graphics.Exceptions.ImageFileNotFound(path, info) end
 
+
+
 ---@class obe.Graphics.Exceptions.InvalidColorName
 obe.Graphics.Exceptions._InvalidColorName = {};
 
@@ -1998,6 +2142,8 @@ obe.Graphics.Exceptions._InvalidColorName = {};
 ---@param info obe.DebugInfo #
 ---@return obe.Graphics.Exceptions.InvalidColorName
 function obe.Graphics.Exceptions.InvalidColorName(color, info) end
+
+
 
 ---@class obe.Graphics.Exceptions.InvalidHexFormat
 obe.Graphics.Exceptions._InvalidHexFormat = {};
@@ -2009,17 +2155,21 @@ obe.Graphics.Exceptions._InvalidHexFormat = {};
 ---@return obe.Graphics.Exceptions.InvalidHexFormat
 function obe.Graphics.Exceptions.InvalidHexFormat(hexCode, info) end
 
+
+
 ---@class obe.Graphics.Exceptions.InvalidHsvFormat
 obe.Graphics.Exceptions._InvalidHsvFormat = {};
 
 --- obe.Graphics.Exceptions.InvalidHsvFormat constructor
 ---
----@param H number[integer] #
+---@param H number #
 ---@param S number #
 ---@param V number #
 ---@param info obe.DebugInfo #
 ---@return obe.Graphics.Exceptions.InvalidHsvFormat
 function obe.Graphics.Exceptions.InvalidHsvFormat(H, S, V, info) end
+
+
 
 ---@class obe.Graphics.Exceptions.InvalidRgbFormat
 obe.Graphics.Exceptions._InvalidRgbFormat = {};
@@ -2034,6 +2184,8 @@ obe.Graphics.Exceptions._InvalidRgbFormat = {};
 ---@return obe.Graphics.Exceptions.InvalidRgbFormat
 function obe.Graphics.Exceptions.InvalidRgbFormat(r, g, b, a, info) end
 
+
+
 ---@class obe.Graphics.Exceptions.InvalidSpriteColorType
 obe.Graphics.Exceptions._InvalidSpriteColorType = {};
 
@@ -2045,6 +2197,8 @@ obe.Graphics.Exceptions._InvalidSpriteColorType = {};
 ---@return obe.Graphics.Exceptions.InvalidSpriteColorType
 function obe.Graphics.Exceptions.InvalidSpriteColorType(type, value, info) end
 
+
+
 ---@class obe.Graphics.Exceptions.ReadOnlyTexture
 obe.Graphics.Exceptions._ReadOnlyTexture = {};
 
@@ -2054,6 +2208,8 @@ obe.Graphics.Exceptions._ReadOnlyTexture = {};
 ---@param info obe.DebugInfo #
 ---@return obe.Graphics.Exceptions.ReadOnlyTexture
 function obe.Graphics.Exceptions.ReadOnlyTexture(method, info) end
+
+
 
 ---@class obe.Graphics.Font
 obe.Graphics._Font = {};
@@ -2075,9 +2231,11 @@ function obe.Graphics.Font(font) end
 ---@return obe.Graphics.Font
 function obe.Graphics.Font(font) end
 
+
 ---@param filename string #
 ---@return boolean
 function obe.Graphics._Font:loadFromFile(filename) end
+
 
 ---@class obe.Graphics.PositionTransformer
 obe.Graphics._PositionTransformer = {};
@@ -2093,6 +2251,7 @@ function obe.Graphics.PositionTransformer() end
 ---@param yTransformer string #Name of the Transformer the y Coordinate should use
 ---@return obe.Graphics.PositionTransformer
 function obe.Graphics.PositionTransformer(xTransformer, yTransformer) end
+
 
 --- Gets the CoordinateTransformer of x Coordinate.
 ---
@@ -2114,6 +2273,7 @@ function obe.Graphics._PositionTransformer:getYTransformer() end
 ---@return string
 function obe.Graphics._PositionTransformer:getYTransformerName() end
 
+
 ---@class obe.Graphics.RenderTarget
 obe.Graphics._RenderTarget = {};
 
@@ -2129,6 +2289,8 @@ function obe.Graphics.RenderTarget(target) end
 ---@return obe.Graphics.RenderTarget
 function obe.Graphics.RenderTarget(window) end
 
+
+
 ---@class obe.Graphics.Renderable
 obe.Graphics._Renderable = {};
 
@@ -2137,14 +2299,15 @@ obe.Graphics._Renderable = {};
 ---@return obe.Graphics.Renderable
 function obe.Graphics.Renderable() end
 
+
 --- Get the layer of the Renderable.
 ---
----@return int32_t
+---@return number
 function obe.Graphics._Renderable:getLayer() end
 
 --- Get the Z-depth of the Renderable.
 ---
----@return int32_t
+---@return number
 function obe.Graphics._Renderable:getZDepth() end
 
 --- Get the visibility of the Renderable.
@@ -2154,12 +2317,12 @@ function obe.Graphics._Renderable:isVisible() end
 
 --- Set the layer of the Renderable.
 ---
----@param layer int32_t #Layer where to put the Renderable (Higher layer is behind lower ones)
+---@param layer number #Layer where to put the Renderable (Higher layer is behind lower ones)
 function obe.Graphics._Renderable:setLayer(layer) end
 
 --- Set the Z-Depth of the Renderable (SubLayers)
 ---
----@param zdepth int32_t #z-depth of the Renderable (Higher z-depth is behind lower ones)
+---@param zdepth number #z-depth of the Renderable (Higher z-depth is behind lower ones)
 function obe.Graphics._Renderable:setZDepth(zdepth) end
 
 --- Set the visibility of the Renderable.
@@ -2175,6 +2338,7 @@ function obe.Graphics._Renderable:hide() end
 ---@param camera obe.Scene.Camera #
 function obe.Graphics._Renderable:draw(surface, camera) end
 
+
 ---@class obe.Graphics.RichText
 obe.Graphics._RichText = {};
 
@@ -2189,6 +2353,7 @@ function obe.Graphics.RichText() end
 ---@return obe.Graphics.RichText
 function obe.Graphics.RichText(font) end
 
+
 function obe.Graphics._RichText:clear() end
 
 ---@param text obe.Graphics.Text #
@@ -2201,13 +2366,13 @@ function obe.Graphics._RichText:getFont() end
 ---@param font obe.Graphics.Font #
 function obe.Graphics._RichText:setFont(font) end
 
----@return table
+---@return table<number, Line>
 function obe.Graphics._RichText:getLines() end
 
----@return number[position integer]
+---@return number
 function obe.Graphics._RichText:getCharacterSize() end
 
----@param size number[position integer] #
+---@param size number #
 function obe.Graphics._RichText:setCharacterSize(size) end
 
 ---@return sf.FloatRect
@@ -2215,6 +2380,7 @@ function obe.Graphics._RichText:getLocalBounds() end
 
 ---@return sf.FloatRect
 function obe.Graphics._RichText:getGlobalBounds() end
+
 
 ---@class obe.Graphics.Shader
 obe.Graphics._Shader = {};
@@ -2230,6 +2396,7 @@ function obe.Graphics.Shader() end
 ---@return obe.Graphics.Shader
 function obe.Graphics.Shader(path) end
 
+
 --- Dumps the content of the Shader to a Vili Node.
 ---
 ---@return vili.node
@@ -2242,6 +2409,7 @@ function obe.Graphics._Shader:load(data) end
 
 ---@param path string #
 function obe.Graphics._Shader:loadShader(path) end
+
 
 ---@class obe.Graphics.Shapes.Circle
 ---@field shape sf.CircleShape #
@@ -2264,6 +2432,7 @@ function obe.Graphics.Shapes.Circle(shape) end
 ---@return obe.Graphics.Shapes.Circle
 function obe.Graphics.Shapes.Circle(circle) end
 
+
 ---@param radius number #
 function obe.Graphics.Shapes._Circle:setRadius(radius) end
 
@@ -2273,6 +2442,7 @@ function obe.Graphics.Shapes._Circle:getRadius() end
 ---@param target sf.RenderTarget #
 ---@param states sf.RenderStates #
 function obe.Graphics.Shapes._Circle:draw(target, states) end
+
 
 ---@class obe.Graphics.Shapes.Polygon
 ---@field shape sf.ConvexShape #
@@ -2295,17 +2465,19 @@ function obe.Graphics.Shapes.Polygon(shape) end
 ---@return obe.Graphics.Shapes.Polygon
 function obe.Graphics.Shapes.Polygon(polygon) end
 
----@param index number[integer] #
+
+---@param index number #
 ---@param position obe.Transform.UnitVector #
 function obe.Graphics.Shapes._Polygon:setPointPosition(index, position) end
 
----@param index number[integer] #
+---@param index number #
 ---@return obe.Transform.UnitVector
 function obe.Graphics.Shapes._Polygon:getPointPosition(index) end
 
 ---@param target sf.RenderTarget #
 ---@param states sf.RenderStates #
 function obe.Graphics.Shapes._Polygon:draw(target, states) end
+
 
 ---@class obe.Graphics.Shapes.Rectangle
 ---@field shape sf.RectangleShape #
@@ -2328,6 +2500,7 @@ function obe.Graphics.Shapes.Rectangle(shape) end
 ---@return obe.Graphics.Shapes.Rectangle
 function obe.Graphics.Shapes.Rectangle(rectangle) end
 
+
 ---@return obe.Transform.UnitVector
 function obe.Graphics.Shapes._Rectangle:getSize() end
 
@@ -2337,6 +2510,7 @@ function obe.Graphics.Shapes._Rectangle:setSize(size) end
 ---@param target sf.RenderTarget #
 ---@param states sf.RenderStates #
 function obe.Graphics.Shapes._Rectangle:draw(target, states) end
+
 
 ---@class obe.Graphics.Shapes.Text
 ---@field shape obe.Graphics.RichText #
@@ -2359,6 +2533,7 @@ function obe.Graphics.Shapes.Text(shape) end
 ---@return obe.Graphics.Shapes.Text
 function obe.Graphics.Shapes.Text(text) end
 
+
 function obe.Graphics.Shapes._Text:clear() end
 
 ---@param text obe.Graphics.Text #
@@ -2370,18 +2545,19 @@ function obe.Graphics.Shapes._Text:getFont() end
 ---@param font obe.Graphics.Font #
 function obe.Graphics.Shapes._Text:setFont(font) end
 
----@return number[position integer]
+---@return number
 function obe.Graphics.Shapes._Text:getCharacterSize() end
 
----@param size number[position integer] #
+---@param size number #
 function obe.Graphics.Shapes._Text:setCharacterSize(size) end
 
 ---@param target sf.RenderTarget #
 ---@param states sf.RenderStates #
 function obe.Graphics.Shapes._Text:draw(target, states) end
 
+
 ---@class obe.Graphics.Sprite
----@field ComponentType constant expr std.string_view #
+---@field ComponentType string #
 obe.Graphics._Sprite = {};
 
 --- Creates a new Sprite with the given Id.
@@ -2389,6 +2565,7 @@ obe.Graphics._Sprite = {};
 ---@param id string #A std::string containing the Id of the Sprite
 ---@return obe.Graphics.Sprite
 function obe.Graphics.Sprite(id) end
+
 
 --- Draws the handle used to scale the Sprite.
 ---
@@ -2409,8 +2586,8 @@ function obe.Graphics._Sprite:getColor() end
 --- Get the HandlePoint of the Sprite at the given Position(x, y)
 ---
 ---@param cameraPosition obe.Transform.UnitVector #Position of the Scene Camera
----@param posX number[integer] #x Coordinate of the Position you try to pick the HandlePoint
----@param posY number[integer] #y Coordinate of the Position you try to pick the HandlePoint
+---@param posX number #x Coordinate of the Position you try to pick the HandlePoint
+---@param posY number #y Coordinate of the Position you try to pick the HandlePoint
 ---@return obe.Graphics.SpriteHandlePoint
 function obe.Graphics._Sprite:getHandlePoint(cameraPosition, posX, posY) end
 
@@ -2459,12 +2636,12 @@ function obe.Graphics._Sprite:getTexture() end
 
 --- Get the x Coordinate of the scale factor of the Sprite.
 ---
----@return number[integer]
+---@return number
 function obe.Graphics._Sprite:getXScaleFactor() end
 
 --- Get the y Coordinate of the scale factor of the Sprite.
 ---
----@return number[integer]
+---@return number
 function obe.Graphics._Sprite:getYScaleFactor() end
 
 ---@return boolean
@@ -2510,14 +2687,14 @@ function obe.Graphics._Sprite:setRotation(rotate) end
 
 --- Set the rotation origin of the Sprite.
 ---
----@param x number[integer] #x Coordinate of the new rotation origin of the Sprite
----@param y number[integer] #y Coordinate of the new rotation origin of the Sprite
+---@param x number #x Coordinate of the new rotation origin of the Sprite
+---@param y number #y Coordinate of the new rotation origin of the Sprite
 function obe.Graphics._Sprite:setRotationOrigin(x, y) end
 
 --- Set the scaling origin of the Sprite.
 ---
----@param x number[integer] #x Coordinate of the new scaling origin of the Sprite
----@param y number[integer] #y Coordinate of the new scaling origin of the Sprite
+---@param x number #x Coordinate of the new scaling origin of the Sprite
+---@param y number #y Coordinate of the new scaling origin of the Sprite
 function obe.Graphics._Sprite:setScalingOrigin(x, y) end
 
 ---@param shader obe.Graphics.Shader #
@@ -2528,16 +2705,16 @@ function obe.Graphics._Sprite:setShader(shader) end
 ---@param texture obe.Graphics.Texture #Texture to set
 function obe.Graphics._Sprite:setTexture(texture) end
 
----@param x number[position integer] #
----@param y number[position integer] #
----@param width number[position integer] #
----@param height number[position integer] #
+---@param x number #
+---@param y number #
+---@param width number #
+---@param height number #
 function obe.Graphics._Sprite:setTextureRect(x, y, width, height) end
 
 --- Set the translation origin of the Sprite.
 ---
----@param x number[integer] #x Coordinate of the new translation origin of the Sprite
----@param y number[integer] #y Coordinate of the new translation origin of the Sprite
+---@param x number #x Coordinate of the new translation origin of the Sprite
+---@param y number #y Coordinate of the new translation origin of the Sprite
 function obe.Graphics._Sprite:setTranslationOrigin(x, y) end
 
 ---@param antiAliasing boolean #
@@ -2557,9 +2734,10 @@ function obe.Graphics._Sprite:attachResourceManager(resources) end
 ---@return string
 function obe.Graphics._Sprite:type() end
 
+
 ---@class obe.Graphics.SpriteHandlePoint
----@field m_dp Transform.UnitVector #
----@field radius number[position integer] #The radius of a HandlePoint.
+---@field m_dp obe.Transform.UnitVector #
+---@field radius number #The radius of a HandlePoint.
 obe.Graphics._SpriteHandlePoint = {};
 
 --- Creates a Scale HandlePoint.
@@ -2574,6 +2752,7 @@ function obe.Graphics.SpriteHandlePoint(parent, ref) end
 ---@param parent obe.Graphics.Sprite #Rect of the parent Sprite
 ---@return obe.Graphics.SpriteHandlePoint
 function obe.Graphics.SpriteHandlePoint(parent) end
+
 
 --- Get the rect of the parent Sprite.
 ---
@@ -2596,10 +2775,11 @@ function obe.Graphics._SpriteHandlePoint:getType() end
 ---@param camera obe.Transform.UnitVector #Camera used to manipulate PositionTransformers
 function obe.Graphics._SpriteHandlePoint:moveTo(position, camera) end
 
+
 ---@class obe.Graphics.Text
----@field color Color #
----@field outline Color #
----@field thickness number[position integer] #
+---@field color obe.Graphics.Color #
+---@field outline obe.Graphics.Color #
+---@field thickness number #
 ---@field style sf.Text.Style #
 ---@field string std.wstring #
 obe.Graphics._Text = {};
@@ -2615,6 +2795,8 @@ function obe.Graphics.Text() end
 ---@return obe.Graphics.Text
 function obe.Graphics.Text(string) end
 
+
+
 ---@class obe.Graphics.Texture
 obe.Graphics._Texture = {};
 
@@ -2625,7 +2807,7 @@ function obe.Graphics.Texture() end
 
 --- obe.Graphics.Texture constructor
 ---
----@param texture shared pointer #
+---@param texture sf.Texture #
 ---@return obe.Graphics.Texture
 function obe.Graphics.Texture(texture) end
 
@@ -2641,8 +2823,9 @@ function obe.Graphics.Texture(texture) end
 ---@return obe.Graphics.Texture
 function obe.Graphics.Texture(copy) end
 
----@param width number[position integer] #
----@param height number[position integer] #
+
+---@param width number #
+---@param height number #
 ---@return boolean
 function obe.Graphics._Texture:create(width, height) end
 
@@ -2667,8 +2850,9 @@ function obe.Graphics._Texture:isRepeated() end
 
 function obe.Graphics._Texture:reset() end
 
----@return number[position integer]
+---@return number
 function obe.Graphics._Texture:useCount() end
+
 
 ---@class obe.Input.Exceptions.InputButtonAlreadyInCombination
 obe.Input.Exceptions._InputButtonAlreadyInCombination = {};
@@ -2680,6 +2864,8 @@ obe.Input.Exceptions._InputButtonAlreadyInCombination = {};
 ---@return obe.Input.Exceptions.InputButtonAlreadyInCombination
 function obe.Input.Exceptions.InputButtonAlreadyInCombination(button, info) end
 
+
+
 ---@class obe.Input.Exceptions.InputButtonInvalidOperation
 obe.Input.Exceptions._InputButtonInvalidOperation = {};
 
@@ -2689,8 +2875,9 @@ obe.Input.Exceptions._InputButtonInvalidOperation = {};
 ---@param operationType string #
 ---@param info obe.DebugInfo #
 ---@return obe.Input.Exceptions.InputButtonInvalidOperation
-function obe.Input.Exceptions.InputButtonInvalidOperation(inputButtonType,
-                                                          operationType, info) end
+function obe.Input.Exceptions.InputButtonInvalidOperation(inputButtonType, operationType, info) end
+
+
 
 ---@class obe.Input.Exceptions.InvalidGamepadButton
 obe.Input.Exceptions._InvalidGamepadButton = {};
@@ -2702,6 +2889,8 @@ obe.Input.Exceptions._InvalidGamepadButton = {};
 ---@return obe.Input.Exceptions.InvalidGamepadButton
 function obe.Input.Exceptions.InvalidGamepadButton(gamepadButtonId, info) end
 
+
+
 ---@class obe.Input.Exceptions.InvalidInputButtonState
 obe.Input.Exceptions._InvalidInputButtonState = {};
 
@@ -2712,6 +2901,8 @@ obe.Input.Exceptions._InvalidInputButtonState = {};
 ---@return obe.Input.Exceptions.InvalidInputButtonState
 function obe.Input.Exceptions.InvalidInputButtonState(state, info) end
 
+
+
 ---@class obe.Input.Exceptions.InvalidInputCombinationCode
 obe.Input.Exceptions._InvalidInputCombinationCode = {};
 
@@ -2721,18 +2912,21 @@ obe.Input.Exceptions._InvalidInputCombinationCode = {};
 ---@param combinationCode string #
 ---@param info obe.DebugInfo #
 ---@return obe.Input.Exceptions.InvalidInputCombinationCode
-function obe.Input.Exceptions.InvalidInputCombinationCode(action,
-                                                          combinationCode, info) end
+function obe.Input.Exceptions.InvalidInputCombinationCode(action, combinationCode, info) end
+
+
 
 ---@class obe.Input.Exceptions.InvalidInputTypeEnumValue
 obe.Input.Exceptions._InvalidInputTypeEnumValue = {};
 
 --- obe.Input.Exceptions.InvalidInputTypeEnumValue constructor
 ---
----@param enumValue number[integer] #
+---@param enumValue number #
 ---@param info obe.DebugInfo #
 ---@return obe.Input.Exceptions.InvalidInputTypeEnumValue
 function obe.Input.Exceptions.InvalidInputTypeEnumValue(enumValue, info) end
+
+
 
 ---@class obe.Input.Exceptions.UnknownInputAction
 obe.Input.Exceptions._UnknownInputAction = {};
@@ -2740,11 +2934,12 @@ obe.Input.Exceptions._UnknownInputAction = {};
 --- obe.Input.Exceptions.UnknownInputAction constructor
 ---
 ---@param actionName string #
----@param existingActions table #
+---@param existingActions table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.Input.Exceptions.UnknownInputAction
-function obe.Input.Exceptions.UnknownInputAction(actionName, existingActions,
-                                                 info) end
+function obe.Input.Exceptions.UnknownInputAction(actionName, existingActions, info) end
+
+
 
 ---@class obe.Input.Exceptions.UnknownInputButton
 obe.Input.Exceptions._UnknownInputButton = {};
@@ -2752,11 +2947,12 @@ obe.Input.Exceptions._UnknownInputButton = {};
 --- obe.Input.Exceptions.UnknownInputButton constructor
 ---
 ---@param buttonName string #
----@param existingButtons table #
+---@param existingButtons table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.Input.Exceptions.UnknownInputButton
-function obe.Input.Exceptions.UnknownInputButton(buttonName, existingButtons,
-                                                 info) end
+function obe.Input.Exceptions.UnknownInputButton(buttonName, existingButtons, info) end
+
+
 
 ---@class obe.Input.InputAction
 obe.Input._InputAction = {};
@@ -2767,6 +2963,7 @@ obe.Input._InputAction = {};
 ---@param id string #Id of the InputAction
 ---@return obe.Input.InputAction
 function obe.Input.InputAction(actionsEvents, id) end
+
 
 --- Adds an InputCondition to the InputAction.
 ---
@@ -2789,7 +2986,7 @@ function obe.Input._InputAction:clearConditions() end
 
 --- Get all the contexts the InputAction is in.
 ---
----@return table
+---@return table<number, string>
 function obe.Input._InputAction:getContexts() end
 
 --- Gets the delay required between two InputAction triggerings.
@@ -2816,16 +3013,17 @@ function obe.Input._InputAction:setRepeat(delay) end
 ---
 function obe.Input._InputAction:update() end
 
----@return table
+---@return table<number, obe.Input.InputButton>
 function obe.Input._InputAction:getInvolvedButtons() end
 
----@param monitors table #
+---@param monitors table<number, obe.Input.InputButtonMonitorPtr> #
 function obe.Input._InputAction:enable(monitors) end
 
 function obe.Input._InputAction:disable() end
 
 ---@return boolean
 function obe.Input._InputAction:isEnabled() end
+
 
 ---@class obe.Input.InputButton
 obe.Input._InputButton = {};
@@ -2848,17 +3046,17 @@ function obe.Input.InputButton(key, name) end
 
 --- Creates a new InputButton representing a Gamepad Button.
 ---
----@param gamepadIndex number[position integer] #Index of the gamepad
----@param buttonIndex number[position integer] #Index of the button of the gamepad
+---@param gamepadIndex number #Index of the gamepad
+---@param buttonIndex number #Index of the button of the gamepad
 ---@param name string #Name of the gamepad Button
 ---@return obe.Input.InputButton
 function obe.Input.InputButton(gamepadIndex, buttonIndex, name) end
 
 --- Creates a new InputButton representing a gamepad Axis.
 ---
----@param gamepadIndex number[position integer] #Index of the gamepad
+---@param gamepadIndex number #Index of the gamepad
 ---@param gamepadAxis sf.Joystick.Axis #Enum value of the Gamepad Axis
----@param detect table #Pair containing the check type (More / Less) and the threshold before axis activation detection
+---@param detect table<number, any> #Pair containing the check type (More / Less) and the threshold before axis activation detection
 ---@param name string #Name of the gamepad Axis
 ---@return obe.Input.InputButton
 function obe.Input.InputButton(gamepadIndex, gamepadAxis, detect, name) end
@@ -2876,6 +3074,7 @@ function obe.Input.InputButton(direction, name) end
 ---@return obe.Input.InputButton
 function obe.Input.InputButton(other) end
 
+
 ---@param other obe.Input.InputButton #
 function obe.Input._InputButton:reload(other) end
 
@@ -2884,7 +3083,7 @@ function obe.Input._InputButton:reload(other) end
 ---@return number
 function obe.Input._InputButton:getAxisPosition() end
 
----@return number[integer]
+---@return number
 function obe.Input._InputButton:getWheelDelta() end
 
 --- Get the SFML Keyboard Key.
@@ -2918,6 +3117,7 @@ function obe.Input._InputButton:isPressed() end
 ---@return boolean
 function obe.Input._InputButton:isWritable() end
 
+
 ---@class obe.Input.InputButtonMonitor
 obe.Input._InputButtonMonitor = {};
 
@@ -2926,6 +3126,7 @@ obe.Input._InputButtonMonitor = {};
 ---@param button obe.Input.InputButton #Pointer to the InputButton to monitor
 ---@return obe.Input.InputButtonMonitor
 function obe.Input.InputButtonMonitor(button) end
+
 
 --- Gets a pointer to the monitored InputButton.
 ---
@@ -2945,6 +3146,7 @@ function obe.Input._InputButtonMonitor:update(events) end
 ---@return boolean
 function obe.Input._InputButtonMonitor:checkForRefresh() end
 
+
 ---@class obe.Input.InputCondition
 obe.Input._InputCondition = {};
 
@@ -2952,6 +3154,7 @@ obe.Input._InputCondition = {};
 ---
 ---@return obe.Input.InputCondition
 function obe.Input.InputCondition() end
+
 
 --- Adds a new InputCombinationElement to the InputCondition.
 ---
@@ -2967,13 +3170,14 @@ function obe.Input._InputCondition:check() end
 ---
 function obe.Input._InputCondition:clear() end
 
----@param monitors table #
+---@param monitors table<number, obe.Input.InputButtonMonitorPtr> #
 function obe.Input._InputCondition:enable(monitors) end
 
 function obe.Input._InputCondition:disable() end
 
 ---@return boolean
 function obe.Input._InputCondition:isEnabled() end
+
 
 ---@class obe.Input.InputManager
 obe.Input._InputManager = {};
@@ -2983,6 +3187,7 @@ obe.Input._InputManager = {};
 ---@param eventNamespace obe.Event.EventNamespace #
 ---@return obe.Input.InputManager
 function obe.Input.InputManager(eventNamespace) end
+
 
 --- Get if a KeyboardAction exists.
 ---
@@ -3004,7 +3209,7 @@ function obe.Input._InputManager:getAction(actionId) end
 
 --- Gets all the contexts currently used by the InputManager.
 ---
----@return table
+---@return table<number, string>
 function obe.Input._InputManager:getContexts() end
 
 --- Clears all Actions.
@@ -3043,18 +3248,21 @@ function obe.Input._InputManager:getInput(key) end
 
 --- Get a list of all InputButtons which are pressed.
 ---
----@return table
+---@return table<number, obe.Input.InputButton>
 function obe.Input._InputManager:getPressedInputs() end
 
 function obe.Input._InputManager:requireRefresh() end
 
 function obe.Input._InputManager:initializeGamepads() end
 
----@param gamepadIndex number[position integer] #
+---@param gamepadIndex number #
 function obe.Input._InputManager:initializeGamepad(gamepadIndex) end
+
 
 ---@class obe.Network.LuaPacket
 obe.Network._LuaPacket = {};
+
+
 
 ---@class obe.Network.NetworkHandler
 obe.Network._NetworkHandler = {};
@@ -3065,7 +3273,9 @@ obe.Network._NetworkHandler = {};
 ---@return obe.Network.NetworkHandler
 function obe.Network.NetworkHandler(eventNamespace) end
 
+
 function obe.Network._NetworkHandler:handleTriggers() end
+
 
 ---@class obe.Network.TcpServer
 obe.Network._TcpServer = {};
@@ -3073,20 +3283,23 @@ obe.Network._TcpServer = {};
 --- obe.Network.TcpServer constructor
 ---
 ---@param eventNamespace obe.Event.EventNamespace #
----@param port unsigned short #
+---@param port number #
 ---@param triggerNamespace? string #
 ---@param triggerGroup? string #
 ---@return obe.Network.TcpServer
-function obe.Network.TcpServer(eventNamespace, port, triggerNamespace,
-                               triggerGroup) end
+function obe.Network.TcpServer(eventNamespace, port, triggerNamespace, triggerGroup) end
+
 
 function obe.Network._TcpServer:update() end
 
----@param maxBufferSize number[position integer] #
+---@param maxBufferSize number #
 function obe.Network._TcpServer:setBufferSize(maxBufferSize) end
+
 
 ---@class obe.Network.TcpSocket
 obe.Network._TcpSocket = {};
+
+
 
 ---@class obe.Scene.Camera
 obe.Scene._Camera = {};
@@ -3095,6 +3308,7 @@ obe.Scene._Camera = {};
 ---
 ---@return obe.Scene.Camera
 function obe.Scene.Camera() end
+
 
 --- Gets the Position of the Camera.
 ---
@@ -3130,6 +3344,7 @@ function obe.Scene._Camera:setPosition(position, ref) end
 ---@param ref? obe.Transform.Referential #Referential used to resize the Camera
 function obe.Scene._Camera:setSize(pSize, ref) end
 
+
 ---@class obe.Scene.Exceptions.ChildNotInSceneNode
 obe.Scene.Exceptions._ChildNotInSceneNode = {};
 
@@ -3141,6 +3356,8 @@ obe.Scene.Exceptions._ChildNotInSceneNode = {};
 ---@return obe.Scene.Exceptions.ChildNotInSceneNode
 function obe.Scene.Exceptions.ChildNotInSceneNode(sceneNode, child, info) end
 
+
+
 ---@class obe.Scene.Exceptions.GameObjectAlreadyExists
 obe.Scene.Exceptions._GameObjectAlreadyExists = {};
 
@@ -3151,8 +3368,9 @@ obe.Scene.Exceptions._GameObjectAlreadyExists = {};
 ---@param objectId string #
 ---@param info obe.DebugInfo #
 ---@return obe.Scene.Exceptions.GameObjectAlreadyExists
-function obe.Scene.Exceptions.GameObjectAlreadyExists(sceneFile, objectType,
-                                                      objectId, info) end
+function obe.Scene.Exceptions.GameObjectAlreadyExists(sceneFile, objectType, objectId, info) end
+
+
 
 ---@class obe.Scene.Exceptions.MissingSceneFileBlock
 obe.Scene.Exceptions._MissingSceneFileBlock = {};
@@ -3165,6 +3383,8 @@ obe.Scene.Exceptions._MissingSceneFileBlock = {};
 ---@return obe.Scene.Exceptions.MissingSceneFileBlock
 function obe.Scene.Exceptions.MissingSceneFileBlock(sceneFile, blockName, info) end
 
+
+
 ---@class obe.Scene.Exceptions.SceneOnLoadCallbackError
 obe.Scene.Exceptions._SceneOnLoadCallbackError = {};
 
@@ -3175,8 +3395,9 @@ obe.Scene.Exceptions._SceneOnLoadCallbackError = {};
 ---@param errorMessage string #
 ---@param info obe.DebugInfo #
 ---@return obe.Scene.Exceptions.SceneOnLoadCallbackError
-function obe.Scene.Exceptions.SceneOnLoadCallbackError(sceneFile, nextSceneFile,
-                                                       errorMessage, info) end
+function obe.Scene.Exceptions.SceneOnLoadCallbackError(sceneFile, nextSceneFile, errorMessage, info) end
+
+
 
 ---@class obe.Scene.Exceptions.SceneScriptLoadingError
 obe.Scene.Exceptions._SceneScriptLoadingError = {};
@@ -3188,8 +3409,9 @@ obe.Scene.Exceptions._SceneScriptLoadingError = {};
 ---@param errorMessage string #
 ---@param info obe.DebugInfo #
 ---@return obe.Scene.Exceptions.SceneScriptLoadingError
-function obe.Scene.Exceptions.SceneScriptLoadingError(sceneFile, scriptPath,
-                                                      errorMessage, info) end
+function obe.Scene.Exceptions.SceneScriptLoadingError(sceneFile, scriptPath, errorMessage, info) end
+
+
 
 ---@class obe.Scene.Exceptions.UnknownCollider
 obe.Scene.Exceptions._UnknownCollider = {};
@@ -3198,11 +3420,12 @@ obe.Scene.Exceptions._UnknownCollider = {};
 ---
 ---@param sceneFile string #
 ---@param colliderId string #
----@param allCollidersIds table #
+---@param allCollidersIds table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.Scene.Exceptions.UnknownCollider
-function obe.Scene.Exceptions.UnknownCollider(sceneFile, colliderId,
-                                              allCollidersIds, info) end
+function obe.Scene.Exceptions.UnknownCollider(sceneFile, colliderId, allCollidersIds, info) end
+
+
 
 ---@class obe.Scene.Exceptions.UnknownGameObject
 obe.Scene.Exceptions._UnknownGameObject = {};
@@ -3211,11 +3434,12 @@ obe.Scene.Exceptions._UnknownGameObject = {};
 ---
 ---@param sceneFile string #
 ---@param objectId string #
----@param allObjectIds table #
+---@param allObjectIds table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.Scene.Exceptions.UnknownGameObject
-function obe.Scene.Exceptions.UnknownGameObject(sceneFile, objectId,
-                                                allObjectIds, info) end
+function obe.Scene.Exceptions.UnknownGameObject(sceneFile, objectId, allObjectIds, info) end
+
+
 
 ---@class obe.Scene.Exceptions.UnknownSprite
 obe.Scene.Exceptions._UnknownSprite = {};
@@ -3224,11 +3448,12 @@ obe.Scene.Exceptions._UnknownSprite = {};
 ---
 ---@param sceneFile string #
 ---@param spriteId string #
----@param allSpritesIds table #
+---@param allSpritesIds table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.Scene.Exceptions.UnknownSprite
-function obe.Scene.Exceptions.UnknownSprite(sceneFile, spriteId, allSpritesIds,
-                                            info) end
+function obe.Scene.Exceptions.UnknownSprite(sceneFile, spriteId, allSpritesIds, info) end
+
+
 
 ---@class obe.Scene.Scene
 obe.Scene._Scene = {};
@@ -3239,6 +3464,7 @@ obe.Scene._Scene = {};
 ---@param lua sol.state_view #
 ---@return obe.Scene.Scene
 function obe.Scene.Scene(events, lua) end
+
 
 ---@param resources obe.Engine.ResourceManager #
 function obe.Scene._Scene:attachResourceManager(resources) end
@@ -3290,13 +3516,13 @@ function obe.Scene._Scene:createGameObject(obj, id) end
 
 --- Get how many GameObjects are present in the Scene.
 ---
----@return number[integer]
+---@return number
 function obe.Scene._Scene:getGameObjectAmount() end
 
 --- Get all the GameObjects present in the Scene.
 ---
 ---@param objectType? string #
----@return table
+---@return table<number, obe.Script.GameObject>
 function obe.Scene._Scene:getAllGameObjects(objectType) end
 
 --- Get a GameObject by Id (Raises an exception if not found)
@@ -3334,24 +3560,24 @@ function obe.Scene._Scene:createSprite(id, addToSceneRoot) end
 
 --- Get how many Sprites are present in the Scene.
 ---
----@return number[integer]
+---@return number
 function obe.Scene._Scene:getSpriteAmount() end
 
 --- Get all the Sprites present in the Scene.
 ---
----@return table
+---@return table<number, obe.Graphics.Sprite>
 function obe.Scene._Scene:getAllSprites() end
 
 --- Get all the Sprites present in the Scene in the given layer.
 ---
----@param layer number[integer] #Layer to get all the Sprites from
----@return table
+---@param layer number #Layer to get all the Sprites from
+---@return table<number, obe.Graphics.Sprite>
 function obe.Scene._Scene:getSpritesByLayer(layer) end
 
 --- Get the first found Sprite with the BoundingRect including the given position.
 ---
 ---@param position obe.Transform.UnitVector #Position to check
----@param layer number[integer] #Layer where to check
+---@param layer number #Layer where to check
 ---@return obe.Graphics.Sprite
 function obe.Scene._Scene:getSpriteByPosition(position, layer) end
 
@@ -3381,18 +3607,18 @@ function obe.Scene._Scene:createCollider(id, addToSceneRoot) end
 
 --- Get how many Colliders are present in the Scene.
 ---
----@return number[integer]
+---@return number
 function obe.Scene._Scene:getColliderAmount() end
 
 --- Get all the pointers of the Colliders in the Scene.
 ---
----@return table
+---@return table<number, obe.Collision.PolygonalCollider>
 function obe.Scene._Scene:getAllColliders() end
 
 --- Get the first Collider found with a point on the given position.
 ---
 ---@param position obe.Transform.UnitVector #Position to get the Point of a Collider
----@return table
+---@return table<number, any>
 function obe.Scene._Scene:getColliderPointByPosition(position) end
 
 --- Get the Collider using the centroid Position.
@@ -3447,17 +3673,19 @@ function obe.Scene._Scene:getRenderOptions() end
 ---@param options obe.Scene.SceneRenderOptions #
 function obe.Scene._Scene:setRenderOptions(options) end
 
+
 ---@class obe.Scene.SceneNode
 obe.Scene._SceneNode = {};
 
+
 --- Adds a child to the SceneNode.
 ---
----@param child Movable #Pointer to the new SceneNode child
+---@param child obe.Transform.Movable #Pointer to the new SceneNode child
 function obe.Scene._SceneNode:addChild(child) end
 
 --- Removes a child from the SceneNode.
 ---
----@param child Movable #Reference to the SceneNode child to remove
+---@param child obe.Transform.Movable #Reference to the SceneNode child to remove
 function obe.Scene._SceneNode:removeChild(child) end
 
 --- Set the position of the SceneNode and all of its children using an UnitVector.
@@ -3480,6 +3708,7 @@ function obe.Scene._SceneNode:setPositionWithoutChildren(position) end
 ---@param position obe.Transform.UnitVector #Position to add to the current Position
 function obe.Scene._SceneNode:moveWithoutChildren(position) end
 
+
 ---@class obe.Script.Exceptions.GameObjectScriptError
 obe.Script.Exceptions._GameObjectScriptError = {};
 
@@ -3490,8 +3719,9 @@ obe.Script.Exceptions._GameObjectScriptError = {};
 ---@param callback string #
 ---@param info obe.DebugInfo #
 ---@return obe.Script.Exceptions.GameObjectScriptError
-function obe.Script.Exceptions.GameObjectScriptError(objectType, objectId,
-                                                     callback, info) end
+function obe.Script.Exceptions.GameObjectScriptError(objectType, objectId, callback, info) end
+
+
 
 ---@class obe.Script.Exceptions.InvalidScript
 obe.Script.Exceptions._InvalidScript = {};
@@ -3504,6 +3734,8 @@ obe.Script.Exceptions._InvalidScript = {};
 ---@return obe.Script.Exceptions.InvalidScript
 function obe.Script.Exceptions.InvalidScript(path, error, info) end
 
+
+
 ---@class obe.Script.Exceptions.LuaExecutionError
 obe.Script.Exceptions._LuaExecutionError = {};
 
@@ -3513,6 +3745,8 @@ obe.Script.Exceptions._LuaExecutionError = {};
 ---@param info obe.DebugInfo #
 ---@return obe.Script.Exceptions.LuaExecutionError
 function obe.Script.Exceptions.LuaExecutionError(errorMessage, info) end
+
+
 
 ---@class obe.Script.Exceptions.NoSuchComponent
 obe.Script.Exceptions._NoSuchComponent = {};
@@ -3524,8 +3758,9 @@ obe.Script.Exceptions._NoSuchComponent = {};
 ---@param objectId string #
 ---@param info obe.DebugInfo #
 ---@return obe.Script.Exceptions.NoSuchComponent
-function obe.Script.Exceptions.NoSuchComponent(componentType, objectType,
-                                               objectId, info) end
+function obe.Script.Exceptions.NoSuchComponent(componentType, objectType, objectId, info) end
+
+
 
 ---@class obe.Script.Exceptions.ObjectDefinitionNotFound
 obe.Script.Exceptions._ObjectDefinitionNotFound = {};
@@ -3537,6 +3772,8 @@ obe.Script.Exceptions._ObjectDefinitionNotFound = {};
 ---@return obe.Script.Exceptions.ObjectDefinitionNotFound
 function obe.Script.Exceptions.ObjectDefinitionNotFound(objectType, info) end
 
+
+
 ---@class obe.Script.Exceptions.ScriptFileNotFound
 obe.Script.Exceptions._ScriptFileNotFound = {};
 
@@ -3547,8 +3784,9 @@ obe.Script.Exceptions._ScriptFileNotFound = {};
 ---@param scriptPath string #
 ---@param info obe.DebugInfo #
 ---@return obe.Script.Exceptions.ScriptFileNotFound
-function obe.Script.Exceptions.ScriptFileNotFound(objectType, objectId,
-                                                  scriptPath, info) end
+function obe.Script.Exceptions.ScriptFileNotFound(objectType, objectId, scriptPath, info) end
+
+
 
 ---@class obe.Script.Exceptions.WrongSourceAttributeType
 obe.Script.Exceptions._WrongSourceAttributeType = {};
@@ -3561,13 +3799,16 @@ obe.Script.Exceptions._WrongSourceAttributeType = {};
 ---@param realType string #
 ---@param info obe.DebugInfo #
 ---@return obe.Script.Exceptions.WrongSourceAttributeType
-function obe.Script.Exceptions.WrongSourceAttributeType(objectType,
-                                                        attributeName,
-                                                        expectedType, realType,
-                                                        info) end
+function obe.Script.Exceptions.WrongSourceAttributeType(objectType, attributeName, expectedType, realType, info) end
+
+
 
 ---@class obe.Script.GameObject
 ---@field deletable boolean #Delete State of the GameObject (false = not deleted)
+---@field Animator obe.Animation.Animator #Gets the Animator Component of the GameObject (Raises ObEngine.Script.GameObject.NoAnimator if no Animator Component)
+---@field Collider obe.Collision.PolygonalCollider #Gets the Collider Component of the GameObject (Raises ObEngine.Script.GameObject.NoCollider if no Collider Component)
+---@field Sprite obe.Graphics.Sprite #Gets the Sprite Component of the GameObject (Raises ObEngine.Script.GameObject.NoSprite if no Sprite Component)
+---@field SceneNode obe.Scene.SceneNode #Gets the Scene Node of the GameObject (SceneNode that can manipulate the position of all Scene Components)
 obe.Script._GameObject = {};
 
 --- Creates a new GameObject.
@@ -3577,6 +3818,7 @@ obe.Script._GameObject = {};
 ---@param id string #Id of the GameObject you want to create
 ---@return obe.Script.GameObject
 function obe.Script.GameObject(lua, type, id) end
+
 
 --- Get the Type of the GameObject.
 ---
@@ -3613,26 +3855,6 @@ function obe.Script._GameObject:getUpdateState() end
 ---@param state boolean #Should be equal to true if the GameObject must updates, false otherwise
 function obe.Script._GameObject:setUpdateState(state) end
 
---- Gets the Animator Component of the GameObject (Raises ObEngine.Script.GameObject.NoAnimator if no Animator Component)
----
----@return obe.Animation.Animator
-function obe.Script._GameObject:getAnimator() end
-
---- Gets the Collider Component of the GameObject (Raises ObEngine.Script.GameObject.NoCollider if no Collider Component)
----
----@return obe.Collision.PolygonalCollider
-function obe.Script._GameObject:getCollider() end
-
---- Gets the Sprite Component of the GameObject (Raises ObEngine.Script.GameObject.NoSprite if no Sprite Component)
----
----@return obe.Graphics.Sprite
-function obe.Script._GameObject:getSprite() end
-
---- Gets the Scene Node of the GameObject (SceneNode that can manipulate the position of all Scene Components)
----
----@return obe.Scene.SceneNode
-function obe.Script._GameObject:getSceneNode() end
-
 --- Execute a Lua String in the Lua State of the GameObject.
 ---
 ---@param query string #String to execute
@@ -3651,7 +3873,7 @@ function obe.Script._GameObject:sendInitArg(argName, value) end
 ---
 ---@param argName string #Name of the Parameter to push
 ---@param value sol.object #Value of the Parameter
-function obe.Script._GameObject:sendInitArgFromLua(argName, value) end
+function obe.Script._GameObject:sendInitArg(argName, value) end
 
 --- Loads the GameObject through the GameObject Definition File.
 ---
@@ -3711,8 +3933,10 @@ function obe.Script._GameObject:load(data) end
 ---@param path string #
 function obe.Script._GameObject:loadSource(path) end
 
+
 ---@class obe.Script.GameObjectDatabase
 obe.Script._GameObjectDatabase = {};
+
 
 --- Gets the Requires ComplexNode of the GameObject.
 ---
@@ -3736,11 +3960,14 @@ function obe.Script._GameObjectDatabase:ApplyRequirements(environment, requires)
 ---
 function obe.Script._GameObjectDatabase:Clear() end
 
+
 ---@class obe.Script.LuaState
 obe.Script._LuaState = {};
 
+
 ---@param config vili.node #
 function obe.Script._LuaState:loadConfig(config) end
+
 
 ---@class obe.System.ContextualPathFactory
 obe.System._ContextualPathFactory = {};
@@ -3758,6 +3985,8 @@ function obe.System.ContextualPathFactory(base) end
 ---@return obe.System.ContextualPathFactory
 function obe.System.ContextualPathFactory(base, customMounts) end
 
+
+
 ---@class obe.System.Cursor
 obe.System._Cursor = {};
 
@@ -3768,40 +3997,41 @@ obe.System._Cursor = {};
 ---@return obe.System.Cursor
 function obe.System.Cursor(window, eventNamespace) end
 
+
 --- Gets the x Coordinate of the Cursor Position (Constrained)
 ---
----@return number[integer]
+---@return number
 function obe.System._Cursor:getConstrainedX() end
 
 --- Gets the y Coordinate of the Cursor Position (Constrained)
 ---
----@return number[integer]
+---@return number
 function obe.System._Cursor:getConstrainedY() end
 
 --- Gets the x Coordinate of the raw (System) position of the Cursor (Unconstrained)
 ---
----@return number[integer]
+---@return number
 function obe.System._Cursor:getX() end
 
 --- Gets the y Coordinate of the raw (System) position of the Cursor (Unconstrained)
 ---
----@return number[integer]
+---@return number
 function obe.System._Cursor:getY() end
 
 --- Sets the x Coordinate of the Cursor Position.
 ---
----@param x number[integer] #An int containing the x Coordinate of the new Cursor Position
+---@param x number #An int containing the x Coordinate of the new Cursor Position
 function obe.System._Cursor:setX(x) end
 
 --- Sets the y Coordinate of the Cursor Position.
 ---
----@param y number[integer] #An int containing the y Coordinate of the new Cursor Position
+---@param y number #An int containing the y Coordinate of the new Cursor Position
 function obe.System._Cursor:setY(y) end
 
 --- Sets the Position of the Cursor.
 ---
----@param x number[integer] #An int containing the x Coordinate of the new Cursor Position
----@param y number[integer] #An int containing the y Coordinate of the new Cursor Position
+---@param x number #An int containing the x Coordinate of the new Cursor Position
+---@param y number #An int containing the y Coordinate of the new Cursor Position
 function obe.System._Cursor:setPosition(x, y) end
 
 function obe.System._Cursor:show() end
@@ -3826,13 +4056,14 @@ function obe.System._Cursor:update() end
 
 --- Sets the Cursor's constraint.
 ---
----@param constraint function #A function returning the constrained Position of the Cursor (a std::pair<int, int>) and taking the Cursor pointer in parameter
----@param condition? function #condition for the constraint to apply
+---@param constraint fun(p0:obe.System.Cursor):table<number, number> #A function returning the constrained Position of the Cursor (a std::pair<int, int>) and taking the Cursor pointer in parameter
+---@param condition? fun():boolean #condition for the constraint to apply
 function obe.System._Cursor:setConstraint(constraint, condition) end
 
 ---@param button sf.Mouse.Button #
 ---@return boolean
 function obe.System._Cursor:isPressed(button) end
+
 
 ---@class obe.System.Exceptions.InvalidMountFile
 obe.System.Exceptions._InvalidMountFile = {};
@@ -3844,15 +4075,19 @@ obe.System.Exceptions._InvalidMountFile = {};
 ---@return obe.System.Exceptions.InvalidMountFile
 function obe.System.Exceptions.InvalidMountFile(mountFilePath, info) end
 
+
+
 ---@class obe.System.Exceptions.InvalidMouseButtonEnumValue
 obe.System.Exceptions._InvalidMouseButtonEnumValue = {};
 
 --- obe.System.Exceptions.InvalidMouseButtonEnumValue constructor
 ---
----@param enumValue number[integer] #
+---@param enumValue number #
 ---@param info obe.DebugInfo #
 ---@return obe.System.Exceptions.InvalidMouseButtonEnumValue
 function obe.System.Exceptions.InvalidMouseButtonEnumValue(enumValue, info) end
+
+
 
 ---@class obe.System.Exceptions.InvalidProjectFile
 obe.System.Exceptions._InvalidProjectFile = {};
@@ -3864,6 +4099,8 @@ obe.System.Exceptions._InvalidProjectFile = {};
 ---@return obe.System.Exceptions.InvalidProjectFile
 function obe.System.Exceptions.InvalidProjectFile(projectFilePath, info) end
 
+
+
 ---@class obe.System.Exceptions.MissingDefaultMountPoint
 obe.System.Exceptions._MissingDefaultMountPoint = {};
 
@@ -3872,6 +4109,8 @@ obe.System.Exceptions._MissingDefaultMountPoint = {};
 ---@param info obe.DebugInfo #
 ---@return obe.System.Exceptions.MissingDefaultMountPoint
 function obe.System.Exceptions.MissingDefaultMountPoint(info) end
+
+
 
 ---@class obe.System.Exceptions.MountFileMissing
 obe.System.Exceptions._MountFileMissing = {};
@@ -3883,18 +4122,21 @@ obe.System.Exceptions._MountFileMissing = {};
 ---@return obe.System.Exceptions.MountFileMissing
 function obe.System.Exceptions.MountFileMissing(currentPath, info) end
 
+
+
 ---@class obe.System.Exceptions.MountablePathIndexOverflow
 obe.System.Exceptions._MountablePathIndexOverflow = {};
 
 --- obe.System.Exceptions.MountablePathIndexOverflow constructor
 ---
----@param index number[integer] #
----@param maximum number[integer] #
----@param mounts table #
+---@param index number #
+---@param maximum number #
+---@param mounts table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.System.Exceptions.MountablePathIndexOverflow
-function obe.System.Exceptions.MountablePathIndexOverflow(index, maximum,
-                                                          mounts, info) end
+function obe.System.Exceptions.MountablePathIndexOverflow(index, maximum, mounts, info) end
+
+
 
 ---@class obe.System.Exceptions.PackageAlreadyInstalled
 obe.System.Exceptions._PackageAlreadyInstalled = {};
@@ -3906,6 +4148,8 @@ obe.System.Exceptions._PackageAlreadyInstalled = {};
 ---@return obe.System.Exceptions.PackageAlreadyInstalled
 function obe.System.Exceptions.PackageAlreadyInstalled(package, info) end
 
+
+
 ---@class obe.System.Exceptions.PackageFileNotFound
 obe.System.Exceptions._PackageFileNotFound = {};
 
@@ -3915,6 +4159,8 @@ obe.System.Exceptions._PackageFileNotFound = {};
 ---@param info obe.DebugInfo #
 ---@return obe.System.Exceptions.PackageFileNotFound
 function obe.System.Exceptions.PackageFileNotFound(path, info) end
+
+
 
 ---@class obe.System.Exceptions.PathError
 obe.System.Exceptions._PathError = {};
@@ -3927,16 +4173,20 @@ obe.System.Exceptions._PathError = {};
 ---@return obe.System.Exceptions.PathError
 function obe.System.Exceptions.PathError(prefix, path, info) end
 
+
+
 ---@class obe.System.Exceptions.ResourceNotFound
 obe.System.Exceptions._ResourceNotFound = {};
 
 --- obe.System.Exceptions.ResourceNotFound constructor
 ---
 ---@param path string #
----@param mounts table #
+---@param mounts table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.System.Exceptions.ResourceNotFound
 function obe.System.Exceptions.ResourceNotFound(path, mounts, info) end
+
+
 
 ---@class obe.System.Exceptions.UnknownPackage
 obe.System.Exceptions._UnknownPackage = {};
@@ -3944,10 +4194,12 @@ obe.System.Exceptions._UnknownPackage = {};
 --- obe.System.Exceptions.UnknownPackage constructor
 ---
 ---@param package string #
----@param allPackages table #
+---@param allPackages table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.System.Exceptions.UnknownPackage
 function obe.System.Exceptions.UnknownPackage(package, allPackages, info) end
+
+
 
 ---@class obe.System.Exceptions.UnknownPathPrefix
 obe.System.Exceptions._UnknownPathPrefix = {};
@@ -3955,10 +4207,12 @@ obe.System.Exceptions._UnknownPathPrefix = {};
 --- obe.System.Exceptions.UnknownPathPrefix constructor
 ---
 ---@param prefix string #
----@param allPrefixes table #
+---@param allPrefixes table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.System.Exceptions.UnknownPathPrefix
 function obe.System.Exceptions.UnknownPathPrefix(prefix, allPrefixes, info) end
+
+
 
 ---@class obe.System.Exceptions.UnknownProject
 obe.System.Exceptions._UnknownProject = {};
@@ -3966,10 +4220,12 @@ obe.System.Exceptions._UnknownProject = {};
 --- obe.System.Exceptions.UnknownProject constructor
 ---
 ---@param project string #
----@param allProjects table #
+---@param allProjects table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.System.Exceptions.UnknownProject
 function obe.System.Exceptions.UnknownProject(project, allProjects, info) end
+
+
 
 ---@class obe.System.Exceptions.UnknownStretchMode
 obe.System.Exceptions._UnknownStretchMode = {};
@@ -3980,6 +4236,8 @@ obe.System.Exceptions._UnknownStretchMode = {};
 ---@param info obe.DebugInfo #
 ---@return obe.System.Exceptions.UnknownStretchMode
 function obe.System.Exceptions.UnknownStretchMode(stretchMode, info) end
+
+
 
 ---@class obe.System.FindResult
 obe.System._FindResult = {};
@@ -3995,12 +4253,13 @@ function obe.System.FindResult(pathNotFound, query, mounts) end
 --- obe.System.FindResult constructor
 ---
 ---@param pathType obe.System.PathType #
----@param mount shared pointer #
+---@param mount obe.System.MountablePath #
 ---@param path string #
 ---@param query string #
 ---@param element? string #
 ---@return obe.System.FindResult
 function obe.System.FindResult(pathType, mount, path, query, element) end
+
 
 ---@return string
 function obe.System._FindResult:hypotheticalPath() end
@@ -4020,11 +4279,12 @@ function obe.System._FindResult:element() end
 ---@return boolean
 function obe.System._FindResult:success() end
 
+
 ---@class obe.System.MountablePath
----@field pathType MountablePathType #Type of the mounted path.
+---@field pathType obe.System.MountablePathType #Type of the mounted path.
 ---@field basePath string #Path of the mounted path.
 ---@field prefix string #Prefix of the mounted path.
----@field priority number[position integer] #Priority of the mounted path (Higher priority means overriding lower priority Paths)
+---@field priority number #Priority of the mounted path (Higher priority means overriding lower priority Paths)
 ---@field implicit boolean #Allows the path to be used implicitly (without prefix)
 obe.System._MountablePath = {};
 
@@ -4033,11 +4293,11 @@ obe.System._MountablePath = {};
 ---@param pathType obe.System.MountablePathType #Type of the mounted path
 ---@param basePath string #Path to the mounted path
 ---@param prefix string #
----@param priority? number[position integer] #Priority of the mounted path
+---@param priority? number #Priority of the mounted path
 ---@param implicit? boolean #
 ---@return obe.System.MountablePath
-function obe.System.MountablePath(pathType, basePath, prefix, priority, implicit)
-end
+function obe.System.MountablePath(pathType, basePath, prefix, priority, implicit) end
+
 
 --- Function called to Mount all Paths using 'mount.vili' file.
 ---
@@ -4067,7 +4327,7 @@ function obe.System._MountablePath:Paths() end
 
 --- All the Mounted Paths as strings.
 ---
----@return table
+---@return table<number, string>
 function obe.System._MountablePath:StringPaths() end
 
 --- Sort the mounted paths based on their priorities.
@@ -4080,8 +4340,9 @@ function obe.System._MountablePath:Sort() end
 ---@return obe.System.MountablePath
 function obe.System._MountablePath:FromPrefix(prefix) end
 
----@return table
+---@return table<number, string>
 function obe.System._MountablePath:GetAllPrefixes() end
+
 
 ---@class obe.System.Path
 obe.System._Path = {};
@@ -4116,6 +4377,7 @@ function obe.System.Path(path) end
 ---@return obe.System.Path
 function obe.System.Path(prefix, path) end
 
+
 --- Replaces Path's value with a new one.
 ---
 ---@param path string #New value for Path
@@ -4135,14 +4397,14 @@ function obe.System._Path:last() end
 
 --- Build a path using the current path and the BasePath at given index.
 ---
----@param index number[integer] #Index of the BasePath to use
+---@param index number #Index of the BasePath to use
 ---@return obe.System.Path
 function obe.System._Path:getPath(index) end
 
 --- Finds the most prioritized file corresponding to the Path.
 ---
 ---@param pathType? obe.System.PathType #
----@return table
+---@return table<number, obe.System.FindResult>
 function obe.System._Path:list(pathType) end
 
 ---@param pathType? obe.System.PathType #
@@ -4150,13 +4412,14 @@ function obe.System._Path:list(pathType) end
 function obe.System._Path:find(pathType) end
 
 ---@param pathType? obe.System.PathType #
----@return table
+---@return table<number, obe.System.FindResult>
 function obe.System._Path:findAll(pathType) end
 
 --- Get the current path in string form.
 ---
 ---@return string
 function obe.System._Path:toString() end
+
 
 ---@class obe.System.Plugin
 obe.System._Plugin = {};
@@ -4168,8 +4431,9 @@ obe.System._Plugin = {};
 ---@return obe.System.Plugin
 function obe.System.Plugin(id, path) end
 
----@param lua sol.state_view #
-function obe.System._Plugin:onLoadBindings(lua) end
+
+---@param engine obe.Engine.Engine #
+function obe.System._Plugin:onInit(engine) end
 
 ---@param dt number #
 function obe.System._Plugin:onUpdate(dt) end
@@ -4182,9 +4446,6 @@ function obe.System._Plugin:onExit() end
 function obe.System._Plugin:hasOnInit() end
 
 ---@return boolean
-function obe.System._Plugin:hasOnLoadBindings() end
-
----@return boolean
 function obe.System._Plugin:hasOnUpdate() end
 
 ---@return boolean
@@ -4193,6 +4454,10 @@ function obe.System._Plugin:hasOnRender() end
 ---@return boolean
 function obe.System._Plugin:hasOnExit() end
 
+---@return boolean
+function obe.System._Plugin:isValid() end
+
+
 ---@class obe.System.Project.Project
 obe.System.Project._Project = {};
 
@@ -4200,6 +4465,7 @@ obe.System.Project._Project = {};
 ---
 ---@return obe.System.Project.Project
 function obe.System.Project.Project() end
+
 
 --- Dumps the content of the Project to a vili node.
 ---
@@ -4218,6 +4484,7 @@ function obe.System.Project._Project:mount() end
 
 function obe.System.Project._Project:unmount() end
 
+
 ---@class obe.System.Project.ProjectURLs
 ---@field homepage string #
 ---@field issues string #
@@ -4225,6 +4492,7 @@ function obe.System.Project._Project:unmount() end
 ---@field documentation string #
 ---@field license string #
 obe.System.Project._ProjectURLs = {};
+
 
 --- Dumps the content of the Project URLs to a vili node.
 ---
@@ -4236,6 +4504,7 @@ function obe.System.Project._ProjectURLs:dump() end
 ---@param data vili.node #vili node containing the data of the Project URLs
 function obe.System.Project._ProjectURLs:load(data) end
 
+
 ---@class obe.System.Window
 obe.System._Window = {};
 
@@ -4244,6 +4513,7 @@ obe.System._Window = {};
 ---@param configuration vili.node #
 ---@return obe.System.Window
 function obe.System.Window(configuration) end
+
 
 function obe.System._Window:create() end
 
@@ -4272,16 +4542,16 @@ function obe.System._Window:isOpen() end
 ---@return boolean
 function obe.System._Window:pollEvent(event) end
 
----@param width number[position integer] #
----@param height number[position integer] #
+---@param width number #
+---@param height number #
 function obe.System._Window:setSize(width, height) end
 
----@param width number[position integer] #
----@param height number[position integer] #
+---@param width number #
+---@param height number #
 function obe.System._Window:setWindowSize(width, height) end
 
----@param width number[position integer] #
----@param height number[position integer] #
+---@param width number #
+---@param height number #
 function obe.System._Window:setRenderSize(width, height) end
 
 ---@param title string #
@@ -4311,16 +4581,18 @@ function obe.System._Window:setClearColor(color) end
 ---@param visible boolean #
 function obe.System._Window:setMouseCursorVisible(visible) end
 
+
 ---@class obe.Tiles.AnimatedTile
 obe.Tiles._AnimatedTile = {};
 
 --- obe.Tiles.AnimatedTile constructor
 ---
 ---@param tileset obe.Tiles.Tileset #
----@param tileIds table #
----@param sleeps table #
+---@param tileIds table<number, number> #
+---@param sleeps table<number, obe.Time.TimeUnit> #
 ---@return obe.Tiles.AnimatedTile
 function obe.Tiles.AnimatedTile(tileset, tileIds, sleeps) end
+
 
 ---@param quad sf.Vertex #
 ---@param tileInfo? obe.Tiles.TileInfo #
@@ -4333,36 +4605,40 @@ function obe.Tiles._AnimatedTile:start() end
 
 function obe.Tiles._AnimatedTile:stop() end
 
----@return uint32_t
+---@return number
 function obe.Tiles._AnimatedTile:getId() end
 
 function obe.Tiles._AnimatedTile:update() end
+
 
 ---@class obe.Tiles.Exceptions.TilePositionOutsideLayer
 obe.Tiles.Exceptions._TilePositionOutsideLayer = {};
 
 --- obe.Tiles.Exceptions.TilePositionOutsideLayer constructor
 ---
----@param x uint32_t #
----@param y uint32_t #
----@param width uint32_t #
----@param height uint32_t #
+---@param x number #
+---@param y number #
+---@param width number #
+---@param height number #
 ---@param info obe.DebugInfo #
 ---@return obe.Tiles.Exceptions.TilePositionOutsideLayer
-function obe.Tiles.Exceptions.TilePositionOutsideLayer(x, y, width, height, info)
-end
+function obe.Tiles.Exceptions.TilePositionOutsideLayer(x, y, width, height, info) end
+
+
 
 ---@class obe.Tiles.Exceptions.UnknownTileId
 obe.Tiles.Exceptions._UnknownTileId = {};
 
 --- obe.Tiles.Exceptions.UnknownTileId constructor
 ---
----@param tileId uint32_t #
----@param maxTileId uint32_t #
----@param tilesets table #
+---@param tileId number #
+---@param maxTileId number #
+---@param tilesets table<string, table<number, number>> #
 ---@param info obe.DebugInfo #
 ---@return obe.Tiles.Exceptions.UnknownTileId
 function obe.Tiles.Exceptions.UnknownTileId(tileId, maxTileId, tilesets, info) end
+
+
 
 ---@class obe.Tiles.Exceptions.UnknownTileLayer
 obe.Tiles.Exceptions._UnknownTileLayer = {};
@@ -4370,10 +4646,12 @@ obe.Tiles.Exceptions._UnknownTileLayer = {};
 --- obe.Tiles.Exceptions.UnknownTileLayer constructor
 ---
 ---@param layerId string #
----@param layerIds table #
+---@param layerIds table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.Tiles.Exceptions.UnknownTileLayer
 function obe.Tiles.Exceptions.UnknownTileLayer(layerId, layerIds, info) end
+
+
 
 ---@class obe.Tiles.Exceptions.UnknownTileset
 obe.Tiles.Exceptions._UnknownTileset = {};
@@ -4381,10 +4659,12 @@ obe.Tiles.Exceptions._UnknownTileset = {};
 --- obe.Tiles.Exceptions.UnknownTileset constructor
 ---
 ---@param tilesetId string #
----@param tilesetsIds table #
+---@param tilesetsIds table<number, string> #
 ---@param info obe.DebugInfo #
 ---@return obe.Tiles.Exceptions.UnknownTileset
 function obe.Tiles.Exceptions.UnknownTileset(tilesetId, tilesetsIds, info) end
+
+
 
 ---@class obe.Tiles.TileLayer
 obe.Tiles._TileLayer = {};
@@ -4393,14 +4673,15 @@ obe.Tiles._TileLayer = {};
 ---
 ---@param scene obe.Tiles.TileScene #
 ---@param id string #
----@param layer int32_t #
----@param x uint32_t #
----@param y uint32_t #
----@param width uint32_t #
----@param height uint32_t #
----@param data table #
+---@param layer number #
+---@param x number #
+---@param y number #
+---@param width number #
+---@param height number #
+---@param data table<number, number> #
 ---@return obe.Tiles.TileLayer
 function obe.Tiles.TileLayer(scene, id, layer, x, y, width, height, data) end
+
 
 ---@return string
 function obe.Tiles._TileLayer:getId() end
@@ -4413,15 +4694,16 @@ function obe.Tiles._TileLayer:build() end
 ---@param camera obe.Scene.Camera #
 function obe.Tiles._TileLayer:draw(surface, camera) end
 
----@param x uint32_t #
----@param y uint32_t #
----@param tileId uint32_t #
+---@param x number #
+---@param y number #
+---@param tileId number #
 function obe.Tiles._TileLayer:setTile(x, y, tileId) end
 
----@param x uint32_t #
----@param y uint32_t #
----@return uint32_t
+---@param x number #
+---@param y number #
+---@return number
 function obe.Tiles._TileLayer:getTile(x, y) end
+
 
 ---@class obe.Tiles.TileScene
 obe.Tiles._TileScene = {};
@@ -4431,6 +4713,7 @@ obe.Tiles._TileScene = {};
 ---@param scene obe.Scene.Scene #
 ---@return obe.Tiles.TileScene
 function obe.Tiles.TileScene(scene) end
+
 
 --- Dumps the content of the Serializable object to a vili node.
 ---
@@ -4446,10 +4729,10 @@ function obe.Tiles._TileScene:update() end
 
 function obe.Tiles._TileScene:clear() end
 
----@return table
+---@return table<number, obe.Tiles.TileLayer>
 function obe.Tiles._TileScene:getAllLayers() end
 
----@return table
+---@return table<number, string>
 function obe.Tiles._TileScene:getLayersIds() end
 
 ---@param id string #
@@ -4462,25 +4745,25 @@ function obe.Tiles._TileScene:getAnimatedTiles() end
 ---@return obe.Tiles.TilesetCollection
 function obe.Tiles._TileScene:getTilesets() end
 
----@return table
+---@return table<number, obe.Graphics.Renderable>
 function obe.Tiles._TileScene:getRenderables() end
 
----@return table
+---@return table<number, obe.Collision.PolygonalCollider>
 function obe.Tiles._TileScene:getColliderModels() end
 
----@return table
+---@return table<number, vili.node>
 function obe.Tiles._TileScene:getGameObjectsModels() end
 
----@return uint32_t
+---@return number
 function obe.Tiles._TileScene:getWidth() end
 
----@return uint32_t
+---@return number
 function obe.Tiles._TileScene:getHeight() end
 
----@return uint32_t
+---@return number
 function obe.Tiles._TileScene:getTileWidth() end
 
----@return uint32_t
+---@return number
 function obe.Tiles._TileScene:getTileHeight() end
 
 ---@return boolean
@@ -4489,49 +4772,50 @@ function obe.Tiles._TileScene:isSmooth() end
 ---@return obe.Scene.Scene
 function obe.Tiles._TileScene:getScene() end
 
+
 ---@class obe.Tiles.Tileset
 obe.Tiles._Tileset = {};
 
 --- obe.Tiles.Tileset constructor
 ---
 ---@param id string #
----@param firstTileId uint32_t #
----@param count uint32_t #
+---@param firstTileId number #
+---@param count number #
 ---@param imagePath string #
----@param columns uint32_t #
----@param tileWidth uint32_t #
----@param tileHeight uint32_t #
----@param margin? uint32_t #
----@param spacing? uint32_t #
+---@param columns number #
+---@param tileWidth number #
+---@param tileHeight number #
+---@param margin? number #
+---@param spacing? number #
 ---@return obe.Tiles.Tileset
-function obe.Tiles.Tileset(id, firstTileId, count, imagePath, columns,
-                           tileWidth, tileHeight, margin, spacing) end
+function obe.Tiles.Tileset(id, firstTileId, count, imagePath, columns, tileWidth, tileHeight, margin, spacing) end
 
----@return uint32_t
+
+---@return number
 function obe.Tiles._Tileset:getFirstTileId() end
 
----@return uint32_t
+---@return number
 function obe.Tiles._Tileset:getLastTileId() end
 
----@return uint32_t
+---@return number
 function obe.Tiles._Tileset:getTileCount() end
 
----@return uint32_t
+---@return number
 function obe.Tiles._Tileset:getMargin() end
 
----@return uint32_t
+---@return number
 function obe.Tiles._Tileset:getSpacing() end
 
----@return uint32_t
+---@return number
 function obe.Tiles._Tileset:getTileWidth() end
 
----@return uint32_t
+---@return number
 function obe.Tiles._Tileset:getTileHeight() end
 
----@return uint32_t
+---@return number
 function obe.Tiles._Tileset:getImageWidth() end
 
----@return uint32_t
+---@return number
 function obe.Tiles._Tileset:getImageHeight() end
 
 ---@return string
@@ -4539,6 +4823,7 @@ function obe.Tiles._Tileset:getImagePath() end
 
 ---@return obe.Graphics.Texture
 function obe.Tiles._Tileset:getTexture() end
+
 
 ---@class obe.Tiles.TilesetCollection
 obe.Tiles._TilesetCollection = {};
@@ -4548,34 +4833,36 @@ obe.Tiles._TilesetCollection = {};
 ---@return obe.Tiles.TilesetCollection
 function obe.Tiles.TilesetCollection() end
 
----@param firstTileId uint32_t #
+
+---@param firstTileId number #
 ---@param id string #
 ---@param source string #
----@param columns uint32_t #
----@param width uint32_t #
----@param height uint32_t #
----@param count uint32_t #
-function obe.Tiles._TilesetCollection:addTileset(firstTileId, id, source,
-                                                 columns, width, height, count) end
+---@param columns number #
+---@param width number #
+---@param height number #
+---@param count number #
+function obe.Tiles._TilesetCollection:addTileset(firstTileId, id, source, columns, width, height, count) end
 
 ---@param id string #
 ---@return obe.Tiles.Tileset
 function obe.Tiles._TilesetCollection:tilesetFromId(id) end
 
----@param tileId uint32_t #
+---@param tileId number #
 ---@return obe.Tiles.Tileset
 function obe.Tiles._TilesetCollection:tilesetFromTileId(tileId) end
 
----@return size_t
+---@return number
 function obe.Tiles._TilesetCollection:size() end
 
----@return table
+---@return table<number, number>
 function obe.Tiles._TilesetCollection:getTilesetsFirstTilesIds() end
 
 function obe.Tiles._TilesetCollection:clear() end
 
+
 ---@class obe.Time.Chronometer
 obe.Time._Chronometer = {};
+
 
 --- Starts the Chronometer.
 ---
@@ -4607,8 +4894,10 @@ function obe.Time._Chronometer:getLimit() end
 ---@return boolean
 function obe.Time._Chronometer:over() end
 
+
 ---@class obe.Time.FramerateCounter
 obe.Time._FramerateCounter = {};
+
 
 --- Called when screen is refreshed.
 ---
@@ -4627,6 +4916,7 @@ function obe.Time._FramerateCounter:loadFont(font) end
 ---
 function obe.Time._FramerateCounter:draw() end
 
+
 ---@class obe.Time.FramerateManager
 obe.Time._FramerateManager = {};
 
@@ -4635,6 +4925,7 @@ obe.Time._FramerateManager = {};
 ---@param window obe.System.Window #
 ---@return obe.Time.FramerateManager
 function obe.Time.FramerateManager(window) end
+
 
 --- Configures the FramerateManager.
 ---
@@ -4679,7 +4970,7 @@ function obe.Time._FramerateManager:isFramerateLimited() end
 
 --- Get the frame per second cap.
 ---
----@return number[position integer]
+---@return number
 function obe.Time._FramerateManager:getFramerateTarget() end
 
 --- Check if vSync is enabled or not.
@@ -4699,7 +4990,7 @@ function obe.Time._FramerateManager:limitFramerate(state) end
 
 --- Set the max framerate.
 ---
----@param limit number[position integer] #An unsigned int containing the max framerate
+---@param limit number #An unsigned int containing the max framerate
 function obe.Time._FramerateManager:setFramerateTarget(limit) end
 
 --- Set if VerticalSync should be enabled or not.
@@ -4707,15 +4998,18 @@ function obe.Time._FramerateManager:setFramerateTarget(limit) end
 ---@param vsync boolean #A boolean containing if the v-sync should be enabled (true = enabled)
 function obe.Time._FramerateManager:setVSyncEnabled(vsync) end
 
+
 ---@class obe.Transform.Exceptions.InvalidUnitsEnumValue
 obe.Transform.Exceptions._InvalidUnitsEnumValue = {};
 
 --- obe.Transform.Exceptions.InvalidUnitsEnumValue constructor
 ---
----@param enumValue number[integer] #
+---@param enumValue number #
 ---@param info obe.DebugInfo #
 ---@return obe.Transform.Exceptions.InvalidUnitsEnumValue
 function obe.Transform.Exceptions.InvalidUnitsEnumValue(enumValue, info) end
+
+
 
 ---@class obe.Transform.Exceptions.PolygonNotEnoughPoints
 obe.Transform.Exceptions._PolygonNotEnoughPoints = {};
@@ -4723,10 +5017,12 @@ obe.Transform.Exceptions._PolygonNotEnoughPoints = {};
 --- obe.Transform.Exceptions.PolygonNotEnoughPoints constructor
 ---
 ---@param polygon nil #
----@param points number[integer] #
+---@param points number #
 ---@param info obe.DebugInfo #
 ---@return obe.Transform.Exceptions.PolygonNotEnoughPoints
 function obe.Transform.Exceptions.PolygonNotEnoughPoints(polygon, points, info) end
+
+
 
 ---@class obe.Transform.Exceptions.PolygonPointIndexOverflow
 obe.Transform.Exceptions._PolygonPointIndexOverflow = {};
@@ -4734,12 +5030,13 @@ obe.Transform.Exceptions._PolygonPointIndexOverflow = {};
 --- obe.Transform.Exceptions.PolygonPointIndexOverflow constructor
 ---
 ---@param polygon nil #
----@param index number[integer] #
----@param maximum number[integer] #
+---@param index number #
+---@param maximum number #
 ---@param info obe.DebugInfo #
 ---@return obe.Transform.Exceptions.PolygonPointIndexOverflow
-function obe.Transform.Exceptions.PolygonPointIndexOverflow(polygon, index,
-                                                            maximum, info) end
+function obe.Transform.Exceptions.PolygonPointIndexOverflow(polygon, index, maximum, info) end
+
+
 
 ---@class obe.Transform.Exceptions.UnknownReferential
 obe.Transform.Exceptions._UnknownReferential = {};
@@ -4751,6 +5048,8 @@ obe.Transform.Exceptions._UnknownReferential = {};
 ---@return obe.Transform.Exceptions.UnknownReferential
 function obe.Transform.Exceptions.UnknownReferential(referential, info) end
 
+
+
 ---@class obe.Transform.Exceptions.UnknownUnit
 obe.Transform.Exceptions._UnknownUnit = {};
 
@@ -4761,21 +5060,26 @@ obe.Transform.Exceptions._UnknownUnit = {};
 ---@return obe.Transform.Exceptions.UnknownUnit
 function obe.Transform.Exceptions.UnknownUnit(unit, info) end
 
+
+
 ---@class obe.Transform.Matrix2D
 obe.Transform._Matrix2D = {};
 
 --- obe.Transform.Matrix2D constructor
 ---
----@param elements std.array #
+---@param elements table<number, number> #
 ---@return obe.Transform.Matrix2D
 function obe.Transform.Matrix2D(elements) end
+
 
 ---@param vector obe.Transform.UnitVector #
 ---@return obe.Transform.UnitVector
 function obe.Transform._Matrix2D:product(vector) end
 
+
 ---@class obe.Transform.Movable
 obe.Transform._Movable = {};
+
 
 --- Set the position of the Movable using an UnitVector.
 ---
@@ -4792,8 +5096,9 @@ function obe.Transform._Movable:move(position) end
 ---@return obe.Transform.UnitVector
 function obe.Transform._Movable:getPosition() end
 
+
 ---@class obe.Transform.Polygon
----@field DefaultTolerance constant expr double #
+---@field DefaultTolerance number #
 obe.Transform._Polygon = {};
 
 --- obe.Transform.Polygon constructor
@@ -4807,10 +5112,11 @@ function obe.Transform.Polygon() end
 ---@return obe.Transform.Polygon
 function obe.Transform.Polygon(polygon) end
 
+
 --- Adds a new Point to the Polygon at Position (x, y)
 ---
 ---@param position obe.Transform.UnitVector #Coordinate of the Position where to add the new Point
----@param pointIndex? number[integer] #Index where to insert the new Point, Use pointIndex = -1 <DefaultArg> to insert at the end (between last and first Point)
+---@param pointIndex? number #Index where to insert the new Point, Use pointIndex = -1 <DefaultArg> to insert at the end (between last and first Point)
 function obe.Transform._Polygon:addPoint(position, pointIndex) end
 
 --- Finds the closest Line from the given Position.
@@ -4823,10 +5129,9 @@ function obe.Transform._Polygon:findClosestSegment(position) end
 ---
 ---@param position obe.Transform.UnitVector #Coordinate of the Position used to get the closest Point
 ---@param neighbor? boolean #Get the closest neighbor of the closest Point instead of the Point
----@param excludedPoints? table #A std::vector containing points you want to exclude from the calculus (Not used in neighbor check step)
+---@param excludedPoints? table<number, obe.Transform.point_index_t> #A std::vector containing points you want to exclude from the calculus (Not used in neighbor check step)
 ---@return obe.Transform.PolygonPoint
-function obe.Transform._Polygon:findClosestPoint(position, neighbor,
-                                                 excludedPoints) end
+function obe.Transform._Polygon:findClosestPoint(position, neighbor, excludedPoints) end
 
 --- Get all the Points of the Polygon.
 ---
@@ -4840,7 +5145,7 @@ function obe.Transform._Polygon:getCentroid() end
 
 --- Get the number of points in the Polygon.
 ---
----@return number[integer]
+---@return number
 function obe.Transform._Polygon:getPointsAmount() end
 
 --- Get the Position of the first point (index 0) of the Polygon.
@@ -4863,7 +5168,7 @@ function obe.Transform._Polygon:getSegment(segment) end
 ---
 ---@param position obe.Transform.UnitVector #Coordinate of the Position to test
 ---@param tolerance? number #Amount of SceneUnits allowed around the position
----@return optional
+---@return obe.Transform.PolygonSegment?
 function obe.Transform._Polygon:getSegmentContainingPoint(position, tolerance) end
 
 --- Check if the MasterPoint of the Polygon is on Position (x - tolerance <= x <= x + tolerance, y - tolerance <= tolerance <= y + tolerance)
@@ -4877,7 +5182,7 @@ function obe.Transform._Polygon:isCentroidAroundPosition(position, tolerance) en
 ---
 ---@param position obe.Transform.UnitVector #Coordinate of the Position to test
 ---@param tolerance obe.Transform.UnitVector #Position tolerance, bigger number means less precise
----@return optional
+---@return obe.Transform.PolygonPoint?
 function obe.Transform._Polygon:getPointAroundPosition(position, tolerance) end
 
 --- Moves the Polygon (relative to the current position)
@@ -4908,8 +5213,9 @@ function obe.Transform._Polygon:setPositionFromCentroid(position) end
 ---@return obe.Transform.Rect
 function obe.Transform._Polygon:getBoundingBox() end
 
+
 ---@class obe.Transform.PolygonPoint
----@field index constant reference to point_index_t #
+---@field index point_index_t #
 obe.Transform._PolygonPoint = {};
 
 --- obe.Transform.PolygonPoint constructor
@@ -4926,6 +5232,7 @@ function obe.Transform.PolygonPoint(parent, index) end
 ---@param position obe.Transform.UnitVector #
 ---@return obe.Transform.PolygonPoint
 function obe.Transform.PolygonPoint(parent, index, position) end
+
 
 function obe.Transform._PolygonPoint:remove() end
 
@@ -4944,9 +5251,10 @@ function obe.Transform._PolygonPoint:setRelativePosition(from, position) end
 ---@param position obe.Transform.UnitVector #
 function obe.Transform._PolygonPoint:move(position) end
 
+
 ---@class obe.Transform.PolygonSegment
----@field first constant reference to PolygonPoint #
----@field second constant reference to PolygonPoint #
+---@field first obe.Transform.PolygonPoint #
+---@field second obe.Transform.PolygonPoint #
 obe.Transform._PolygonSegment = {};
 
 --- obe.Transform.PolygonSegment constructor
@@ -4956,13 +5264,19 @@ obe.Transform._PolygonSegment = {};
 ---@return obe.Transform.PolygonSegment
 function obe.Transform.PolygonSegment(first, second) end
 
+
 ---@return number
 function obe.Transform._PolygonSegment:getAngle() end
 
 ---@return number
 function obe.Transform._PolygonSegment:getLength() end
 
+
 ---@class obe.Transform.Rect
+---@field x number #
+---@field y number #
+---@field width number #
+---@field height number #
 obe.Transform._Rect = {};
 
 --- obe.Transform.Rect constructor
@@ -4977,11 +5291,12 @@ function obe.Transform.Rect() end
 ---@return obe.Transform.Rect
 function obe.Transform.Rect(position, size) end
 
+
 --- Transform the UnitVector passed by reference using the given Referential.
 ---
 ---@param vec obe.Transform.UnitVector #The UnitVector you want to transform
 ---@param ref obe.Transform.Referential #The chosen Rect::Referential
----@param type obe.Transform.Rect.ConversionType #The way you want to transform your UnitVector From : Referential::TopLeft to ref To : ref to Referential::TopLeft
+---@param type obe.Transform.ReferentialConversionType #The way you want to transform your UnitVector From : Referential::TopLeft to ref To : ref to Referential::TopLeft
 function obe.Transform._Rect:transformRef(vec, ref, type) end
 
 --- Moves the Rectangle (Adds the given position to the current one)
@@ -5037,21 +5352,9 @@ function obe.Transform._Rect:rotate(angle, origin) end
 --- Draws the Rect for debug purposes <REMOVE>
 ---
 ---@param surface obe.Graphics.RenderTarget #
----@param x number[integer] #
----@param y number[integer] #
+---@param x number #
+---@param y number #
 function obe.Transform._Rect:draw(surface, x, y) end
-
----@return number
-function obe.Transform._Rect:x() end
-
----@return number
-function obe.Transform._Rect:y() end
-
----@return number
-function obe.Transform._Rect:width() end
-
----@return number
-function obe.Transform._Rect:height() end
 
 --- Checks if the Rect intersects a specified Rect.
 ---
@@ -5060,20 +5363,21 @@ function obe.Transform._Rect:height() end
 function obe.Transform._Rect:intersects(rect) end
 
 ---@param rect obe.Transform.Rect #
----@return optional
+---@return obe.Transform.Rect?
 function obe.Transform._Rect:intersection(rect) end
 
+
 ---@class obe.Transform.Referential
----@field TopLeft Referential #Referential TopLeft.
----@field Top Referential #Referential Top.
----@field TopRight Referential #Referential TopRight.
----@field Left Referential #Referential Left.
----@field Center Referential #Referential Center.
----@field Right Referential #Referential Right.
----@field BottomLeft Referential #Referential BottomLeft.
----@field Bottom Referential #Referential Bottom.
----@field BottomRight Referential #Referential BottomRight.
----@field Referentials std.array of Referential,9 #
+---@field TopLeft obe.Transform.Referential #Referential TopLeft.
+---@field Top obe.Transform.Referential #Referential Top.
+---@field TopRight obe.Transform.Referential #Referential TopRight.
+---@field Left obe.Transform.Referential #Referential Left.
+---@field Center obe.Transform.Referential #Referential Center.
+---@field Right obe.Transform.Referential #Referential Right.
+---@field BottomLeft obe.Transform.Referential #Referential BottomLeft.
+---@field Bottom obe.Transform.Referential #Referential Bottom.
+---@field BottomRight obe.Transform.Referential #Referential BottomRight.
+---@field Referentials table<number, obe.Transform.Referential> #
 obe.Transform._Referential = {};
 
 --- obe.Transform.Referential constructor
@@ -5087,6 +5391,7 @@ function obe.Transform.Referential() end
 ---@param refY number #
 ---@return obe.Transform.Referential
 function obe.Transform.Referential(refX, refY) end
+
 
 --- Get the opposite Referential in a Rect.
 ---
@@ -5146,8 +5451,10 @@ function obe.Transform._Referential:toString(format) end
 ---@return obe.Transform.Referential
 function obe.Transform._Referential:FromString(ref) end
 
+
 ---@class obe.Transform.UnitBasedObject
 obe.Transform._UnitBasedObject = {};
+
 
 --- Set the unit the Object should work with.
 ---
@@ -5159,10 +5466,11 @@ function obe.Transform._UnitBasedObject:setWorkingUnit(unit) end
 ---@return obe.Transform.Units
 function obe.Transform._UnitBasedObject:getWorkingUnit() end
 
+
 ---@class obe.Transform.UnitVector
 ---@field x number #x Coordinate of the UnitVector (related to Unit)
 ---@field y number #y Coordinate of the UnitVector (related to Unit)
----@field unit Units #Unit of the UnitVector.
+---@field unit obe.Transform.Units #Unit of the UnitVector.
 ---@field View ViewStruct #Struct used for UnitVector conversions, do not modify !
 ---@field Screen ScreenStruct #Struct used for UnitVector conversions, do not modify !
 obe.Transform._UnitVector = {};
@@ -5181,6 +5489,7 @@ function obe.Transform.UnitVector(unit) end
 ---@return obe.Transform.UnitVector
 function obe.Transform.UnitVector(x, y, unit) end
 
+
 --- Return an UnitVector with the converted values (x, y) to the Unit you want.
 ---
 ---@param pUnit obe.Transform.Units #An enum value from Transform::Units
@@ -5189,7 +5498,7 @@ function obe.Transform._UnitVector:to(pUnit) end
 
 --- Unpacks the UnitVector to a tuple (can be used with structured bindings)
 ---
----@return table
+---@return table<number, number>
 function obe.Transform._UnitVector:unpack() end
 
 ---@param angle number #
@@ -5206,6 +5515,7 @@ function obe.Transform._UnitVector:distance(vec) end
 ---@return number
 function obe.Transform._UnitVector:magnitude() end
 
+
 ---@class obe.Types.Identifiable
 obe.Types._Identifiable = {};
 
@@ -5214,6 +5524,7 @@ obe.Types._Identifiable = {};
 ---@param id string #A std::string containing the id of the Identifiable
 ---@return obe.Types.Identifiable
 function obe.Types.Identifiable(id) end
+
 
 --- Set a new id for the Identifiable.
 ---
@@ -5225,8 +5536,11 @@ function obe.Types._Identifiable:setId(id) end
 ---@return string
 function obe.Types._Identifiable:getId() end
 
+
 ---@class obe.Types.ProtectedIdentifiable
 obe.Types._ProtectedIdentifiable = {};
+
+
 
 ---@class obe.Types.Selectable
 obe.Types._Selectable = {};
@@ -5236,6 +5550,7 @@ obe.Types._Selectable = {};
 ---@param selected? boolean #Default state of m_selected
 ---@return obe.Types.Selectable
 function obe.Types.Selectable(selected) end
+
 
 --- Set the state of the Selectable.
 ---
@@ -5259,8 +5574,10 @@ function obe.Types._Selectable:unselect() end
 ---@return boolean
 function obe.Types._Selectable:isSelected() end
 
+
 ---@class obe.Types.Serializable
 obe.Types._Serializable = {};
+
 
 --- Dumps the content of the Serializable object to a vili node.
 ---
@@ -5272,6 +5589,7 @@ function obe.Types._Serializable:dump() end
 ---@param data vili.node #vili node containing the data of the object
 function obe.Types._Serializable:load(data) end
 
+
 ---@class obe.Types.Togglable
 obe.Types._Togglable = {};
 
@@ -5280,6 +5598,7 @@ obe.Types._Togglable = {};
 ---@param enabled boolean #Default state of m_enabled
 ---@return obe.Types.Togglable
 function obe.Types.Togglable(enabled) end
+
 
 --- Set the state of the Togglable.
 ---
@@ -5303,15 +5622,17 @@ function obe.Types._Togglable:disable() end
 ---@return boolean
 function obe.Types._Togglable:isEnabled() end
 
+
 ---@class obe.Utils.Exec.RunArgsParser
 obe.Utils.Exec._RunArgsParser = {};
 
 --- Constructor of RunArgsParser takes argc and argv in parameters.
 ---
----@param size number[integer] #This is argc
----@param start char #This is argv
+---@param size number #This is argc
+---@param start string #This is argv
 ---@return obe.Utils.Exec.RunArgsParser
 function obe.Utils.Exec.RunArgsParser(size, start) end
+
 
 --- Check if a argument has been entered.
 ---
@@ -5324,6 +5645,7 @@ function obe.Utils.Exec._RunArgsParser:argumentExists(arg) end
 ---@param arg string #Name of the argument you want to retrieve the value
 ---@return string
 function obe.Utils.Exec._RunArgsParser:getArgumentValue(arg) end
+
 
 ---@class vili.const_node_iterator
 vili._const_node_iterator = {};
@@ -5346,21 +5668,26 @@ function vili.const_node_iterator(value) end
 ---@return vili.const_node_iterator
 function vili.const_node_iterator(other_it) end
 
+
+
 ---@class vili.exceptions.array_index_overflow
 vili.exceptions._array_index_overflow = {};
 
 --- vili.exceptions.array_index_overflow constructor
 ---
----@param index size_t #
----@param maximum size_t #
+---@param index number #
+---@param maximum number #
 ---@param info vili.exceptions.debug_info #
 ---@return vili.exceptions.array_index_overflow
 function vili.exceptions.array_index_overflow(index, maximum, info) end
 
+
+
 ---@class vili.exceptions.base_exception
 vili.exceptions._base_exception = {};
 
----@return char
+
+---@return string
 function vili.exceptions._base_exception:what() end
 
 ---@param args Args &&... #
@@ -5369,19 +5696,22 @@ function vili.exceptions._base_exception:error(args) end
 ---@param args Args &&... #
 function vili.exceptions._base_exception:hint(args) end
 
+
 ---@class vili.exceptions.debug_info
 ---@field file string #
----@field line number[integer] #
+---@field line number #
 ---@field function string #
 vili.exceptions._debug_info = {};
 
 --- vili.exceptions.debug_info constructor
 ---
 ---@param file string #
----@param line number[integer] #
+---@param line number #
 ---@param funcname string #
 ---@return vili.exceptions.debug_info
 function vili.exceptions.debug_info(file, line, funcname) end
+
+
 
 ---@class vili.exceptions.file_not_found
 vili.exceptions._file_not_found = {};
@@ -5393,17 +5723,20 @@ vili.exceptions._file_not_found = {};
 ---@return vili.exceptions.file_not_found
 function vili.exceptions.file_not_found(path, info) end
 
+
+
 ---@class vili.exceptions.inconsistent_indentation
 vili.exceptions._inconsistent_indentation = {};
 
 --- vili.exceptions.inconsistent_indentation constructor
 ---
----@param indent_level int64_t #
----@param base_indentation int64_t #
+---@param indent_level number #
+---@param base_indentation number #
 ---@param info vili.exceptions.debug_info #
 ---@return vili.exceptions.inconsistent_indentation
-function vili.exceptions.inconsistent_indentation(indent_level,
-                                                  base_indentation, info) end
+function vili.exceptions.inconsistent_indentation(indent_level, base_indentation, info) end
+
+
 
 ---@class vili.exceptions.integer_dump_error
 vili.exceptions._integer_dump_error = {};
@@ -5414,6 +5747,8 @@ vili.exceptions._integer_dump_error = {};
 ---@param info vili.exceptions.debug_info #
 ---@return vili.exceptions.integer_dump_error
 function vili.exceptions.integer_dump_error(value, info) end
+
+
 
 ---@class vili.exceptions.invalid_cast
 vili.exceptions._invalid_cast = {};
@@ -5426,6 +5761,8 @@ vili.exceptions._invalid_cast = {};
 ---@return vili.exceptions.invalid_cast
 function vili.exceptions.invalid_cast(cast, real_type, info) end
 
+
+
 ---@class vili.exceptions.invalid_data_type
 vili.exceptions._invalid_data_type = {};
 
@@ -5434,6 +5771,8 @@ vili.exceptions._invalid_data_type = {};
 ---@param info vili.exceptions.debug_info #
 ---@return vili.exceptions.invalid_data_type
 function vili.exceptions.invalid_data_type(info) end
+
+
 
 ---@class vili.exceptions.invalid_merge
 vili.exceptions._invalid_merge = {};
@@ -5446,6 +5785,8 @@ vili.exceptions._invalid_merge = {};
 ---@return vili.exceptions.invalid_merge
 function vili.exceptions.invalid_merge(merge_base_type, merge_type, info) end
 
+
+
 ---@class vili.exceptions.invalid_node_type
 vili.exceptions._invalid_node_type = {};
 
@@ -5455,6 +5796,8 @@ vili.exceptions._invalid_node_type = {};
 ---@param info vili.exceptions.debug_info #
 ---@return vili.exceptions.invalid_node_type
 function vili.exceptions.invalid_node_type(node_type, info) end
+
+
 
 ---@class vili.exceptions.number_dump_error
 vili.exceptions._number_dump_error = {};
@@ -5466,27 +5809,33 @@ vili.exceptions._number_dump_error = {};
 ---@return vili.exceptions.number_dump_error
 function vili.exceptions.number_dump_error(value, info) end
 
+
+
 ---@class vili.exceptions.parsing_error
 vili.exceptions._parsing_error = {};
 
 --- vili.exceptions.parsing_error constructor
 ---
 ---@param source string #
----@param line size_t #
----@param column size_t #
+---@param line number #
+---@param column number #
 ---@param info vili.exceptions.debug_info #
 ---@return vili.exceptions.parsing_error
 function vili.exceptions.parsing_error(source, line, column, info) end
+
+
 
 ---@class vili.exceptions.too_much_indentation
 vili.exceptions._too_much_indentation = {};
 
 --- vili.exceptions.too_much_indentation constructor
 ---
----@param indent_level int64_t #
+---@param indent_level number #
 ---@param info vili.exceptions.debug_info #
 ---@return vili.exceptions.too_much_indentation
 function vili.exceptions.too_much_indentation(indent_level, info) end
+
+
 
 ---@class vili.exceptions.unknown_child_node
 ---@field key string #
@@ -5499,6 +5848,8 @@ vili.exceptions._unknown_child_node = {};
 ---@return vili.exceptions.unknown_child_node
 function vili.exceptions.unknown_child_node(key, info) end
 
+
+
 ---@class vili.exceptions.unknown_template
 vili.exceptions._unknown_template = {};
 
@@ -5508,6 +5859,8 @@ vili.exceptions._unknown_template = {};
 ---@param info vili.exceptions.debug_info #
 ---@return vili.exceptions.unknown_template
 function vili.exceptions.unknown_template(template_name, info) end
+
+
 
 ---@class vili.node
 vili._node = {};
@@ -5519,7 +5872,7 @@ function vili.node() end
 
 --- Same than vili::integer constructor.
 ---
----@param value number[integer] #
+---@param value number #
 ---@return vili.node
 function vili.node(value) end
 
@@ -5555,7 +5908,7 @@ function vili.node(value) end
 
 --- Same than vili::string constructor.
 ---
----@param value char #
+---@param value string #
 ---@return vili.node
 function vili.node(value) end
 
@@ -5582,6 +5935,7 @@ function vili.node(copy) end
 ---@param move vili.node #
 ---@return vili.node
 function vili.node(move) end
+
 
 --- Retrieves the type of the underlying value of the node.
 ---
@@ -5690,7 +6044,7 @@ function vili._node:front() end
 ---@return vili.node
 function vili._node:back() end
 
----@return size_t
+---@return number
 function vili._node:size() end
 
 ---@return boolean
@@ -5701,6 +6055,7 @@ function vili._node:clear() end
 ---@param type vili.node_type #
 ---@return vili.node
 function vili._node:from_type(type) end
+
 
 ---@class vili.node_iterator
 vili._node_iterator = {};
@@ -5723,17 +6078,21 @@ function vili.node_iterator(value) end
 ---@return vili.node_iterator
 function vili.node_iterator(other_it) end
 
+
+
 ---@class vili.parser.node_in_stack
----@field item pointer to node #
----@field indent number[integer] #
+---@field item node #
+---@field indent number #
 vili.parser._node_in_stack = {};
 
 --- vili.parser.node_in_stack constructor
 ---
 ---@param node vili.node #
----@param indent number[integer] #
+---@param indent number #
 ---@return vili.parser.node_in_stack
 function vili.parser.node_in_stack(node, indent) end
+
+
 
 ---@class vili.parser.state
 ---@field root node #
@@ -5756,7 +6115,8 @@ function vili.parser.state(state) end
 ---@return vili.parser.state
 function vili.parser.state(state) end
 
----@param indent int64_t #
+
+---@param indent number #
 function vili.parser._state:set_indent(indent) end
 
 function vili.parser._state:use_indent() end
@@ -5780,96 +6140,127 @@ function vili.parser._state:specialize_template() end
 ---@return vili.node
 function vili.parser._state:get_template(template_name) end
 
+
 ---@class obe.Events.Actions.Action
----@field action reference to Input.InputAction #
----@field condition reference to Input.InputCondition #
+---@field action obe.Input.InputAction #
+---@field condition obe.Input.InputCondition #
 obe.Events.Actions._Action = {};
 
+
+
 ---@class obe.Events.Cursor.Hold
----@field x number[integer] #
----@field y number[integer] #
+---@field x number #
+---@field y number #
 ---@field left boolean #
 ---@field middle boolean #
 ---@field right boolean #
----@field id constant expr std.string_view #
+---@field id string #
 obe.Events.Cursor._Hold = {};
 
+
+
 ---@class obe.Events.Cursor.Move
----@field x number[integer] #
----@field y number[integer] #
----@field previousX number[integer] #
----@field previousY number[integer] #
----@field id constant expr std.string_view #
+---@field x number #
+---@field y number #
+---@field previousX number #
+---@field previousY number #
+---@field id string #
 obe.Events.Cursor._Move = {};
 
+
+
 ---@class obe.Events.Cursor.Press
----@field x number[integer] #
----@field y number[integer] #
+---@field x number #
+---@field y number #
 ---@field left boolean #
 ---@field middle boolean #
 ---@field right boolean #
----@field id constant expr std.string_view #
+---@field id string #
 obe.Events.Cursor._Press = {};
 
+
+
 ---@class obe.Events.Cursor.Release
----@field x number[integer] #
----@field y number[integer] #
+---@field x number #
+---@field y number #
 ---@field left boolean #
 ---@field middle boolean #
 ---@field right boolean #
----@field id constant expr std.string_view #
+---@field id string #
 obe.Events.Cursor._Release = {};
 
+
+
 ---@class obe.Events.Game.End
----@field id constant expr std.string_view #
+---@field id string #
 obe.Events.Game._End = {};
 
+
+
 ---@class obe.Events.Game.Render
----@field id constant expr std.string_view #
+---@field id string #
 obe.Events.Game._Render = {};
 
+
+
 ---@class obe.Events.Game.Start
----@field id constant expr std.string_view #
+---@field id string #
 obe.Events.Game._Start = {};
+
+
 
 ---@class obe.Events.Game.Update
 ---@field dt number #
----@field id constant expr std.string_view #
+---@field id string #
 obe.Events.Game._Update = {};
 
+
+
 ---@class obe.Events.Keys.StateChanged
----@field state constant Input.InputButtonState #
----@field previousState constant Input.InputButtonState #
+---@field state obe.Input.InputButtonState #
+---@field previousState obe.Input.InputButtonState #
 obe.Events.Keys._StateChanged = {};
 
+
+
 ---@class obe.Events.Network.Connected
----@field ip constant string #
----@field id constant expr std.string_view #
+---@field ip string #
+---@field id string #
 obe.Events.Network._Connected = {};
 
+
+
 ---@class obe.Events.Network.DataReceived
----@field content constant string #
----@field id constant expr std.string_view #
+---@field content string #
+---@field id string #
 obe.Events.Network._DataReceived = {};
 
+
+
 ---@class obe.Events.Network.Disconnected
----@field id constant expr std.string_view #
+---@field id string #
 obe.Events.Network._Disconnected = {};
+
+
 
 ---@class obe.Events.Scene.Loaded
 ---@field filename string #
----@field id constant expr std.string_view #
+---@field id string #
 obe.Events.Scene._Loaded = {};
+
+
 
 ---@class obe.Graphics.Utils.DrawPolygonOptions
 ---@field lines boolean #
 ---@field points boolean #
 ---@field radius number #
----@field lineColor Color #
----@field pointColor Color #
----@field specificLineColor std.unordered_map of number[position integer],Color #
----@field specificPointColor std.unordered_map of number[position integer],Color #
+---@field lineColor obe.Graphics.Color #
+---@field pointColor obe.Graphics.Color #
+---@field specificLineColor table<number, obe.Graphics.Color> #
+---@field specificPointColor table<number, obe.Graphics.Color> #
 obe.Graphics.Utils._DrawPolygonOptions = {};
+
+
 
 ---@class obe.Scene.SceneRenderOptions
 ---@field sprites boolean #
@@ -5877,27 +6268,35 @@ obe.Graphics.Utils._DrawPolygonOptions = {};
 ---@field sceneNodes boolean #
 obe.Scene._SceneRenderOptions = {};
 
+
+
 ---@class obe.Tiles.TextureQuadsIndex
----@field q0 uint8_t #
----@field q1 uint8_t #
----@field q2 uint8_t #
----@field q3 uint8_t #
+---@field q0 number #
+---@field q1 number #
+---@field q2 number #
+---@field q3 number #
 obe.Tiles._TextureQuadsIndex = {};
+
 
 ---@param info obe.Tiles.TileInfo #
 function obe.Tiles._TextureQuadsIndex:transform(info) end
+
 
 ---@class obe.Tiles.TileInfo
 ---@field flippedHorizontally boolean #
 ---@field flippedVertically boolean #
 ---@field flippedDiagonally boolean #
----@field tileId uint32_t #
+---@field tileId number #
 obe.Tiles._TileInfo = {};
+
+
 
 ---@class obe.Transform.ScreenStruct
 ---@field w number #
 ---@field h number #
 obe.Transform._ScreenStruct = {};
+
+
 
 ---@class obe.Transform.ViewStruct
 ---@field w number #
@@ -5906,217 +6305,341 @@ obe.Transform._ScreenStruct = {};
 ---@field y number #
 obe.Transform._ViewStruct = {};
 
+
+
 ---@class vili.parser.error
 vili.parser._error = {};
+
+
 
 ---@class vili.parser.rules.affectation
 vili.parser.rules._affectation = {};
 
+
+
 ---@class vili.parser.rules.affectation_separator
 vili.parser.rules._affectation_separator = {};
+
+
 
 ---@class vili.parser.rules.array
 vili.parser.rules._array = {};
 
+
+
 ---@class vili.parser.rules.array_elements
 vili.parser.rules._array_elements = {};
+
+
 
 ---@class vili.parser.rules.array_separator
 vili.parser.rules._array_separator = {};
 
+
+
 ---@class vili.parser.rules.block
 vili.parser.rules._block = {};
+
+
 
 ---@class vili.parser.rules.boolean
 vili.parser.rules._boolean = {};
 
+
+
 ---@class vili.parser.rules.brace_based_object
 vili.parser.rules._brace_based_object = {};
+
+
 
 ---@class vili.parser.rules.char_
 vili.parser.rules._char_ = {};
 
+
+
 ---@class vili.parser.rules.close_array
 vili.parser.rules._close_array = {};
+
+
 
 ---@class vili.parser.rules.close_object
 vili.parser.rules._close_object = {};
 
+
+
 ---@class vili.parser.rules.comment
 vili.parser.rules._comment = {};
+
+
 
 ---@class vili.parser.rules.data
 vili.parser.rules._data = {};
 
+
+
 ---@class vili.parser.rules.digits
 vili.parser.rules._digits = {};
+
+
 
 ---@class vili.parser.rules.element
 vili.parser.rules._element = {};
 
+
+
 ---@class vili.parser.rules.empty_line
 vili.parser.rules._empty_line = {};
+
+
 
 ---@class vili.parser.rules.endline
 vili.parser.rules._endline = {};
 
+
+
 ---@class vili.parser.rules.escaped
 vili.parser.rules._escaped = {};
+
+
 
 ---@class vili.parser.rules.escaped_char
 vili.parser.rules._escaped_char = {};
 
+
+
 ---@class vili.parser.rules.false_
 vili.parser.rules._false_ = {};
+
+
 
 ---@class vili.parser.rules.floating_point
 vili.parser.rules._floating_point = {};
 
+
+
 ---@class vili.parser.rules.full_node
 vili.parser.rules._full_node = {};
+
+
 
 ---@class vili.parser.rules.grammar
 vili.parser.rules._grammar = {};
 
+
+
 ---@class vili.parser.rules.identifier
 vili.parser.rules._identifier = {};
+
+
 
 ---@class vili.parser.rules.indent
 vili.parser.rules._indent = {};
 
+
+
 ---@class vili.parser.rules.indent_based_object
 vili.parser.rules._indent_based_object = {};
+
+
 
 ---@class vili.parser.rules.inline_comment
 vili.parser.rules._inline_comment = {};
 
+
+
 ---@class vili.parser.rules.inline_element
 vili.parser.rules._inline_element = {};
+
+
 
 ---@class vili.parser.rules.inline_node
 vili.parser.rules._inline_node = {};
 
+
+
 ---@class vili.parser.rules.integer
 vili.parser.rules._integer = {};
+
+
 
 ---@class vili.parser.rules.multiline_comment
 vili.parser.rules._multiline_comment = {};
 
+
+
 ---@class vili.parser.rules.multiline_comment_block
 vili.parser.rules._multiline_comment_block = {};
+
+
 
 ---@class vili.parser.rules.node
 vili.parser.rules._node = {};
 
+
+
 ---@class vili.parser.rules.number
 vili.parser.rules._number = {};
+
+
 
 ---@class vili.parser.rules.object
 vili.parser.rules._object = {};
 
+
+
 ---@class vili.parser.rules.object_elements
 vili.parser.rules._object_elements = {};
+
+
 
 ---@class vili.parser.rules.object_separator
 vili.parser.rules._object_separator = {};
 
+
+
 ---@class vili.parser.rules.open_array
 vili.parser.rules._open_array = {};
+
+
 
 ---@class vili.parser.rules.open_object
 vili.parser.rules._open_object = {};
 
+
+
 ---@class vili.parser.rules.sign
 vili.parser.rules._sign = {};
+
+
 
 ---@class vili.parser.rules.space_or_comment
 vili.parser.rules._space_or_comment = {};
 
+
+
 ---@class vili.parser.rules.string
 vili.parser.rules._string = {};
+
+
 
 ---@class vili.parser.rules.string_content
 vili.parser.rules._string_content = {};
 
+
+
 ---@class vili.parser.rules.string_delimiter
 vili.parser.rules._string_delimiter = {};
+
+
 
 ---@class vili.parser.rules.template_begin
 vili.parser.rules._template_begin = {};
 
+
+
 ---@class vili.parser.rules.template_decl
 vili.parser.rules._template_decl = {};
+
+
 
 ---@class vili.parser.rules.template_decl_content
 vili.parser.rules._template_decl_content = {};
 
+
+
 ---@class vili.parser.rules.template_identifier
 vili.parser.rules._template_identifier = {};
+
+
 
 ---@class vili.parser.rules.template_identifier_usage
 vili.parser.rules._template_identifier_usage = {};
 
+
+
 ---@class vili.parser.rules.template_keyword
 vili.parser.rules._template_keyword = {};
+
+
 
 ---@class vili.parser.rules.template_specialization
 vili.parser.rules._template_specialization = {};
 
+
+
 ---@class vili.parser.rules.template_usage
 vili.parser.rules._template_usage = {};
+
+
 
 ---@class vili.parser.rules.true_
 vili.parser.rules._true_ = {};
 
+
+
 ---@class vili.parser.rules.unescaped
 vili.parser.rules._unescaped = {};
+
+
 
 ---@class vili.parser.rules.unicode
 vili.parser.rules._unicode = {};
 
+
+
 ---@class vili.parser.rules.vili_grammar
 vili.parser.rules._vili_grammar = {};
+
+
 
 ---@class vili.parser.rules.xdigit
 vili.parser.rules._xdigit = {};
 
+
+
 ---@class vili.writer.dump_options
----@field indent number[position integer] #
+---@field indent number #
 ---@field array array #
 ---@field object object #
 ---@field root boolean #
 vili.writer._dump_options = {};
 
+
+
 ---@class vili.writer.dump_options.array
----@field items_per_line number[position integer] #
----@field max_line_length number[position integer] #
+---@field items_per_line number #
+---@field max_line_length number #
 ---@field starts_with_newline delimiter_newline_policy #
 ---@field ends_with_newline delimiter_newline_policy #
----@field left_bracket_spacing number[position integer] #
----@field right_bracket_spacing number[position integer] #
----@field inline_spacing number[position integer] #
+---@field left_bracket_spacing number #
+---@field right_bracket_spacing number #
+---@field inline_spacing number #
 ---@field comma_spacing comma_spacing_policy #
 vili.writer.dump_options._array = {};
 
+
+
 ---@class vili.writer.dump_options.object
----@field items_per_line number[position integer] #
----@field max_line_length number[position integer] #
+---@field items_per_line number #
+---@field max_line_length number #
 ---@field starts_with_newline delimiter_newline_policy #
 ---@field ends_with_newline delimiter_newline_policy #
----@field left_brace_spacing number[position integer] #
----@field right_brace_spacing number[position integer] #
----@field affectation_left_spaces number[position integer] #
----@field affectation_right_spaces number[position integer] #
----@field inline_spacing number[position integer] #
+---@field left_brace_spacing number #
+---@field right_brace_spacing number #
+---@field affectation_left_spaces number #
+---@field affectation_right_spaces number #
+---@field inline_spacing number #
 ---@field comma_spacing comma_spacing_policy #
 ---@field style object_style #
 vili.writer.dump_options._object = {};
 
----@return expr auto
+
+
+---@return auto
 function obe.getTypeName() end
 
----@param surfaceWidth number[position integer] #
----@param surfaceHeight number[position integer] #
+---@param surfaceWidth number #
+---@param surfaceHeight number #
 function obe.InitEngine(surfaceWidth, surfaceHeight) end
 
 --- Convert a std::string containing an AnimationPlayMode in string form to an AnimationPlayMode enum value.
@@ -6312,8 +6835,7 @@ function obe.Debug.critical(content) end
 ---@param drawMasterPoint boolean #
 ---@param drawSkel boolean #
 ---@param offset obe.Transform.UnitVector #
-function obe.Debug.Render.drawPolygon(target, polygon, drawLines, drawPoints,
-                                      drawMasterPoint, drawSkel, offset) end
+function obe.Debug.Render.drawPolygon(target, polygon, drawLines, drawPoints, drawMasterPoint, drawSkel, offset) end
 
 function obe.Graphics.InitPositionTransformer() end
 
@@ -6326,8 +6848,8 @@ function obe.Graphics.Canvas.canvasElementTypeToString(type) end
 --- Draws a Point.
 ---
 ---@param surface obe.Graphics.RenderTarget #RenderSurface where to render the point
----@param x number[integer] #x Coordinate of the position of the Point
----@param y number[integer] #y Coordinate of the position of the Point
+---@param x number #x Coordinate of the position of the Point
+---@param y number #y Coordinate of the position of the Point
 ---@param radius number #Radius of the Point to draw
 ---@param color obe.Graphics.Color #Color of the new Point
 function obe.Graphics.Utils.drawPoint(surface, x, y, radius, color) end
@@ -6335,18 +6857,18 @@ function obe.Graphics.Utils.drawPoint(surface, x, y, radius, color) end
 --- Draws a Line.
 ---
 ---@param surface obe.Graphics.RenderTarget #RenderSurface where to render the line
----@param x1 number[integer] #x Coordinate of the first point of the line
----@param y1 number[integer] #y Coordinate of the first point of the line
----@param x2 number[integer] #x Coordinate of the second point of the line
----@param y2 number[integer] #y Coordinate of the second point of the line
----@param thickness number[integer] #Thickness of the line you want to draw (2 = Minimal visible size)
+---@param x1 number #x Coordinate of the first point of the line
+---@param y1 number #y Coordinate of the first point of the line
+---@param x2 number #x Coordinate of the second point of the line
+---@param y2 number #y Coordinate of the second point of the line
+---@param thickness number #Thickness of the line you want to draw (2 = Minimal visible size)
 ---@param color obe.Graphics.Color #Color of the line you want to draw
 function obe.Graphics.Utils.drawLine(surface, x1, y1, x2, y2, thickness, color) end
 
 --- Draws a Polygon.
 ---
 ---@param surface obe.Graphics.RenderTarget #RenderSurface where to render the polygon
----@param points table #List of all the Polygon points positions
+---@param points table<number, obe.Transform.UnitVector> #List of all the Polygon points positions
 ---@param options obe.Graphics.Utils.DrawPolygonOptions #Drawing options : <lines> bool : Are the lines of the Polygon visible ? (true = visible, false = not visible) <points> bool : Are the points of the Polygon visible ? (true = visible, false = not visible) <radius> unsigned int : The radius of the points of the Polygon. <line_color> Color : Default color of the lines of the Polygon. <line_color_x> Color : Color of a specific line of the Polygon where x is the index of the line <point_color> Color : Default color of the points of the Polygon <point_color_x> Color : Color of a specific point of the Polygon where x is the index of the point
 function obe.Graphics.Utils.drawPolygon(surface, points, options) end
 
@@ -6379,7 +6901,7 @@ function obe.Scene.sceneCreateGameObjectProxy(self, obj, id) end
 
 ---@param self obe.Scene.Scene #
 ---@param objectType? string #
----@return sol.nested
+---@return table<number, table>
 function obe.Scene.sceneGetAllGameObjectsProxy(self, objectType) end
 
 ---@param callback sol.protected_function #
@@ -6432,7 +6954,7 @@ function obe.Script.ViliLuaBridge.luaTableToViliArray(convert) end
 
 ---@param path string #
 ---@param warnOnMissingPrefix? boolean #
----@return table
+---@return table<number, string>
 function obe.System.splitPathAndPrefix(path, warnOnMissingPrefix) end
 
 ---@param stretchMode string #
@@ -6451,7 +6973,7 @@ function obe.System.Package.GetPackageLocation(packageName) end
 ---@return boolean
 function obe.System.Package.PackageExists(packageName) end
 
----@return table
+---@return table<number, string>
 function obe.System.Package.ListPackages() end
 
 --- Installs a Package.
@@ -6464,7 +6986,7 @@ function obe.System.Package.Install(packageName) end
 ---
 ---@param packageName string #Name of the Package to load.
 ---@param prefix string #Prefix that can be used to reference Package root path
----@param priority? number[position integer] #Priority of the path that will be mounted.
+---@param priority? number #Priority of the path that will be mounted.
 ---@return boolean
 function obe.System.Package.Load(packageName, prefix, priority) end
 
@@ -6484,19 +7006,19 @@ function obe.System.Project.ProjectExists(projectName) end
 ---
 ---@param projectName string #Name of the Project to load.
 ---@param prefix string #Prefix that can be used to reference Project root path
----@param priority? number[position integer] #Priority of the path that will be mounted.
+---@param priority? number #Priority of the path that will be mounted.
 ---@return boolean
 function obe.System.Project.Load(projectName, prefix, priority) end
 
----@return table
+---@return table<number, string>
 function obe.System.Project.ListProjects() end
 
----@param tileId uint32_t #
+---@param tileId number #
 ---@return obe.Tiles.TileInfo
 function obe.Tiles.getTileInfo(tileId) end
 
----@param tileId uint32_t #
----@return uint32_t
+---@param tileId number #
+---@return number
 function obe.Tiles.stripTileFlags(tileId) end
 
 ---@param info obe.Tiles.TileInfo #
@@ -6523,13 +7045,13 @@ function obe.Transform.unitsToString(unit) end
 --- Get a list of directories.
 ---
 ---@param path string #Path where you want to check the directories
----@return table
+---@return table<number, string>
 function obe.Utils.File.getDirectoryList(path) end
 
 --- Get a list of files.
 ---
 ---@param path string #Path where you want to check the files
----@return table
+---@return table<number, string>
 function obe.Utils.File.getFileList(path) end
 
 --- Check if the file at the given path exists.
@@ -6603,15 +7125,15 @@ function obe.Utils.File.normalizePath(path) end
 ---@return string
 function obe.Utils.File.canonicalPath(path) end
 
----@param parts table #
+---@param parts table<number, string> #
 ---@return string
 function obe.Utils.File.join(parts) end
 
 --- Get a random integer between the given bound.
 ---
----@param min number[integer] #Min bound
----@param max number[integer] #Max bound
----@return number[integer]
+---@param min number #Min bound
+---@param max number #Max bound
+---@return number
 function obe.Utils.Math.randint(min, max) end
 
 --- Get a random double.
@@ -6650,7 +7172,7 @@ function obe.Utils.Math.isDoubleInt(value) end
 --- Get the sign of the given number.
 ---
 ---@param val T #Value to check the sign
----@return number[integer]
+---@return number
 function obe.Utils.Math.sign(val) end
 
 --- Converts a degrees angle to radians.
@@ -6677,14 +7199,14 @@ function obe.Utils.Math.normalize(value, low, high) end
 ---
 ---@param str string #String you want to split
 ---@param delimiters? string #Delimiter used to split the string
----@return table
+---@return table<number, string>
 function obe.Utils.String.split(str, delimiters) end
 
 --- Count of the occurences of occur in string str.
 ---
 ---@param str string #String you want to count the occurences in
 ---@param occur string #String you want to search
----@return number[integer]
+---@return number
 function obe.Utils.String.occurencesInString(str, occur) end
 
 --- Get if the string only contains letters.
@@ -6735,7 +7257,7 @@ function obe.Utils.String.isSurroundedBy(string, bet) end
 --- Generates a random string witch characters from the given set.
 ---
 ---@param set string #Set of characters to use for the generation
----@param len number[integer] #Length of the string you want to generate
+---@param len number #Length of the string you want to generate
 ---@return string
 function obe.Utils.String.getRandomKey(set, len) end
 
@@ -6762,13 +7284,13 @@ function obe.Utils.String.endsWith(string, search) end
 
 ---@param source string #
 ---@param target string #
----@return number[integer]
+---@return number
 function obe.Utils.String.distance(source, target) end
 
 ---@param source string #
----@param words table #
----@param limit? number[integer] #
----@return table
+---@param words table<number, string> #
+---@param limit? number #
+---@return table<number, string>
 function obe.Utils.String.sortByDistance(source, words, limit) end
 
 ---@param source string #
@@ -6778,16 +7300,16 @@ function obe.Utils.String.quote(source) end
 --- Check if a given item is in the given std::vector.
 ---
 ---@param item V #Item you want to search in the std::vector
----@param vec table #Reference of the std::vector you want to search the item in
+---@param vec table<number, V> #Reference of the std::vector you want to search the item in
 ---@return boolean
 function obe.Utils.Vector.contains(item, vec) end
 
 --- Join all elements of a std::string into a std::string using a separator.
 ---
----@param vector table #array containing the strings to join
+---@param vector table<number, string> #array containing the strings to join
 ---@param sep? string #string separator used to join the string values from the array
----@param start? number[integer] #start position from where to start joining values
----@param stop? number[integer] #from which index (starting at the end) of the array to stop joining values
+---@param start? number #start position from where to start joining values
+---@param stop? number #from which index (starting at the end) of the array to stop joining values
 ---@return string
 function obe.Utils.Vector.join(vector, sep, start, stop) end
 
@@ -6800,7 +7322,7 @@ function vili.from_string(type) end
 function vili.to_string(type) end
 
 ---@param input string #
----@param indent_level? number[position integer] #
+---@param indent_level? number #
 ---@param pad_left? boolean #
 ---@return string
 function vili.exceptions.indent_string(input, indent_level, pad_left) end
@@ -6846,7 +7368,7 @@ function vili.utils.string.quote(str) end
 function vili.utils.string.to_double(input) end
 
 ---@param input string #
----@return long long
+---@return number
 function vili.utils.string.to_long(input) end
 
 ---@param data vili.node #
@@ -6880,109 +7402,117 @@ function vili.writer.dump_object(data, options) end
 ---@return string
 function vili.writer.dump(data, options) end
 
----@type global_type
+
+---@type string
 obe.Config.Templates.wait_command = {};
----@type global_type
+---@type string
 obe.Config.Templates.play_group_command = {};
----@type global_type
+---@type string
 obe.Config.Templates.set_animation_command = {};
----@type global_type
+---@type spdlog.logger
 obe.Debug.Log = {};
----@type global_type
+---@type table<string, obe.Graphics.CoordinateTransformer>
 obe.Graphics.Transformers = {};
----@type global_type
+---@type obe.Graphics.CoordinateTransformer
 obe.Graphics.Parallax = {};
----@type global_type
+---@type obe.Graphics.CoordinateTransformer
 obe.Graphics.Camera = {};
----@type global_type
+---@type obe.Graphics.CoordinateTransformer
 obe.Graphics.Position = {};
----@type global_type
+---@type fun(p0:obe.System.Cursor):table<number, number>
 obe.System.Constraints.Default = {};
----@type global_type
+---@type string
 obe.System.Prefixes.obe = {};
----@type global_type
+---@type string
 obe.System.Prefixes.cwd = {};
----@type global_type
+---@type string
 obe.System.Prefixes.exe = {};
----@type global_type
+---@type string
 obe.System.Prefixes.cfg = {};
----@type global_type
+---@type string
 obe.System.Prefixes.mount = {};
----@type global_type
+---@type string
 obe.System.Prefixes.extlibs = {};
----@type global_type
+---@type string
 obe.System.Prefixes.root = {};
----@type global_type
+---@type number
 obe.System.Priorities.high = {};
----@type global_type
+---@type number
 obe.System.Priorities.projectmount = {};
----@type global_type
+---@type number
 obe.System.Priorities.project = {};
----@type global_type
+---@type number
 obe.System.Priorities.mount = {};
----@type global_type
+---@type number
 obe.System.Priorities.defaults = {};
----@type global_type
+---@type number
 obe.System.Priorities.low = {};
----@type global_type
+---@type string
 obe.System.Project.Prefixes.objects = {};
----@type global_type
+---@type string
 obe.System.Project.Prefixes.scenes = {};
----@type global_type
+---@type obe.Time.TimeUnit
 obe.Time.seconds = {};
----@type global_type
+---@type obe.Time.TimeUnit
 obe.Time.milliseconds = {};
----@type global_type
+---@type obe.Time.TimeUnit
 obe.Time.microseconds = {};
----@type global_type
+---@type obe.Time.TimeUnit
 obe.Time.minutes = {};
----@type global_type
+---@type obe.Time.TimeUnit
 obe.Time.hours = {};
----@type global_type
+---@type obe.Time.TimeUnit
 obe.Time.days = {};
----@type global_type
+---@type obe.Time.TimeUnit
 obe.Time.weeks = {};
----@type global_type
+---@type number
 obe.Utils.Math.pi = {};
----@type global_type
+---@type string
 obe.Utils.String.Alphabet = {};
----@type global_type
+---@type string
 obe.Utils.String.Numbers = {};
----@type global_type
+---@type boolean
 vili.PERMISSIVE_CAST = {};
----@type global_type
+---@type boolean
 vili.VERBOSE_EXCEPTIONS = {};
----@type global_type
+---@type string
 vili.true_value = {};
----@type global_type
+---@type string
 vili.false_value = {};
----@type global_type
+---@type string
 vili.null_typename = {};
----@type global_type
+---@type string
 vili.boolean_typename = {};
----@type global_type
+---@type string
 vili.integer_typename = {};
----@type global_type
+---@type string
 vili.number_typename = {};
----@type global_type
+---@type string
 vili.string_typename = {};
----@type global_type
+---@type string
 vili.object_typename = {};
----@type global_type
+---@type string
 vili.array_typename = {};
----@type global_type
+---@type string
 vili.unknown_typename = {};
----@type global_type
+---@type string
 vili.container_typename = {};
---- The Play Mode of an Animation. It indicates whether an Animation can be interrupted or not and what to do when the Animation is over.
+--- The Play Mode of an Animation. It indicates whether an Animation can be interrupted or not and what to do when the Animation is over TODO: /bind{AnimationPlayMode}.
 ---
 ---@class obe.Animation.AnimationPlayMode
-obe.Animation.AnimationPlayMode = {OneTime = 0, Loop = 1, Force = 2};
+obe.Animation.AnimationPlayMode = {
+    OneTime = 0,
+    Loop = 1,
+    Force = 2,
+};
 --- The AnimationStatus indicates whether the current Animation should continue to play or call another one.
 ---
 ---@class obe.Animation.AnimationStatus
-obe.Animation.AnimationStatus = {Play = 0, Call = 1};
---- Sets the scaling behaviour the Animator will apply on target.
+obe.Animation.AnimationStatus = {
+    Play = 0,
+    Call = 1,
+};
+--- Sets the scaling behaviour the Animator will apply on target TODO: /bind{Animator.TargetScaleMode}.
 ---
 ---@class obe.Animation.AnimatorTargetScaleMode
 obe.Animation.AnimatorTargetScaleMode = {
@@ -6990,9 +7520,9 @@ obe.Animation.AnimatorTargetScaleMode = {
     KeepRatio = 1,
     FixedWidth = 2,
     FixedHeight = 3,
-    TextureSize = 4
+    TextureSize = 4,
 };
----
+--- 
 ---
 ---@class obe.Animation.Easing.EasingType
 obe.Animation.Easing.EasingType = {
@@ -7026,32 +7556,54 @@ obe.Animation.Easing.EasingType = {
     InOutElastic = 27,
     InBounce = 28,
     OutBounce = 29,
-    InOutBounce = 30
+    InOutBounce = 30,
 };
 --- Defines how a sound should be loaded.
 ---
 ---@class obe.Audio.LoadPolicy
-obe.Audio.LoadPolicy = {Normal = 0, Cache = 1, Stream = 2};
+obe.Audio.LoadPolicy = {
+    Normal = 0,
+    Cache = 1,
+    Stream = 2,
+};
 --- Enum that defines the current status of a sound.
 ---
 ---@class obe.Audio.SoundStatus
-obe.Audio.SoundStatus = {Playing = 0, Paused = 1, Stopped = 2};
+obe.Audio.SoundStatus = {
+    Playing = 0,
+    Paused = 1,
+    Stopped = 2,
+};
 --- Enum used when manipulating tags in the Collider.
 ---
 ---@class obe.Collision.ColliderTagType
-obe.Collision.ColliderTagType = {Tag = 0, Accepted = 1, Rejected = 2};
----
+obe.Collision.ColliderTagType = {
+    Tag = 0,
+    Accepted = 1,
+    Rejected = 2,
+};
+--- 
 ---
 ---@class obe.Event.CallbackSchedulerState
-obe.Event.CallbackSchedulerState = {Standby = 0, Ready = 1, Done = 2};
----
+obe.Event.CallbackSchedulerState = {
+    Standby = 0,
+    Ready = 1,
+    Done = 2,
+};
+--- 
 ---
 ---@class obe.Event.ListenerChangeState
-obe.Event.ListenerChangeState = {Added = 0, Removed = 1};
+obe.Event.ListenerChangeState = {
+    Added = 0,
+    Removed = 1,
+};
 --- Type of the handle point of a Sprite (either scale or rotate)
 ---
 ---@class obe.Graphics.SpriteHandlePointType
-obe.Graphics.SpriteHandlePointType = {ScaleHandle = 0, RotateHandle = 1};
+obe.Graphics.SpriteHandlePointType = {
+    ScaleHandle = 0,
+    RotateHandle = 1,
+};
 --- Type of the CanvasElement, used for identification \lua_bind{Canvas.Type}.
 ---
 ---@class obe.Graphics.Canvas.CanvasElementType
@@ -7062,24 +7614,40 @@ obe.Graphics.Canvas.CanvasElementType = {
     Text = 3,
     Circle = 4,
     Polygon = 5,
-    Bezier = 6
+    Bezier = 6,
 };
 --- Horizontal alignment state of Text \lua_bind{Canvas.TextAlignment.Horizontal}.
 ---
 ---@class obe.Graphics.Canvas.TextHorizontalAlign
-obe.Graphics.Canvas.TextHorizontalAlign = {Left = 0, Center = 1, Right = 2};
+obe.Graphics.Canvas.TextHorizontalAlign = {
+    Left = 0,
+    Center = 1,
+    Right = 2,
+};
 --- Vertical alignment of Text \lua_bind{Canvas.TextAlignment.Vertical}.
 ---
 ---@class obe.Graphics.Canvas.TextVerticalAlign
-obe.Graphics.Canvas.TextVerticalAlign = {Top = 0, Center = 1, Bottom = 2};
----
+obe.Graphics.Canvas.TextVerticalAlign = {
+    Top = 0,
+    Center = 1,
+    Bottom = 2,
+};
+--- 
 ---
 ---@class obe.Input.MouseWheelScrollDirection
-obe.Input.MouseWheelScrollDirection = {Up = 0, Down = 1, Left = 2, Right = 3};
+obe.Input.MouseWheelScrollDirection = {
+    Up = 0,
+    Down = 1,
+    Left = 2,
+    Right = 3,
+};
 --- Trigger condition on an AxisButton input.
 ---
 ---@class obe.Input.AxisThresholdDirection
-obe.Input.AxisThresholdDirection = {Less = 0, More = 1};
+obe.Input.AxisThresholdDirection = {
+    Less = 0,
+    More = 1,
+};
 --- Possible states of InputButton.
 ---
 ---@class obe.Input.InputButtonState
@@ -7088,7 +7656,7 @@ obe.Input.InputButtonState = {
     Hold = 1,
     Pressed = 2,
     Released = 3,
-    LAST__ = 4
+    LAST__ = 4,
 };
 --- The type of Input.
 ---
@@ -7103,36 +7671,70 @@ obe.Input.InputType = {
     Others = 6,
     GamepadButton = 7,
     GamepadAxis = 8,
-    ScrollWheel = 9
+    ScrollWheel = 9,
 };
 --- Defines the source of a mounted path.
 ---
 ---@class obe.System.MountablePathType
-obe.System.MountablePathType = {Path = 0, Package = 1, Project = 2};
+obe.System.MountablePathType = {
+    Path = 0,
+    Package = 1,
+    Project = 2,
+};
 --- action to take whenever two MountablePath with the same prefix are mounted
 ---
 ---@class obe.System.SamePrefixPolicy
-obe.System.SamePrefixPolicy = {KeepBoth = 0, Skip = 1, Replace = 2};
----
+obe.System.SamePrefixPolicy = {
+    KeepBoth = 0,
+    Skip = 1,
+    Replace = 2,
+};
+--- 
 ---
 ---@class obe.System.PathType
-obe.System.PathType = {All = 0, Directory = 1, File = 2};
----
+obe.System.PathType = {
+    All = 0,
+    Directory = 1,
+    File = 2,
+};
+--- 
 ---
 ---@class obe.System.WindowContext
-obe.System.WindowContext = {GameWindow = 0, EditorWindow = 1};
----
+obe.System.WindowContext = {
+    GameWindow = 0,
+    EditorWindow = 1,
+};
+--- 
 ---
 ---@class obe.System.StretchMode
-obe.System.StretchMode = {None = 0, Center = 1, Stretch = 2, Fit = 3};
----
+obe.System.StretchMode = {
+    None = 0,
+    Center = 1,
+    Stretch = 2,
+    Fit = 3,
+};
+--- 
 ---
 ---@class obe.Transform.RelativePositionFrom
-obe.Transform.RelativePositionFrom = {Point0 = 0, Centroid = 1};
+obe.Transform.RelativePositionFrom = {
+    Point0 = 0,
+    Centroid = 1,
+};
+--- Conversion Type for Referential Usage.
+---
+---@class obe.Transform.ReferentialConversionType
+obe.Transform.ReferentialConversionType = {
+    From = 0,
+    To = 1,
+};
 --- Enum which contains value to indicate which kind of flip you want to perform on a Referential.
 ---
 ---@class obe.Transform.FlipAxis
-obe.Transform.FlipAxis = {Horizontal = 0, Vertical = 1, Both = 2};
+obe.Transform.FlipAxis = {
+    Horizontal = 0,
+    Vertical = 1,
+    Both = 2,
+};
 --- Different Units used to work with elements position / size in the Scene.
 ---
 ---@class obe.Transform.Units
@@ -7141,7 +7743,7 @@ obe.Transform.Units = {
     ViewPixels = 1,
     ViewUnits = 2,
     ScenePixels = 3,
-    SceneUnits = 4
+    SceneUnits = 4,
 };
 --- An enum representing Types of existing Nodes.
 ---
@@ -7153,23 +7755,35 @@ vili.node_type = {
     number = 3,
     boolean = 4,
     array = 5,
-    object = 6
+    object = 6,
 };
----
+--- 
 ---
 ---@class vili.writer.delimiter_newline_policy
 vili.writer.delimiter_newline_policy = {
     never = 0,
     only_if_multiline = 1,
-    always = 2
+    always = 2,
 };
----
+--- 
 ---
 ---@class vili.writer.comma_spacing_policy
-vili.writer.comma_spacing_policy = {left_side = 0, right_side = 1, both = 2};
----
+vili.writer.comma_spacing_policy = {
+    left_side = 0,
+    right_side = 1,
+    both = 2,
+};
+--- 
 ---
 ---@class vili.writer.object_style
-vili.writer.object_style = {braces = 0, indent = 1};
+vili.writer.object_style = {
+    braces = 0,
+    indent = 1,
+};
 
-return obe;
+---@type obe.Engine.Engine
+local Engine;
+
+---@type obe.Script.GameObject
+local This;
+

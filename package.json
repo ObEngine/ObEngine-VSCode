@@ -2,31 +2,101 @@
 	"name": "obengine",
 	"displayName": "ObEngine",
 	"description": "ÖbEngine support for VS Code",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "obengine",
 	"icon": "images/logo.png",
 	"engines": {
-		"vscode": "^1.61.0"
+		"vscode": "^1.49.0"
 	},
 	"categories": [
-		"Other"
+		"Other",
+		"Debuggers",
+		"Programming Languages"
 	],
 	"activationEvents": [
 		"onCommand:obengine.eggplant",
-		"onStartupFinished"
+		"onStartupFinished",
+		"onDebug"
 	],
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/ObEngine/ObEngine-VSCode.git"
+	},
+	"bugs": {
+		"url": "https://github.com/ObEngine/ObEngine-VSCode/issues"
+	},
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
 				"command": "obengine.eggplant",
 				"title": "[ObEngine] Spawn eggplant"
+			},
+			{
+				"command": "obengine.context",
+				"title": "[ObEngine] Setup context"
+			}
+		],
+		"breakpoints": [
+			{
+				"language": "lua"
+			}
+		],
+		"debuggers": [
+			{
+				"type": "lrdb",
+				"label": "Lua Debug",
+				"program": "./out/debugAdapter.js",
+				"runtime": "node",
+				"languages": [
+					"lua"
+				],
+				"variables": {},
+				"configurationSnippets": [
+					{
+						"label": "[ObEngine] Debug",
+						"description": "Debug ObEngine project",
+						"body": {
+							"type": "lrdb",
+							"request": "attach",
+							"name": "[ObEngine] Debug",
+							"host": "localhost",
+							"port": 21122
+						}
+					}
+				],
+				"configurationAttributes": {
+					"attach": {
+						"required": [
+							"host",
+							"port"
+						],
+						"properties": {
+							"host": {
+								"type": "string",
+								"description": "ObEngine debugger host name.",
+								"default": "localhost"
+							},
+							"port": {
+								"type": "number",
+								"description": "ObEngine debugger port",
+								"default": 21122
+							},
+							"stopOnEntry": {
+								"type": "boolean",
+								"description": "Automatically stop after launch.",
+								"default": true
+							}
+						}
+					}
+				}
 			}
 		]
 	},
 	"extensionPack": [
 		"sumneko.lua"
 	],
+	"license": "MIT",
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
 		"esbuild-base": "esbuild ./src/extension.ts --bundle --outfile=out/main.js --external:vscode --format=cjs --platform=node",
@@ -36,6 +106,10 @@
 		"pretest": "npm run compile && npm run lint",
 		"lint": "eslint src --ext ts",
 		"test": "node ./out/test/runTest.js"
+	},
+	"dependencies": {
+		"lrdb-debuggable-lua": "^0.5.4",
+		"vscode-debugadapter": "^1.43.0"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.4",
@@ -49,10 +123,8 @@
 		"eslint": "^7.32.0",
 		"glob": "^7.1.7",
 		"mocha": "^9.1.1",
-		"typescript": "^4.4.3"
-	},
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/ObEngine/ObEngine-VSCode.git"
+		"typescript": "^4.4.3",
+		"vscode-debugprotocol": "^1.43.0",
+		"vscode-debug-logger": "0.0.5"
 	}
 }
