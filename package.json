@@ -2,11 +2,11 @@
 	"name": "obengine",
 	"displayName": "ObEngine",
 	"description": "ÖbEngine support for VS Code",
-	"version": "0.0.2",
+	"version": "0.1.1",
 	"publisher": "obengine",
 	"icon": "images/logo.png",
 	"engines": {
-		"vscode": "^1.49.0"
+		"vscode": "^1.61.0"
 	},
 	"categories": [
 		"Other",
