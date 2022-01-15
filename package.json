@@ -27,6 +27,20 @@
 	},
 	"main": "./out/extension.js",
 	"contributes": {
+		"configuration": {
+			"type": "object",
+			"title": "obengine",
+			"properties": {
+				"obengine.executablePath": {
+					"description": "Path to ÖbEngine executable",
+					"type": "string"
+				},
+				"obengine.workingDirectory": {
+					"description": "Path where ÖbEngine should execute",
+					"type": "string"
+				}
+			}
+		},
 		"commands": [
 			{
 				"command": "obengine.eggplant",
@@ -53,6 +67,18 @@
 				],
 				"variables": {},
 				"configurationSnippets": [
+					{
+						"label": "[ObEngine] Run & Debug",
+						"description": "Debug ObEngine project",
+						"body": {
+							"type": "obengine",
+							"request": "attach",
+							"name": "[ObEngine] Debug",
+							"host": "localhost",
+							"port": 21122,
+							"preLaunchTask": "runobengine"
+						}
+					},
 					{
 						"label": "[ObEngine] Debug",
 						"description": "Debug ObEngine project",
