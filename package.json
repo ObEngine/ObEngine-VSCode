@@ -2,7 +2,7 @@
 	"name": "obengine",
 	"displayName": "ObEngine",
 	"description": "ÖbEngine support for VS Code",
-	"version": "0.2.0",
+	"version": "0.3.0",
 	"publisher": "obengine",
 	"icon": "images/logo.png",
 	"engines": {
@@ -67,6 +67,12 @@
 				],
 				"variables": {},
 				"configurationSnippets": [
+					{
+						"type": "obengine",
+						"request": "launch",
+						"name": "[ObEngine] Run",
+						"preLaunchTask": "runobengine"
+					},
 					{
 						"label": "[ObEngine] Run & Debug",
 						"description": "Debug ObEngine project",

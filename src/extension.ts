@@ -2,36 +2,43 @@ import * as vscode from 'vscode';
 import { ObEngineConfigurationProvider } from './obengineConfigurationProvider';
 const util = require('util');
 
+function showObEngineWorkingDirectoryNotConfiguredWarning() {
+	vscode.window.showWarningMessage("ÖbEngine Working Directory not configured, please set it at obengine.workingDirectory");
+}
+
 function getHintFolder() : String | undefined {
-	let extension = vscode.extensions.getExtension("obengine.obengine");
-	if (extension)
-	{
+	let obengineConfig = vscode.workspace.getConfiguration("obengine");
+
+	let obengineWorkingDirectory = obengineConfig.get<string>("workingDirectory");
+	if (obengineWorkingDirectory) {
 		let filePrefix = "file:///";
-		let hintPath = vscode.Uri.joinPath(vscode.Uri.file(extension.extensionPath), "hints").toString(true);
-		if (hintPath.startsWith(filePrefix))
+		let hintsPath = vscode.Uri.joinPath(vscode.Uri.file(obengineWorkingDirectory), "Hints").toString(true);
+		if (hintsPath.startsWith(filePrefix))
 		{
-			hintPath = hintPath.slice(filePrefix.length);
+			hintsPath = hintsPath.slice(filePrefix.length);
 		}
-		return hintPath + "/obengine/library";
+		return hintsPath;
 	}
+	showObEngineWorkingDirectoryNotConfiguredWarning();
 	return undefined;
 }
 
-function addUserThirdPartyHints() {
+function addObEngineHints() {
 	let luaWorkspace = vscode.workspace.getConfiguration("Lua.workspace");
-	let userThirdParty = luaWorkspace.get<Array<String>>("userThirdParty");
+	let userThirdParty = luaWorkspace.get<Array<String>>("library");
 
 	let hintFolder = getHintFolder();
 	if (hintFolder && !userThirdParty?.includes(hintFolder))
 	{
 		let newValue = userThirdParty?.concat([hintFolder]);
-		luaWorkspace.update("userThirdParty", newValue);
+		luaWorkspace.update("library", newValue);
 	}
+	luaWorkspace.update("checkThirdParty", false);
 }
 
-function removeUserThirdPartyHints() {
+function removeObEngineHints() {
 	let luaWorkspace = vscode.workspace.getConfiguration("Lua.workspace");
-	let userThirdParty = luaWorkspace.get<Array<String>>("userThirdParty");
+	let userThirdParty = luaWorkspace.get<Array<String>>("library");
 
 	let hintFolder = getHintFolder();
 	if (hintFolder && userThirdParty?.includes(hintFolder))
@@ -40,68 +47,11 @@ function removeUserThirdPartyHints() {
 			if(element == hintFolder) userThirdParty?.splice(index, 1);
 		 });
 
-		luaWorkspace.update("userThirdParty", userThirdParty);
+		luaWorkspace.update("library", userThirdParty);
 	}
 }
 
-function spawnEggplant() {
-	vscode.window.showInformationMessage('🍆');
-}
-
-interface Task {
-	label?: string;
-}
-
-function setObEngineContext() {
-	let luaWorkspace = vscode.workspace.getConfiguration("Lua.workspace");
-	let workspaceLibrary = luaWorkspace.get<Array<String>>("library");
-
-	let hintFolder = getHintFolder();
-	if (hintFolder && !workspaceLibrary?.includes(hintFolder))
-	{
-		let newValue = workspaceLibrary?.concat([hintFolder]);
-		luaWorkspace.update("library", newValue);
-	}
-	luaWorkspace.update("checkThirdParty", false);
-
-	const runAndDebugObEngineTask = {
-		type: 'obengine',
-		request: 'attach',
-		name: '[ObEngine] Run & Debug',
-		host: "localhost",
-		port: 21122,
-		preLaunchTask: "runobengine"
-	  };
-
-	const debugObEngineTask = {
-		type: 'obengine',
-		request: 'attach',
-		name: '[ObEngine] Debug',
-		host: "localhost",
-		port: 21122,
-	  };
-
-	let launchConfig = vscode.workspace.getConfiguration("launch");
-	let existingConfigurations = launchConfig.get<Array<object>>("configurations", []);
-
-	let configurationsToAdd = [runAndDebugObEngineTask, debugObEngineTask];
-
-	for (const configurationToAdd of configurationsToAdd) {
-		let foundExistingValue = false;
-		for (const existingConf of existingConfigurations) {
-			if (util.isDeepStrictEqual(existingConf, configurationToAdd))
-			{
-				foundExistingValue = true;
-				break;
-			}
-		}
-		if (!foundExistingValue)
-		{
-			let newValue = existingConfigurations?.concat([configurationToAdd]);
-			launchConfig.update("configurations", newValue);
-		}
-	}
-
+function addObEngineRunTask() {
 	let obengineConfig = vscode.workspace.getConfiguration("obengine");
 
 	let obengineExecutablePath = obengineConfig.get<string>("executablePath");
@@ -111,7 +61,7 @@ function setObEngineContext() {
 
 	let obengineWorkingDirectory = obengineConfig.get<string>("workingDirectory");
 	if (!obengineWorkingDirectory) {
-		vscode.window.showWarningMessage("ÖbEngine Working Directory not configured, please set it at obengine.workingDirectory");
+		showObEngineWorkingDirectoryNotConfiguredWarning();
 	}
 
 	const runObEngineTask = {
@@ -142,7 +92,7 @@ function setObEngineContext() {
 	}
 
 	let tasksConfig = vscode.workspace.getConfiguration("tasks");
-	let existingTasks: Array<Task> = launchConfig.get<Array<object>>("tasks", []);
+	let existingTasks: Array<Task> = tasksConfig.get<Array<object>>("tasks", []);
 
 	let foundExistingValue = false;
 	for (const existingTask of existingTasks) {
@@ -167,6 +117,68 @@ function setObEngineContext() {
 			}
 		 });
 	}
+}
+function addObEngineLaunchers() {
+	const runObEngineLauncher = {
+		type: "obengine",
+		request: "launch",
+		name: "[ObEngine] Run",
+		preLaunchTask: "runobengine"
+	};
+	const runAndDebugObEngineLauncher = {
+		type: "obengine",
+		request: "attach",
+		name: "[ObEngine] Run & Debug",
+		host: "localhost",
+		port: 21122,
+		preLaunchTask: "runobengine",
+		env: {
+			"OBE_USE_DEBUGGER": "true"
+		}
+	};
+	const debugObEngineLauncher = {
+		type: "obengine",
+		request: "attach",
+		name: "[ObEngine] Debug",
+		host: "localhost",
+		port: 21122,
+	};
+
+	let launchConfig = vscode.workspace.getConfiguration("launch");
+	let existingConfigurations = launchConfig.get<Array<object>>("configurations", []);
+
+	let configurationsToAdd = [runObEngineLauncher, runAndDebugObEngineLauncher, debugObEngineLauncher];
+
+	for (const configurationToAdd of configurationsToAdd) {
+		let foundExistingValue = false;
+		for (const existingConf of existingConfigurations) {
+			if (util.isDeepStrictEqual(existingConf, configurationToAdd))
+			{
+				foundExistingValue = true;
+				break;
+			}
+		}
+		if (!foundExistingValue)
+		{
+			let newValue = existingConfigurations?.concat([configurationToAdd]);
+			launchConfig.update("configurations", newValue);
+		}
+	}
+}
+
+function spawnEggplant() {
+	vscode.window.showInformationMessage('🍆');
+}
+
+interface Task {
+	label?: string;
+}
+
+function setObEngineContext() {
+	addObEngineHints();
+	addObEngineLaunchers();
+	addObEngineRunTask();
+
 }
 
 export function activate(context: vscode.ExtensionContext) {
@@ -197,5 +209,5 @@ export function activate(context: vscode.ExtensionContext) {
 
 // this method is called when your extension is deactivated
 export function deactivate() {
-	removeUserThirdPartyHints();
+	removeObEngineHints();
 }

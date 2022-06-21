@@ -20,13 +20,13 @@ This package uses [sumneko's Lua extension](https://marketplace.visualstudio.com
 
 This extension contributes the following settings:
 
-* `Lua.workspace.userThirdParty`: List of directories used by [sumneko's Lua extension](https://marketplace.visualstudio.com/items?itemName=sumneko.lua) to load type hints
+* `Lua.workspace.library`: List of directories used by [sumneko's Lua extension](https://marketplace.visualstudio.com/items?itemName=sumneko.lua) to load type hints
 
 ## Known Issues
 
-- Type hints might be wrong
+If you encounter any issues with the extension itself [please report it here](https://github.com/ObEngine/ObEngine-VSCode/issues)
 
-If you encounter any issues (extension problem, wrong type hints), [please report it here](https://github.com/ObEngine/ObEngine-VSCode/issues)
+If you encounter any issues with the type hints (outdated typehints for example) [please report it here](https://github.com/ObEngine/ObEngine/issues)
 
 ## Release Notes
 
